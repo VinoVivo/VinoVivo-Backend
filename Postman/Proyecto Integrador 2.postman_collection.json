@@ -1,0 +1,823 @@
+{
+	"info": {
+		"_postman_id": "866300bb-c617-4e83-98d0-0280da517c63",
+		"name": "Proyecto Integrador 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23378679"
+	},
+	"item": [
+		{
+			"name": "Variety",
+			"item": [
+				{
+					"name": "GetAllVariety",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/variety/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"variety",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateVariety",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 0,\r\n    \"name\" : \"Rosado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/variety/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"variety",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateVariety",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 6,\r\n    \"name\" : \"Rosado3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/variety/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"variety",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteVariety",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/variety/delete/6",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"variety",
+								"delete",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetVarietyById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/variety/id/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"variety",
+								"id",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Type",
+			"item": [
+				{
+					"name": "GetAllType",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/type/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"type",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateType",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 0,\r\n    \"name\" : \"Test1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/type/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"type",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateType",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 4,\r\n    \"name\" : \"Test2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/type/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"type",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteType",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/type/delete/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"type",
+								"delete",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTypeById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/type/id/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"type",
+								"id",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Winery",
+			"item": [
+				{
+					"name": "GetAllWinery",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/winery/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"winery",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateWinery",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 0,\r\n    \"name\" : \"Vinoteca2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/winery/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"winery",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateWinery",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 6,\r\n    \"name\" : \"Vinoteca3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/winery/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"winery",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteWinery",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/winery/delete/6",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"winery",
+								"delete",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetWineryById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/winery/id/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"winery",
+								"id",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "GetAllProduct",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/product/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"product",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateProduct",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 0,\r\n    \"name\": \"VinoTestProyecto2\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula accumsan turpis, ut bibendum.\",\r\n    \"image\": \"noImage\",\r\n    \"year\": 1995,\r\n    \"price\": 10.20,\r\n    \"stock\": 3,\r\n    \"idWinery\": 4,\r\n    \"idVariety\": 4,\r\n    \"idType\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/product/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProductById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/product/id/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"product",
+								"id",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProductsByWineryId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/product/winery/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"product",
+								"winery",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProductsByVarietyId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/product/variety/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"product",
+								"variety",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProductsByTypeId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/product/type/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"product",
+								"type",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteProductById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/product/delete/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"product",
+								"delete",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateProduct",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 5,\r\n    \"name\": \"VinoTestProyecto\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula accumsan turpis, ut bibendum.\",\r\n    \"image\": \"noImage\",\r\n    \"year\": 1999,\r\n    \"price\": 10.20,\r\n    \"stock\": 3,\r\n    \"idWinery\": 2,\r\n    \"idVariety\": 2,\r\n    \"idType\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/product/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"product",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get8RandomProducts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/product/random",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"product",
+								"random"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "GetAllOrder",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/order/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"order",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateOrder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 0,\r\n    \"idCustomer\" : 1,\r\n    \"amount\" : 10.20,\r\n    \"shippingAddress\" : \"noAddress\",\r\n    \"orderEmail\" : \"noEmail\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/order/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"order",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateOrder",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 0,\r\n    \"idCustomer\" : 1,\r\n    \"amount\" : 10.20,\r\n    \"shippingAddress\" : \"noAddress\",\r\n    \"orderEmail\" : \"noEmail\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/order/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"order",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteOrder",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/order/delete/6",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"order",
+								"delete",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrderById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/order/id/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"order",
+								"id",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OrderDetail",
+			"item": [
+				{
+					"name": "GetAllOrderDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/order-details/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"order-details",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateOrderDetail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 10,\r\n    \"idOrder\" : 1,\r\n    \"idProduct\" : 1,\r\n    \"price\" : 10.20,\r\n    \"quantity\" : 20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/order-details/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"order-details",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateOrderDetails",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 5,\r\n    \"idOrder\" : 1,\r\n    \"idProduct\" : 1,\r\n    \"price\" : 10.20,\r\n    \"quantity\" : 19\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/order-details/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"order-details",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteOrderDetails",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/order-details/delete/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"order-details",
+								"delete",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrderDetailsById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/order-details/id/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"order-details",
+								"id",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
