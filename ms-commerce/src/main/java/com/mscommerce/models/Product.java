@@ -41,21 +41,20 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_winery", referencedColumnName = "id")
     @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "products"})
-    //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     private Winery winery;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_variety", referencedColumnName = "id")
     @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "products"})
-    //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     private Variety variety;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_type", referencedColumnName = "id")
     @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "products"})
-    //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     private Type type;
 
 }
+
+

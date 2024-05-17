@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDTO {
+public class ProductDTOGet {
 
     private Integer id;
 
@@ -25,9 +25,10 @@ public class ProductDTO {
 
     private Integer stock;
 
-    private Integer idWinery;
+    private String nameWinery;
 
-    private Integer idVariety;
+    private String nameVariety;
 
-    private Integer idType;
+    private String nameType;
+
 }

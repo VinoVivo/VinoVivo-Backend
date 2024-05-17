@@ -3,6 +3,7 @@ package com.mscommerce.service;
 import com.mscommerce.exception.BadRequestException;
 import com.mscommerce.exception.ResourceNotFoundException;
 import com.mscommerce.models.DTO.ProductDTO;
+import com.mscommerce.models.DTO.ProductDTOGet;
 import com.mscommerce.models.Product;
 import com.mscommerce.models.Type;
 import com.mscommerce.models.Variety;
@@ -12,11 +13,13 @@ import com.mscommerce.repositories.TypeRepository;
 import com.mscommerce.repositories.VarietyRepository;
 import com.mscommerce.repositories.WineryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -32,15 +35,10 @@ public class ProductService {
     private final TypeRepository typeRepository;
 
     // Method to fetch all products
-    public List<ProductDTO> getAllProducts() throws ResourceNotFoundException {
+    public List<ProductDTOGet> getAllProducts() throws ResourceNotFoundException {
         try {
-            // Retrieve all products from the repository
-            List<Product> products = productRepository.findAll();
-
-            // Convert the list of Product entities to a list of DTOs
-            return products.stream()
-                    .map(this::convertProductToProductDTO)
-                    .collect(Collectors.toList());
+            // Retrieve all products from the repository and return them
+            return productRepository.findAllProductDTOGet();
         } catch (Exception ex) {
             // If an exception occurs, throw a ResourceNotFoundException
             throw new ResourceNotFoundException("Failed to fetch products");
@@ -48,19 +46,15 @@ public class ProductService {
     }
 
     // Method to fetch a product by ID
-    public ProductDTO getProductById(Integer productId) throws ResourceNotFoundException {
+    public ProductDTOGet getProductById(Integer productId) throws ResourceNotFoundException {
         try {
-            // Retrieve the product by ID from the repository
-            Optional<Product> productOptional = productRepository.findById(productId);
-
-            // Check if the product exists
-            if (productOptional.isEmpty()) {
+            // Retrieve the product DTO by ID from the repository
+            ProductDTOGet productDTO = productRepository.findProductDTOGetById(productId);
+            // Check if the product DTO exists
+            if (productDTO == null) {
                 throw new ResourceNotFoundException("Product not found with ID: " + productId);
             }
-
-            // Convert the retrieved Product entity to a DTO
-            Product product = productOptional.get();
-            return convertProductToProductDTO(product);
+            return productDTO;
         } catch (ResourceNotFoundException ex) {
             // If a ResourceNotFoundException occurs, rethrow it
             throw ex;
@@ -70,65 +64,69 @@ public class ProductService {
         }
     }
 
-    // Method to fetch products by Winery ID
-    public List<ProductDTO> getProductsByWineryId(Integer wineryId) throws ResourceNotFoundException {
-        // Retrieve the Winery by ID from the repository
-        Winery winery = wineryRepository.findById(wineryId)
-                .orElseThrow(() -> new ResourceNotFoundException("Winery not found with ID: " + wineryId));
-
-        // Retrieve products associated with the Winery ID
-        List<Product> products = productRepository.findByWineryId(wineryId);
-
-        // Convert the list of Product entities to a list of DTOs
-        return products.stream()
-                .map(this::convertProductToProductDTO)
-                .collect(Collectors.toList());
+    // Method to fetch a product by Winery ID
+    public List<ProductDTOGet> getProductsByWineryId(Integer wineryId) throws ResourceNotFoundException {
+        try {
+            // Retrieve products associated with the Winery ID using the query method
+            List<ProductDTOGet> productDTOs = productRepository.findProductsByWineryId(wineryId);
+            // Check if any products are returned
+            if (productDTOs.isEmpty()) {
+                throw new ResourceNotFoundException("No products found for Winery ID: " + wineryId);
+            }
+            return productDTOs;
+        } catch (Exception ex) {
+            throw new RuntimeException("Error occurred while getting products by Winery ID", ex);
+        }
     }
 
-    // Method to fetch products by Variety ID
-    public List<ProductDTO> getProductsByVarietyId(Integer varietyId) throws ResourceNotFoundException {
-        // Retrieve the Variety by ID from the repository
-        Variety variety = varietyRepository.findById(varietyId)
-                .orElseThrow(() -> new ResourceNotFoundException("Variety not found with ID: " + varietyId));
-
-        // Retrieve products associated with the Variety ID
-        List<Product> products = productRepository.findByVarietyId(varietyId);
-
-        // Convert the list of Product entities to a list of DTOs
-        return products.stream()
-                .map(this::convertProductToProductDTO)
-                .collect(Collectors.toList());
+    // Method to fetch a product by Variety ID
+    public List<ProductDTOGet> getProductsByVarietyId(Integer varietyId) throws ResourceNotFoundException {
+        try {
+            // Retrieve products associated with the Variety ID using the query method
+            List<ProductDTOGet> productDTOs = productRepository.findProductsByVarietyId(varietyId);
+            // Check if any products are returned
+            if (productDTOs.isEmpty()) {
+                throw new ResourceNotFoundException("No products found for Variety ID: " + varietyId);
+            }
+            return productDTOs;
+        } catch (Exception ex) {
+            throw new RuntimeException("Error occurred while getting products by Variety ID", ex);
+        }
     }
 
-    // Method to fetch products by Type ID
-    public List<ProductDTO> getProductsByTypeId(Integer typeId) throws ResourceNotFoundException {
-        // Retrieve the Type by ID from the repository
-        Type type = typeRepository.findById(typeId)
-                .orElseThrow(() -> new ResourceNotFoundException("Type not found with ID: " + typeId));
-
-        // Retrieve products associated with the Type ID
-        List<Product> products = productRepository.findByTypeId(typeId);
-
-        // Convert the list of Product entities to a list of DTOs
-        return products.stream()
-                .map(this::convertProductToProductDTO)
-                .collect(Collectors.toList());
+    // Method to fetch a product by Type ID
+    public List<ProductDTOGet> getProductsByTypeId(Integer typeId) throws ResourceNotFoundException {
+        try {
+            // Retrieve products associated with the Type ID using the query method
+            List<ProductDTOGet> productDTOs = productRepository.findProductsByTypeId(typeId);
+            // Check if any products are returned
+            if (productDTOs.isEmpty()) {
+                throw new ResourceNotFoundException("No products found for Type ID: " + typeId);
+            }
+            return productDTOs;
+        } catch (Exception ex) {
+            throw new RuntimeException("Error occurred while getting products by Type ID", ex);
+        }
     }
 
     // Method to fetch random products
-    public List<ProductDTO> findRandomProducts() throws ResourceNotFoundException {
-        // Retrieve random products from the repository
-        List<Product> randomProducts = productRepository.findRandProducts();
-
-        // Check if any random products are found
-        if (randomProducts.isEmpty()) {
-            throw new ResourceNotFoundException("No random products found in the database.");
+    public List<ProductDTOGet> findRandomProducts() throws ResourceNotFoundException {
+        try {
+            // Create a Pageable object with a random sorting order and limit the result to 8 items
+            Pageable pageable = PageRequest.of(0, 8, Sort.by(Sort.Direction.DESC, "id"));
+            // Retrieve random products from the repository using the query method
+            Page<ProductDTOGet> page = productRepository.findRandProductDTOs(pageable);
+            // Extract the content from the page
+            List<ProductDTOGet> randomProductDTOs = page.getContent();
+            // Check if any random products are found
+            if (randomProductDTOs.isEmpty()) {
+                throw new ResourceNotFoundException("No random products found in the database.");
+            }
+            return randomProductDTOs;
+        } catch (Exception ex) {
+            // If an exception occurs, wrap it in a RuntimeException and rethrow
+            throw new RuntimeException("Error occurred while fetching random products", ex);
         }
-
-        // Convert the list of Product entities to a list of DTOs
-        return randomProducts.stream()
-                .map(this::convertProductToProductDTO)
-                .collect(Collectors.toList());
     }
 
     // Method to create a new product
@@ -187,7 +185,6 @@ public class ProductService {
             // Check if the product exists
             Product existingProduct = productRepository.findById(productId)
                     .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + productId));
-
             // Delete the product
             productRepository.delete(existingProduct);
         } catch (ResourceNotFoundException ex) {
