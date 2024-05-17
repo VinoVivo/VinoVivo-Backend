@@ -25,14 +25,10 @@ public class ProductDTOGet {
 
     private Integer stock;
 
-    private String nameType;
+    private String nameWinery;
 
     private String nameVariety;
 
-    private String nameWinery;
-
-
-
-
+    private String nameType;
 
 }
