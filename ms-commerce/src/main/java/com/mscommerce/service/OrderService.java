@@ -5,6 +5,7 @@ import com.mscommerce.exception.ResourceNotFoundException;
 import com.mscommerce.models.DTO.OrderDTO;
 import com.mscommerce.models.Order;
 import com.mscommerce.repositories.OrderRepository;
+import com.mscommerce.repositories.implementation.IOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,12 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class OrderService {
+public class OrderService implements IOrderRepository {
 
     private final OrderRepository orderRepository;
 
     // Method to fetch all orders
+    @Override
     public List<OrderDTO> getAllOrders() throws ResourceNotFoundException {
         try {
             // Retrieve all orders from the repository
@@ -36,6 +38,7 @@ public class OrderService {
     }
 
     // Method to fetch an order by ID
+    @Override
     public OrderDTO getOrderById(Integer orderId) throws ResourceNotFoundException {
         try {
             // Retrieve the order by ID from the repository
@@ -59,6 +62,7 @@ public class OrderService {
     }
 
     // Method to create a new order
+    @Override
     public OrderDTO createOrder(OrderDTO orderDTO) throws BadRequestException {
         // Convert the DTO to an Order entity
         Order orderToStore = convertOrderDTOToOrder(orderDTO);
@@ -75,6 +79,7 @@ public class OrderService {
     }
 
     // Method to update an existing order
+    @Override
     public OrderDTO updateOrder(OrderDTO orderDTO) throws BadRequestException, ResourceNotFoundException {
         try {
             // Check if the order exists
@@ -105,6 +110,7 @@ public class OrderService {
     }
 
     // Method to delete an order by ID
+    @Override
     public void deleteOrder(Integer orderId) throws ResourceNotFoundException {
         try {
             // Check if the order exists
@@ -123,7 +129,8 @@ public class OrderService {
     }
 
     // Method to convert DTO to Order entity
-    private Order convertOrderDTOToOrder(OrderDTO orderDTO) throws BadRequestException {
+    @Override
+    public Order convertOrderDTOToOrder(OrderDTO orderDTO) throws BadRequestException {
         try {
             // Check if any required fields in the DTO are null
             if (Objects.isNull(orderDTO.getIdCustomer()) || Objects.isNull(orderDTO.getAmount()) ||
@@ -150,7 +157,8 @@ public class OrderService {
     }
 
     // Method to convert Order entity to DTO
-    private OrderDTO convertOrderToOrderDTO(Order order) {
+    @Override
+    public OrderDTO convertOrderToOrderDTO(Order order) {
         try {
             // Create a new OrderDTO and set its fields
             OrderDTO orderDTO = new OrderDTO();

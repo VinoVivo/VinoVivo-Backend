@@ -7,6 +7,7 @@ import com.mscommerce.models.OrderDetails;
 import com.mscommerce.repositories.OrderDetailsRepository;
 import com.mscommerce.repositories.OrderRepository;
 import com.mscommerce.repositories.ProductRepository;
+import com.mscommerce.repositories.implementation.IOrderDetailsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +19,14 @@ import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
-public class OrderDetailsService {
+public class OrderDetailsService implements IOrderDetailsRepository {
 
     private final OrderDetailsRepository orderDetailsRepository;
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
 
     // Method to fetch all order details
+    @Override
     public List<OrderDetailsDTO> getAllOrderDetails() throws ResourceNotFoundException {
         try {
             // Retrieve all order details from the repository
@@ -41,16 +43,15 @@ public class OrderDetailsService {
     }
 
     // Method to fetch order details by ID
+    @Override
     public OrderDetailsDTO getOrderDetailsById(Integer orderDetailsId) throws ResourceNotFoundException {
         try {
             // Retrieve the order details by ID from the repository
             Optional<OrderDetails> orderDetailsOptional = orderDetailsRepository.findById(orderDetailsId);
-
             // Check if the order details exist
             if (orderDetailsOptional.isEmpty()) {
                 throw new ResourceNotFoundException("OrderDetails not found with ID: " + orderDetailsId);
             }
-
             // Convert the retrieved OrderDetails entity to a DTO
             OrderDetails orderDetails = orderDetailsOptional.get();
             return convertOrderDetailsToDTO(orderDetails);
@@ -64,6 +65,7 @@ public class OrderDetailsService {
     }
 
     // Method to create new order details
+    @Override
     public OrderDetailsDTO createOrderDetails(OrderDetailsDTO orderDetailsDTO) throws BadRequestException, ResourceNotFoundException {
         // Convert the DTO to an OrderDetails entity
         OrderDetails orderDetailsToStore = convertDTOToOrderDetails(orderDetailsDTO);
@@ -82,6 +84,7 @@ public class OrderDetailsService {
     }
 
     // Method to update existing order details
+    @Override
     public OrderDetailsDTO updateOrderDetails(OrderDetailsDTO orderDetailsDTO) throws BadRequestException, ResourceNotFoundException {
         try {
             // Check if the order details exist
@@ -112,6 +115,7 @@ public class OrderDetailsService {
     }
 
     // Method to delete order details by ID
+    @Override
     public void deleteOrderDetails(Integer orderDetailsId) throws ResourceNotFoundException {
         try {
             // Check if the order details exist
@@ -130,7 +134,9 @@ public class OrderDetailsService {
     }
 
     // Method to convert DTO to OrderDetails entity
-    private OrderDetails convertDTOToOrderDetails(OrderDetailsDTO orderDetailsDTO) throws BadRequestException, ResourceNotFoundException {
+    @Override
+    public OrderDetails convertDTOToOrderDetails(OrderDetailsDTO orderDetailsDTO) throws BadRequestException,
+            ResourceNotFoundException {
         try {
             // Check if any required fields in the DTO are null
             if (Stream.of(orderDetailsDTO.getIdOrder(), orderDetailsDTO.getIdProduct(), orderDetailsDTO.getPrice(), orderDetailsDTO.getQuantity())
@@ -163,7 +169,8 @@ public class OrderDetailsService {
     }
 
     // Method to convert OrderDetails entity to DTO
-    private OrderDetailsDTO convertOrderDetailsToDTO(OrderDetails orderDetails) {
+    @Override
+    public OrderDetailsDTO convertOrderDetailsToDTO(OrderDetails orderDetails) {
         try {
             // Create a new OrderDetailsDTO and set its fields
             OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();

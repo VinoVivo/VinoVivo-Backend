@@ -5,6 +5,7 @@ import com.mscommerce.exception.ResourceNotFoundException;
 import com.mscommerce.models.DTO.WineryDTO;
 import com.mscommerce.models.Winery;
 import com.mscommerce.repositories.WineryRepository;
+import com.mscommerce.repositories.implementation.IWineryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +15,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class WineryService {
+public class WineryService implements IWineryRepository {
 
     private final WineryRepository wineryRepository;
 
 
     // Method to retrieve all wineries
+    @Override
     public List<WineryDTO> getAllWineries() throws ResourceNotFoundException {
         try {
             // Retrieve all wineries from the repository
@@ -35,6 +37,7 @@ public class WineryService {
     }
 
     // Method to retrieve a winery by its ID
+    @Override
     public WineryDTO getWineryById(Integer wineryId) throws ResourceNotFoundException {
         try {
             // Retrieve the winery from the repository by ID
@@ -56,6 +59,7 @@ public class WineryService {
     }
 
     // Method to create a new winery
+    @Override
     public WineryDTO createWinery(WineryDTO wineryDTO) throws BadRequestException {
         try {
             // Convert the DTO to a Winery entity
@@ -72,6 +76,7 @@ public class WineryService {
     }
 
     // Method to update an existing winery
+    @Override
     public WineryDTO updateWinery(WineryDTO wineryDTO) throws ResourceNotFoundException {
         try {
             // Check if the winery exists
@@ -93,6 +98,7 @@ public class WineryService {
     }
 
     // Method to delete a winery
+    @Override
     public void deleteWinery(Integer wineryId) throws ResourceNotFoundException {
         try {
             // Check if the winery exists
@@ -110,6 +116,7 @@ public class WineryService {
     }
 
     // Method to convert a Winery entity to a WineryDTO
+    @Override
     public WineryDTO convertWineryToWineryDTO(Winery winery) {
         try {
             WineryDTO wineryDTO = new WineryDTO();
@@ -123,6 +130,7 @@ public class WineryService {
     }
 
     // Method to convert a WineryDTO to a Winery entity
+    @Override
     public Winery convertWineryDTOToWinery(WineryDTO wineryDTO) {
         try {
             Winery winery = new Winery();

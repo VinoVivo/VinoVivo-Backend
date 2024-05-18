@@ -5,6 +5,7 @@ import com.mscommerce.exception.ResourceNotFoundException;
 import com.mscommerce.models.DTO.TypeDTO;
 import com.mscommerce.models.Type;
 import com.mscommerce.repositories.TypeRepository;
+import com.mscommerce.repositories.implementation.ITypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,12 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class TypeService {
+public class TypeService implements ITypeRepository {
 
     private final TypeRepository typeRepository;
 
     // Method to retrieve all types
+    @Override
     public List<TypeDTO> getAllTypes() throws ResourceNotFoundException {
         try {
             // Retrieve all types from the repository
@@ -34,6 +36,7 @@ public class TypeService {
     }
 
     // Method to retrieve a type by its ID
+    @Override
     public TypeDTO getTypeById(Integer typeId) throws ResourceNotFoundException {
         try {
             // Retrieve the type from the repository by ID
@@ -55,6 +58,7 @@ public class TypeService {
     }
 
     // Method to create a new type
+    @Override
     public TypeDTO createType(TypeDTO typeDTO) throws BadRequestException {
         try {
             // Convert the DTO to a Type entity
@@ -71,6 +75,7 @@ public class TypeService {
     }
 
     // Method to update an existing type
+    @Override
     public TypeDTO updateType(TypeDTO typeDTO) throws ResourceNotFoundException {
         try {
             // Check if the type exists
@@ -92,6 +97,7 @@ public class TypeService {
     }
 
     // Method to delete a type
+    @Override
     public void deleteType(Integer typeId) throws ResourceNotFoundException {
         try {
             // Check if the type exists
@@ -109,6 +115,7 @@ public class TypeService {
     }
 
     // Method to convert a Type entity to a TypeDTO
+    @Override
     public TypeDTO convertTypeToTypeDTO(Type type) {
         try {
             TypeDTO typeDTO = new TypeDTO();
@@ -122,6 +129,7 @@ public class TypeService {
     }
 
     // Method to convert a TypeDTO to a Type entity
+    @Override
     public Type convertTypeDTOToType(TypeDTO typeDTO) {
         try {
             Type type = new Type();

@@ -5,6 +5,7 @@ import com.mscommerce.exception.ResourceNotFoundException;
 import com.mscommerce.models.DTO.VarietyDTO;
 import com.mscommerce.models.Variety;
 import com.mscommerce.repositories.VarietyRepository;
+import com.mscommerce.repositories.implementation.IVarietyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,12 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class VarietyService {
+public class VarietyService implements IVarietyRepository {
 
     private final VarietyRepository varietyRepository;
 
     // Method to retrieve all varieties
+    @Override
     public List<VarietyDTO> getAllVarieties() throws ResourceNotFoundException {
         try {
             // Retrieve all varieties from the repository
@@ -34,6 +36,7 @@ public class VarietyService {
     }
 
     // Method to retrieve a variety by its ID
+    @Override
     public VarietyDTO getVarietyById(Integer varietyId) throws ResourceNotFoundException {
         try {
             // Retrieve the variety from the repository by ID
@@ -55,6 +58,7 @@ public class VarietyService {
     }
 
     // Method to create a new variety
+    @Override
     public VarietyDTO createVariety(VarietyDTO varietyDTO) throws BadRequestException {
         try {
             // Convert the DTO to a Variety entity
@@ -71,6 +75,7 @@ public class VarietyService {
     }
 
     // Method to update an existing variety
+    @Override
     public VarietyDTO updateVariety(VarietyDTO varietyDTO) throws ResourceNotFoundException {
         try {
             // Check if the variety exists
@@ -92,6 +97,7 @@ public class VarietyService {
     }
 
     // Method to delete a variety
+    @Override
     public void deleteVariety(Integer varietyId) throws ResourceNotFoundException {
         try {
             // Check if the variety exists
@@ -109,6 +115,7 @@ public class VarietyService {
     }
 
     // Method to convert a Variety entity to a VarietyDTO
+    @Override
     public VarietyDTO convertVarietyToVarietyDTO(Variety variety) {
         try {
             VarietyDTO varietyDTO = new VarietyDTO();
@@ -122,6 +129,7 @@ public class VarietyService {
     }
 
     // Method to convert a VarietyDTO to a Variety entity
+    @Override
     public Variety convertVarietyDTOToVariety(VarietyDTO varietyDTO) {
         try {
             Variety variety = new Variety();

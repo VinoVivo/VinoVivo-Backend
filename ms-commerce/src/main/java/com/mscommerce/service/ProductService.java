@@ -12,6 +12,7 @@ import com.mscommerce.repositories.ProductRepository;
 import com.mscommerce.repositories.TypeRepository;
 import com.mscommerce.repositories.VarietyRepository;
 import com.mscommerce.repositories.WineryRepository;
+import com.mscommerce.repositories.implementation.IProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,7 +25,7 @@ import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
-public class ProductService {
+public class ProductService implements IProductRepository {
 
     private final ProductRepository productRepository;
 
@@ -35,6 +36,7 @@ public class ProductService {
     private final TypeRepository typeRepository;
 
     // Method to fetch all products
+    @Override
     public List<ProductDTOGet> getAllProducts() throws ResourceNotFoundException {
         try {
             // Retrieve all products from the repository and return them
@@ -46,6 +48,7 @@ public class ProductService {
     }
 
     // Method to fetch a product by ID
+    @Override
     public ProductDTOGet getProductById(Integer productId) throws ResourceNotFoundException {
         try {
             // Retrieve the product DTO by ID from the repository
@@ -65,6 +68,7 @@ public class ProductService {
     }
 
     // Method to fetch a product by Winery ID
+    @Override
     public List<ProductDTOGet> getProductsByWineryId(Integer wineryId) throws ResourceNotFoundException {
         try {
             // Retrieve products associated with the Winery ID using the query method
@@ -80,6 +84,7 @@ public class ProductService {
     }
 
     // Method to fetch a product by Variety ID
+    @Override
     public List<ProductDTOGet> getProductsByVarietyId(Integer varietyId) throws ResourceNotFoundException {
         try {
             // Retrieve products associated with the Variety ID using the query method
@@ -95,6 +100,7 @@ public class ProductService {
     }
 
     // Method to fetch a product by Type ID
+    @Override
     public List<ProductDTOGet> getProductsByTypeId(Integer typeId) throws ResourceNotFoundException {
         try {
             // Retrieve products associated with the Type ID using the query method
@@ -110,6 +116,7 @@ public class ProductService {
     }
 
     // Method to fetch random products
+    @Override
     public List<ProductDTOGet> findRandomProducts() throws ResourceNotFoundException {
         try {
             // Create a Pageable object with a random sorting order and limit the result to 8 items
@@ -130,6 +137,7 @@ public class ProductService {
     }
 
     // Method to create a new product
+    @Override
     public ProductDTO createProduct(ProductDTO productDTO) throws BadRequestException, ResourceNotFoundException {
         // Convert the ProductDTO to a Product entity
         Product productToStore = convertProductDTOToProduct(productDTO);
@@ -145,6 +153,7 @@ public class ProductService {
     }
 
     // Method to update an existing product
+    @Override
     public ProductDTO updateProduct(ProductDTO productDTO) throws BadRequestException, ResourceNotFoundException {
         try {
             // Check if the product exists
@@ -180,6 +189,7 @@ public class ProductService {
     }
 
     // Method to delete a product
+    @Override
     public void deleteProduct(Integer productId) throws ResourceNotFoundException {
         try {
             // Check if the product exists
@@ -197,7 +207,9 @@ public class ProductService {
     }
 
     // Method to convert a ProductDTO to a Product entity
-    private Product convertProductDTOToProduct(ProductDTO productDTO) throws BadRequestException, ResourceNotFoundException {
+    @Override
+    public Product convertProductDTOToProduct(ProductDTO productDTO) throws BadRequestException,
+            ResourceNotFoundException {
         try {
             // Check if any required fields are null
             if (Stream.of(
@@ -243,7 +255,8 @@ public class ProductService {
     }
 
     // Method to convert a Product entity to a ProductDTO
-    private ProductDTO convertProductToProductDTO(Product product) {
+    @Override
+    public ProductDTO convertProductToProductDTO(Product product) {
         try {
             // Create a new ProductDTO and set its fields
             ProductDTO productDTO = new ProductDTO();
