@@ -3,10 +3,14 @@ spring:
     name: ms-commerce
 
   datasource:
-    url: jdbc:mysql://databasevino.c3c0ygekuve5.us-east-1.rds.amazonaws.com:3306/DataBase_Vino_Vivo
+    url: jdbc:mysql://roundhouse.proxy.rlwy.net:53234/Vino_Vivo
     username: root
-    password: V1n0V1v0.24
+    password: RoMBBzsMYCGVecgwguuzMAfkjAIGGJwW
     driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://databasevino.c3c0ygekuve5.us-east-1.rds.amazonaws.com:3306/DataBase_Vino_Vivo
+    #username: root
+    #password: V1n0V1v0.24
+    #driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     show-sql: true
@@ -28,8 +32,10 @@ eureka:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     service-url:
-      defaultZone: ${EUREKA_SERVER_URL:http://${RAILWAY_PUBLIC_DOMAIN}/eureka/}
+      defaultZone: http://localhost:8761/eureka
 
 
 
       #RAILWAY_PUBLIC_DOMAIN #http://localhost:8761/eureka
+
+      #http://${RAILWAY_PUBLIC_DOMAIN}/eureka/
