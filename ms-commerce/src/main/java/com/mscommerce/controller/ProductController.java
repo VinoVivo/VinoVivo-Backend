@@ -19,7 +19,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping("/all")
+    @GetMapping("/type/all")
     public ResponseEntity<List<ProductDTOGet>> getAllProducts() throws ResourceNotFoundException {
         List<ProductDTOGet> productDTOGet = productService.getAllProducts();
         return ResponseEntity.ok().body(productDTOGet);
