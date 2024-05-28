@@ -8,11 +8,11 @@
         <version>2.7.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.msbills</groupId>
-    <artifactId>ms-bills</artifactId>
+    <groupId>com.mscommerce</groupId>
+    <artifactId>ms-commerce</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ms-bills</name>
-    <description>ms-bills</description>
+    <name>ms-commerce</name>
+    <description>ms-commerce</description>
     <properties>
         <java.version>17</java.version>
     </properties>
