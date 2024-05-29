@@ -13,9 +13,9 @@ public class OrderDTO {
 
     private Integer id;
 
-    private Integer idCustomer;
+    private String idCustomer;
 
-    private Double amount;
+    private Double totalPrice;
 
     private String shippingAddress;
 

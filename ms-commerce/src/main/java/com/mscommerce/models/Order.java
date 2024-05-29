@@ -21,10 +21,10 @@ public class Order {
 
     @NotNull
     @Column(name = "id_customer")
-    private Integer idCustomer;
+    private String idCustomer;
 
-    @Column(name = "amount")
-    private Double amount;
+    @Column(name = "total_price")
+    private Double totalPrice;
 
     @Column(name = "shipping_address")
     private String shippingAddress;

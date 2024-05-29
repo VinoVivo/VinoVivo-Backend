@@ -91,7 +91,7 @@ public class OrderService implements IOrderRepository {
 
             // Update fields of the existing order
             existingOrder.setIdCustomer(updatedOrder.getIdCustomer());
-            existingOrder.setAmount(updatedOrder.getAmount());
+            existingOrder.setTotalPrice(updatedOrder.getTotalPrice());
             existingOrder.setShippingAddress(updatedOrder.getShippingAddress());
             existingOrder.setOrderEmail(updatedOrder.getOrderEmail());
 
@@ -133,7 +133,7 @@ public class OrderService implements IOrderRepository {
     public Order convertOrderDTOToOrder(OrderDTO orderDTO) throws BadRequestException {
         try {
             // Check if any required fields in the DTO are null
-            if (Objects.isNull(orderDTO.getIdCustomer()) || Objects.isNull(orderDTO.getAmount()) ||
+            if (Objects.isNull(orderDTO.getIdCustomer()) || Objects.isNull(orderDTO.getTotalPrice()) ||
                     Objects.isNull(orderDTO.getShippingAddress()) || Objects.isNull(orderDTO.getOrderEmail())) {
                 throw new BadRequestException("The received request does not have the correct format.");
             }
@@ -142,7 +142,7 @@ public class OrderService implements IOrderRepository {
             Order order = new Order();
             order.setId(orderDTO.getId());
             order.setIdCustomer(orderDTO.getIdCustomer());
-            order.setAmount(orderDTO.getAmount());
+            order.setTotalPrice(orderDTO.getTotalPrice());
             order.setShippingAddress(orderDTO.getShippingAddress());
             order.setOrderEmail(orderDTO.getOrderEmail());
 
@@ -164,7 +164,7 @@ public class OrderService implements IOrderRepository {
             OrderDTO orderDTO = new OrderDTO();
             orderDTO.setId(order.getId());
             orderDTO.setIdCustomer(order.getIdCustomer());
-            orderDTO.setAmount(order.getAmount());
+            orderDTO.setTotalPrice(order.getTotalPrice());
             orderDTO.setShippingAddress(order.getShippingAddress());
             orderDTO.setOrderEmail(order.getOrderEmail());
             return orderDTO;
