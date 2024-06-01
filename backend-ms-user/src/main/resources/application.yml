@@ -1,0 +1,42 @@
+## Instance port
+server:
+  port: 8081
+
+## Configuration for App name and Spring Data
+spring:
+  application:
+    name: ms-users
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/vino-vivo
+          jwk-set-uri: http://localhost:8080/realms/vino-vivo/protocol/openid-connect/certs
+
+      client:
+        registration:
+          keycloak:
+            client-id: backend-client
+            client-secret: ck06T2oBEMGPRJ3oxv60p3mu2xvCIUDZ
+            authorization-grant-type: client_credentials
+        provider:
+          keycloak:
+            tokenUri: http://localhost:8080/realms/vino-vivo/protocol/openid-connect/token
+
+proyecto:
+  keycloak:
+    serverUrl: http://localhost:8080
+    clientId: backend-client
+    clientSecret: ck06T2oBEMGPRJ3oxv60p3mu2xvCIUDZ
+    realm: vino-vivo
+
+## Configuration for Eureka
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true # For local development. Set to false if you want to use the hostname in a DNS-enabled environment
+    hostname: ${HOSTNAME:localhost}

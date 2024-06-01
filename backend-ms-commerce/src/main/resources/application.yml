@@ -1,0 +1,41 @@
+## Configuration for Eureka
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true # For local development. Set to false if you want to use the hostname in a DNS-enabled environment
+    hostname: ${HOSTNAME:localhost}
+
+## Configuration for Spring Boot application, security using OAuth2,
+## and database connection using JDBC and JPA/Hibernate
+spring:
+  application:
+    name: ms-commerce
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/vino-vivo
+          jwk-set-uri: http://localhost:8080/realms/vino-vivo/protocol/openid-connect/certs
+  datasource:
+    url: jdbc:mysql://roundhouse.proxy.rlwy.net:53234/Vino_Vivo
+    username: root
+    password: RoMBBzsMYCGVecgwguuzMAfkjAIGGJwW
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        hbm2ddl.auto: validate
+    open-in-view: false
+
+## Instance port
+server:
+  port: 8082
+

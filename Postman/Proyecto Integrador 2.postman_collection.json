@@ -1,126 +1,1739 @@
 {
 	"info": {
-		"_postman_id": "78957f38-364c-4fd1-b2c5-6f2731d09e37",
+		"_postman_id": "866300bb-c617-4e83-98d0-0280da517c63",
 		"name": "Proyecto Integrador 2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23378679"
 	},
 	"item": [
 		{
-			"name": "Variety",
+			"name": "Commerce",
 			"item": [
 				{
-					"name": "GetAllVariety",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8082/variety/all",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"variety",
-								"all"
+					"name": "Variety",
+					"item": [
+						{
+							"name": "Admin",
+							"item": [
+								{
+									"name": "CreateVariety",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 0,\r\n    \"name\" : \"Rosado2\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8082/variety/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"variety",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateVariety",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 8,\r\n    \"name\" : \"Rosado3\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8082/variety/update",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"variety",
+												"update"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteVariety",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/variety/delete/8",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"variety",
+												"delete",
+												"8"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Public",
+							"item": [
+								{
+									"name": "GetAllVariety",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8082/variety/all",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"variety",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetVarietyById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/variety/id/8",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"variety",
+												"id",
+												"8"
+											]
+										}
+									},
+									"response": []
+								}
 							]
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "CreateVariety",
+					"name": "Type",
+					"item": [
+						{
+							"name": "Admin",
+							"item": [
+								{
+									"name": "CreateType",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 0,\r\n    \"name\" : \"Test1\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8082/type/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"type",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateType",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 11,\r\n    \"name\" : \"Test25\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8082/type/update",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"type",
+												"update"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteType",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/type/delete/11",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"type",
+												"delete",
+												"11"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Public",
+							"item": [
+								{
+									"name": "GetAllType",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/type/all",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"type",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetTypeById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/type/id/11",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"type",
+												"id",
+												"11"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Winery",
+					"item": [
+						{
+							"name": "Admin",
+							"item": [
+								{
+									"name": "CreateWinery",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 0,\r\n    \"name\" : \"Vinoteca2\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8082/winery/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"winery",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateWinery",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 8,\r\n    \"name\" : \"Vinoteca35\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8082/winery/update",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"winery",
+												"update"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteWinery",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/winery/delete/8",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"winery",
+												"delete",
+												"8"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Public",
+							"item": [
+								{
+									"name": "GetAllWinery",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/winery/all",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"winery",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetWineryById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/winery/id/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"winery",
+												"id",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "Admin",
+							"item": [
+								{
+									"name": "CreateProduct",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 0,\r\n    \"name\": \"VinoTestProyecto223\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula accumsan turpis, ut bibendum.\",\r\n    \"image\": \"noImage\",\r\n    \"year\": 1995,\r\n    \"price\": 10.20,\r\n    \"stock\": 3,\r\n    \"idWinery\": 4,\r\n    \"idVariety\": 4,\r\n    \"idType\": 3\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8082/product/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"product",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteProductById",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/product/delete/25",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"product",
+												"delete",
+												"25"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateProduct",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 13,\r\n    \"name\": \"VinoTestProyectos\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula accumsan turpis, ut bibendum.\",\r\n    \"image\": \"noImage\",\r\n    \"year\": 1999,\r\n    \"price\": 10.20,\r\n    \"stock\": 3,\r\n    \"idWinery\": 1,\r\n    \"idVariety\": 2,\r\n    \"idType\": 2\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8082/product/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"product",
+												"update"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Public",
+							"item": [
+								{
+									"name": "GetAllProduct",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/product/type/all",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"product",
+												"type",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetProductById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/product/id/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"product",
+												"id",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetProductsByWineryId",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/product/winery/3",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"product",
+												"winery",
+												"3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetProductsByVarietyId",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/product/variety/4",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"product",
+												"variety",
+												"4"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetProductsByTypeId",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/product/type/2",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"product",
+												"type",
+												"2"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get8RandomProducts",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/product/random",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"product",
+												"random"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Order",
+					"item": [
+						{
+							"name": "Admin",
+							"item": [
+								{
+									"name": "GetAllOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/order/all-admin",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order",
+												"all-admin"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreateOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 0,\r\n    \"idCustomer\" : \"dfsgx\",\r\n    \"totalPrice\" : 10.20,\r\n    \"shippingAddress\" : \"noAddress\",\r\n    \"orderEmail\" : \"noEmail\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8082/order/create-admin",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order",
+												"create-admin"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 8,\r\n    \"idCustomer\" : \"fgdsgsa\",\r\n    \"totalPrice\" : 10.30,\r\n    \"shippingAddress\" : \"noAddress\",\r\n    \"orderEmail\" : \"noEmail\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8082/order/update-admin",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order",
+												"update-admin"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/order/delete-admin/13",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order",
+												"delete-admin",
+												"13"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetOrderById",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/order/id/9",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order",
+												"id",
+												"9"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "User",
+							"item": [
+								{
+									"name": "GetAllOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/order/all",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreateOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"shippingAddress\": \"12345678 Main Street, Cityville\",\r\n  \"orderEmail\": \"secondexample@example.com\",\r\n  \"orderDetailsDTORequests\": [\r\n    {\r\n      \"idProduct\": 6,\r\n      \"quantity\": 1\r\n    },\r\n    {\r\n      \"idProduct\": 6,\r\n      \"quantity\": 2\r\n    }\r\n  ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8082/order/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/order/delete/39",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order",
+												"delete",
+												"39"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 21,\r\n    \"shippingAddress\" : \"noAddress\",\r\n    \"orderEmail\" : \"noEmail\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8082/order/update",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order",
+												"update"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "OrderDetail",
+					"item": [
+						{
+							"name": "Admin",
+							"item": [
+								{
+									"name": "GetAllOrderDetails",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/order-details/all-admin",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order-details",
+												"all-admin"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreateOrderDetails",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 10,\r\n    \"idOrder\" : 1,\r\n    \"idProduct\" : 1,\r\n    \"price\" : 10.20,\r\n    \"quantity\" : 20\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8082/order-details/create-admin",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order-details",
+												"create-admin"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateOrderDetails",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 6,\r\n    \"idOrder\" : 1,\r\n    \"idProduct\" : 1,\r\n    \"price\" : 10.80,\r\n    \"quantity\" : 19\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8082/order-details/update-admin",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order-details",
+												"update-admin"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteOrderDetails",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/order-details/delete-admin/44",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order-details",
+												"delete-admin",
+												"44"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ForceDeleteOrderDetails",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/order-details/force-delete-admin/57",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order-details",
+												"force-delete-admin",
+												"57"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetOrderDetailsById",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/order-details/id-admin/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order-details",
+												"id-admin",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "User",
+							"item": [
+								{
+									"name": "UpdateOrderDetails Copy",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 37,\r\n    \"idOrder\" : 29,\r\n    \"quantity\" : 5\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8082/order-details/update",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order-details",
+												"update"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetAllOrderDetailsByOrderId",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/order-details/all/order-id/24",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order-details",
+												"all",
+												"order-id",
+												"24"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetAllOrderDetails",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/order-details/all",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order-details",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteOrderDetails",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8082/order-details/delete/51",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order-details",
+												"delete",
+												"51"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreateOrderDetailsToExistingOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"idOrder\" : 27,\r\n    \"idProduct\" : 2,\r\n    \"quantity\" : 10\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8082/order-details/create-to-existing-order",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"order-details",
+												"create-to-existing-order"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Cart",
+					"item": [
+						{
+							"name": "Admin",
+							"item": []
+						},
+						{
+							"name": "User",
+							"item": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "ConsoleApi",
+					"item": [
+						{
+							"name": "GetUserThroughConsoleApi",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{KCToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "San",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "password",
+											"value": "1234",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8080/realms/vino-vivo/account",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"realms",
+										"vino-vivo",
+										"account"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateUserThroughConsoleApi",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{KCToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"b2e23703-b86f-4e33-8cc0-dbc7a42156f3\",\r\n    \"username\": \"san\",\r\n    \"firstName\": \"sana\",\r\n    \"lastName\": \"san\",\r\n    \"email\": \"san@gmail.com\",\r\n    \"emailVerified\": true,\r\n    \"userProfileMetadata\": {\r\n        \"attributes\": [\r\n            {\r\n                \"name\": \"username\",\r\n                \"displayName\": \"${username}\",\r\n                \"required\": true,\r\n                \"readOnly\": true,\r\n                \"validators\": {\r\n                    \"username-prohibited-characters\": {\r\n                        \"ignore.empty.value\": true\r\n                    },\r\n                    \"multivalued\": {\r\n                        \"max\": \"1\"\r\n                    },\r\n                    \"length\": {\r\n                        \"max\": 255,\r\n                        \"ignore.empty.value\": true,\r\n                        \"min\": 3\r\n                    },\r\n                    \"up-username-not-idn-homograph\": {\r\n                        \"ignore.empty.value\": true\r\n                    }\r\n                },\r\n                \"multivalued\": false\r\n            },\r\n            {\r\n                \"name\": \"email\",\r\n                \"displayName\": \"${email}\",\r\n                \"required\": true,\r\n                \"readOnly\": false,\r\n                \"validators\": {\r\n                    \"multivalued\": {\r\n                        \"max\": \"1\"\r\n                    },\r\n                    \"length\": {\r\n                        \"max\": 255,\r\n                        \"ignore.empty.value\": true\r\n                    },\r\n                    \"email\": {\r\n                        \"ignore.empty.value\": true\r\n                    }\r\n                },\r\n                \"multivalued\": false\r\n            },\r\n            {\r\n                \"name\": \"firstName\",\r\n                \"displayName\": \"${firstName}\",\r\n                \"required\": false,\r\n                \"readOnly\": false,\r\n                \"annotations\": {},\r\n                \"validators\": {\r\n                    \"person-name-prohibited-characters\": {\r\n                        \"ignore.empty.value\": true\r\n                    },\r\n                    \"multivalued\": {\r\n                        \"max\": \"1\"\r\n                    },\r\n                    \"length\": {\r\n                        \"max\": 255,\r\n                        \"ignore.empty.value\": true\r\n                    }\r\n                },\r\n                \"multivalued\": false\r\n            },\r\n            {\r\n                \"name\": \"lastName\",\r\n                \"displayName\": \"${lastName}\",\r\n                \"required\": false,\r\n                \"readOnly\": false,\r\n                \"annotations\": {},\r\n                \"validators\": {\r\n                    \"person-name-prohibited-characters\": {\r\n                        \"ignore.empty.value\": true\r\n                    },\r\n                    \"multivalued\": {\r\n                        \"max\": \"1\"\r\n                    },\r\n                    \"length\": {\r\n                        \"max\": 255,\r\n                        \"ignore.empty.value\": true\r\n                    }\r\n                },\r\n                \"multivalued\": false\r\n            }\r\n        ],\r\n        \"groups\": [\r\n            {\r\n                \"name\": \"user-metadata\",\r\n                \"displayHeader\": \"User metadata\",\r\n                \"displayDescription\": \"Attributes, which refer to user metadata\"\r\n            }\r\n        ]\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/realms/vino-vivo/account",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"realms",
+										"vino-vivo",
+										"account"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ChangePasswordThroughConsoleApi",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{KCToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"currentPassword\": \"1234\",\r\n    \"newPassword\": \"12345\",\r\n    \"confirmation\": \"12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/realms/vino-vivo/account/credentials/password",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"realms",
+										"vino-vivo",
+										"account",
+										"credentials",
+										"password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GetUserByData",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "POST",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{KCToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\" : 0,\r\n    \"name\" : \"Rosado\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "backend-client",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "client_secret",
+									"value": "TtoVCA3DIQahJlc0c52bjiJ1PA7o7C2w",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text",
+									"disabled": true
 								}
-							}
+							]
 						},
 						"url": {
-							"raw": "http://localhost:8082/variety/create",
+							"raw": "http://localhost:8081/user/profile",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8082",
+							"port": "8081",
 							"path": [
-								"variety",
-								"create"
+								"user",
+								"profile"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "UpdateVariety",
+					"name": "UserProfile",
 					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\" : 6,\r\n    \"name\" : \"Rosado3\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{KCToken}}",
+									"type": "string"
 								}
-							}
+							]
 						},
-						"url": {
-							"raw": "localhost:8082/variety/update",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"variety",
-								"update"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteVariety",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8082/variety/delete/6",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"variety",
-								"delete",
-								"6"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetVarietyById",
-					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8082/variety/id/5",
+							"raw": "http://localhost:8081/user/kcprofile",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8082",
+							"port": "8081",
 							"path": [
-								"variety",
-								"id",
-								"5"
+								"user",
+								"kcprofile"
 							]
 						}
 					},
@@ -129,690 +1742,293 @@
 			]
 		},
 		{
-			"name": "Type",
+			"name": "Keycloak",
 			"item": [
 				{
-					"name": "GetAllType",
+					"name": "GetEndpoints",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8082/type/all",
+							"raw": "http://localhost:8080/realms/vino-vivo/.well-known/openid-configuration",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8082",
+							"port": "8080",
 							"path": [
-								"type",
-								"all"
+								"realms",
+								"vino-vivo",
+								".well-known",
+								"openid-configuration"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "CreateType",
+					"name": "ObtainTokenThroughBackendClient",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "clientSecret",
+									"value": "ck06T2oBEMGPRJ3oxv60p3mu2xvCIUDZ",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:8080/realms/vino-vivo/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "http://localhost:8080/realms/test/protocol/openid-connect/auth",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "backend-client",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "scope",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://oauth.pstmn.io/v1/browser-callback",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "token-name",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8081/users/id/20a1ce3f-449a-4927-a982-af34df2af3f4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"users",
+								"id",
+								"20a1ce3f-449a-4927-a982-af34df2af3f4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserByIdWithToken",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{KCToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/users/id/20a1ce3f-449a-4927-a982-af34df2af3f4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"users",
+								"id",
+								"20a1ce3f-449a-4927-a982-af34df2af3f4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AdminObtainTokenThroughFrontendClient",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\" : 0,\r\n    \"name\" : \"Test1\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "frontend-client",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "dan",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "text"
 								}
-							}
+							]
 						},
 						"url": {
-							"raw": "http://localhost:8082/type/create",
+							"raw": "http://localhost:8080/realms/vino-vivo/protocol/openid-connect/token",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8082",
+							"port": "8080",
 							"path": [
-								"type",
-								"create"
+								"realms",
+								"vino-vivo",
+								"protocol",
+								"openid-connect",
+								"token"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "UpdateType",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\" : 4,\r\n    \"name\" : \"Test2\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8082/type/update",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"type",
-								"update"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteType",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8082/type/delete/4",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"type",
-								"delete",
-								"4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetTypeById",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8082/type/id/4",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"type",
-								"id",
-								"4"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Winery",
-			"item": [
-				{
-					"name": "GetAllWinery",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8082/winery/all",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"winery",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "CreateWinery",
+					"name": "UserOneObtainTokenThroughFrontendClient",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\" : 0,\r\n    \"name\" : \"Vinoteca2\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "frontend-client",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "san",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "text"
 								}
-							}
+							]
 						},
 						"url": {
-							"raw": "http://localhost:8082/winery/create",
+							"raw": "http://localhost:8080/realms/vino-vivo/protocol/openid-connect/token",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8082",
+							"port": "8080",
 							"path": [
-								"winery",
-								"create"
+								"realms",
+								"vino-vivo",
+								"protocol",
+								"openid-connect",
+								"token"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "UpdateWinery",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\" : 6,\r\n    \"name\" : \"Vinoteca3\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8082/winery/update",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"winery",
-								"update"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteWinery",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8082/winery/delete/6",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"winery",
-								"delete",
-								"6"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetWineryById",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8082/winery/id/6",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"winery",
-								"id",
-								"6"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Product",
-			"item": [
-				{
-					"name": "GetAllProduct",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8082/product/type/all",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"product",
-								"type",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "CreateProduct",
+					"name": "UserTwoObtainTokenThroughFrontendClient",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\" : 0,\r\n    \"name\": \"VinoTestProyecto2\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula accumsan turpis, ut bibendum.\",\r\n    \"image\": \"noImage\",\r\n    \"year\": 1995,\r\n    \"price\": 10.20,\r\n    \"stock\": 3,\r\n    \"idWinery\": 4,\r\n    \"idVariety\": 4,\r\n    \"idType\": 3\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "frontend-client",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "mod",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "text"
 								}
-							}
+							]
 						},
 						"url": {
-							"raw": "http://localhost:8082/product/create",
+							"raw": "http://localhost:8080/realms/vino-vivo/protocol/openid-connect/token",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8082",
+							"port": "8080",
 							"path": [
-								"product",
-								"create"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetProductById",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8082/product/id/9",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"product",
-								"id",
-								"9"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetProductsByWineryId",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8082/product/winery/4",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"product",
-								"winery",
-								"4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetProductsByVarietyId",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8082/product/variety/4",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"product",
-								"variety",
-								"4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetProductsByTypeId",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8082/product/type/2",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"product",
-								"type",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteProductById",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8082/product/delete/5",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"product",
-								"delete",
-								"5"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "UpdateProduct",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\" : 5,\r\n    \"name\": \"VinoTestProyecto\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula accumsan turpis, ut bibendum.\",\r\n    \"image\": \"noImage\",\r\n    \"year\": 1999,\r\n    \"price\": 10.20,\r\n    \"stock\": 3,\r\n    \"idWinery\": 2,\r\n    \"idVariety\": 2,\r\n    \"idType\": 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8082/product/update",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"product",
-								"update"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get8RandomProducts",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8082/product/random",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"product",
-								"random"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Order",
-			"item": [
-				{
-					"name": "GetAllOrder",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8082/order/all",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"order",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "CreateOrder",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\" : 0,\r\n    \"idCustomer\" : \"fdsff\",\r\n    \"totalPrice\" : 10.20,\r\n    \"shippingAddress\" : \"noAddress\",\r\n    \"orderEmail\" : \"noEmail\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8082/order/create",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"order",
-								"create"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "UpdateOrder",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\" : 10,\r\n    \"idCustomer\" : \"fdsgdgfdgdf\",\r\n    \"totalPrice\" : 10.20,\r\n    \"shippingAddress\" : \"noAddress\",\r\n    \"orderEmail\" : \"noEmail\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8082/order/update",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"order",
-								"update"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteOrder",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8082/order/delete/10",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"order",
-								"delete",
-								"10"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetOrderById",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8082/order/id/10",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"order",
-								"id",
-								"10"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "OrderDetail",
-			"item": [
-				{
-					"name": "GetAllOrderDetail",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8082/order-details/all",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"order-details",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "CreateOrderDetail",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\" : 10,\r\n    \"idOrder\" : 1,\r\n    \"idProduct\" : 1,\r\n    \"price\" : 10.20,\r\n    \"quantity\" : 20\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8082/order-details/create",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"order-details",
-								"create"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "UpdateOrderDetails",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\" : 5,\r\n    \"idOrder\" : 1,\r\n    \"idProduct\" : 1,\r\n    \"price\" : 10.20,\r\n    \"quantity\" : 19\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8082/order-details/update",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"order-details",
-								"update"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteOrderDetails",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8082/order-details/delete/5",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"order-details",
-								"delete",
-								"5"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetOrderDetailsById",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8082/order-details/id/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"order-details",
-								"id",
-								"1"
+								"realms",
+								"vino-vivo",
+								"protocol",
+								"openid-connect",
+								"token"
 							]
 						}
 					},
