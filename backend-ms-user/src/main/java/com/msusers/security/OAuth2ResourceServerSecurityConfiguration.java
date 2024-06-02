@@ -28,7 +28,8 @@ public class OAuth2ResourceServerSecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(
-                                "/auth/**",
+                                "/",
+                                        "/auth/**",
                                         "/v2/api-docs",
                                         "/v3/api-docs",
                                         "/v3/api-docs/**",
@@ -66,36 +67,5 @@ public class OAuth2ResourceServerSecurityConfiguration {
 
         return new CorsFilter(source);
     }
-
-    /*@Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(withDefaults())
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req ->
-                        req.requestMatchers(
-                                        "/auth/**",
-                                        "/users/order/create",
-                                        "/users/all-orders",
-                                        "/v2/api-docs",
-                                        "/v3/api-docs",
-                                        "/v3/api-docs/**",
-                                        "/swagger-resources",
-                                        "/swagger-resources/**",
-                                        "/configuration/ui",
-                                        "/configuration/security",
-                                        "/swagger-ui/**",
-                                        "/webjars/**",
-                                        "/swagger-ui.html"
-                                )
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated()
-                )
-                .oauth2ResourceServer(auth ->
-                        auth.jwt(token -> token.jwtAuthenticationConverter(new KeycloakJwtAuthenticationConverter())));
-
-        return http.build();
-    }*/
 }
 

@@ -4,21 +4,17 @@ server:
 ## Classic Eureka configuration
 eureka:
   instance:
-    preferIpAddress: true
+    preferIpAddress: false
     hostname: ${HOSTNAME:localhost}
-    
   client:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
       defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
-      
 
-## Enable service discovery (with Eureka)
-## lower-case-service-id is mandatory, otherwise is retrieved in upper case from Eureka
 spring:
   application:
-    name: gateway    
+    name: ms-gateway
   cloud:
     gateway:
       discovery:
@@ -27,6 +23,7 @@ spring:
           lower-case-service-id: true
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - TokenRelay=
       globalcors: ## CORS Configuration
         cors-configurations:
           '[/**]': ## For all routes
@@ -38,21 +35,24 @@ spring:
               - PUT
               - DELETE
               - PATCH
-              - OPTIONS
-      routes:
-        - id: ms-commerce
-          uri: lb://ms-commerce
-          predicates:
-            - Path=/api/v1/**
-          filters:
-            - StripPrefix=2
-        - id: ms-users
-          uri: lb://ms-users
-          predicates:
-            - Path=/api/v2/**
-          filters:
-            - StripPrefix=2
-      
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://vinovivo-production.up.railway.app/realms/vino-vivo/protocol/openid-connect/certs
+      client:
+        provider:
+          keycloak:
+            issuer-uri: https://vinovivo-production.up.railway.app/realms/vino-vivo
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: gateway-client
+            client-secret: Qka8wUwAl8vxrfqVSsolSeXHBTxRnwFa
+            authorization-grant-type: authorization_code
+            scope: openid
+            redirect-uri: https://ms-gateway-production.up.railway.app/login/oauth2/code/keycloak
 
 ## We enable the Actuator API to be able to access <<host>>/actuator/gateway/routes
 ## We expose the routings that have been automatically detected (all)

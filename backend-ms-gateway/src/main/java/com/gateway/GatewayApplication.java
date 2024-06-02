@@ -9,14 +9,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class GatewayApplication {
 
 	public static void main(String[] args) {
-		// Railway's internal interface takes some time to start. We wait for it to be ready.
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-		}
-
+		// Retrieve execution profile from environment variable. Otherwise, default profile is used.
+		String profile = System.getenv("PROFILE");
+		System.setProperty("spring.profiles.active", profile != null ? profile : "default");
 		SpringApplication.run(GatewayApplication.class, args);
 	}
-
 }

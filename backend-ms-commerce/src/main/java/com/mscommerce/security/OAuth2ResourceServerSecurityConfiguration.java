@@ -29,7 +29,7 @@ public class OAuth2ResourceServerSecurityConfiguration {
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers(
+                        req.requestMatchers(HttpMethod.GET,
                                         "/",
                                         "/product/type/all",
                                         "/product/random",
@@ -69,7 +69,8 @@ public class OAuth2ResourceServerSecurityConfiguration {
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.applyPermitDefaultValues();
-        corsConfig.addAllowedOrigin("http://localhost:3000");
+        corsConfig.addAllowedOrigin("https://ms-gateway-production.up.railway.app");
+        corsConfig.addAllowedOrigin("https://ms-gateway-production.up.railway.app/commerce/product/type/all");
         corsConfig.addAllowedMethod(HttpMethod.OPTIONS);
         corsConfig.addAllowedMethod(HttpMethod.GET);
         corsConfig.addAllowedMethod(HttpMethod.POST);
@@ -82,3 +83,4 @@ public class OAuth2ResourceServerSecurityConfiguration {
         return new CorsFilter(source);
     }
 }
+
