@@ -2,9 +2,9 @@ package com.mscommerce.service.implementation;
 
 import com.mscommerce.exception.BadRequestException;
 import com.mscommerce.exception.ResourceNotFoundException;
-import com.mscommerce.models.DTO.VarietyDTO;
+import com.mscommerce.models.DTO.variety.VarietyDTO;
 import com.mscommerce.models.Variety;
-import com.mscommerce.repositories.VarietyRepository;
+import com.mscommerce.repositories.jpa.VarietyRepository;
 import com.mscommerce.service.IVarietyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,126 +19,132 @@ public class VarietyServiceImpl implements IVarietyService {
 
     private final VarietyRepository varietyRepository;
 
-    // Method to retrieve all varieties
+    /**
+     * Fetches all varieties.
+     * @return List of all varieties.
+     */
     @Override
-    public List<VarietyDTO> getAllVarieties() throws ResourceNotFoundException {
-        try {
-            // Fetch all varieties from the repository
-            List<Variety> varieties = varietyRepository.findAll();
+    public List<VarietyDTO> getAllVarieties() {
+        // Fetch all varieties from the repository
+        List<Variety> varieties = varietyRepository.findAll();
 
-            // Convert the list of varieties to a list of DTOs and return
-            return varieties.stream()
-                    .map(this::convertVarietyToVarietyDTO)
-                    .collect(Collectors.toList());
-        } catch (Exception ex) {
-            // If an exception occurs, throw a ResourceNotFoundException
-            throw new ResourceNotFoundException("Failed to fetch varieties");
-        }
+        // Convert the list of varieties to a list of DTOs and return
+        return varieties.stream()
+                .map(this::convertVarietyToVarietyDTO)
+                .collect(Collectors.toList());
     }
 
-    // Method to retrieve a variety by its ID
+    /**
+     * Fetches a variety by ID.
+     * @param varietyId ID of the variety.
+     * @return The fetched variety.
+     */
     @Override
-    public VarietyDTO getVarietyById(Integer varietyId) {
-        try {
-            // Fetch the variety from the repository by ID
-            Optional<Variety> varietyOptional = varietyRepository.findById(varietyId);
+    public VarietyDTO getVarietyById(Integer varietyId) throws ResourceNotFoundException {
+        // Fetch the variety from the repository by ID
+        Optional<Variety> varietyOptional = varietyRepository.findById(varietyId);
 
-            if (varietyOptional.isEmpty()) {
-                // If the variety is not found, throw a ResourceNotFoundException
-                throw new ResourceNotFoundException("Variety not found with ID: " + varietyId);
-            }
-
-            // Convert the variety to a DTO and return
-            Variety variety = varietyOptional.get();
-            return convertVarietyToVarietyDTO(variety);
-        } catch (Exception ex) {
-            // If any other exception occurs, wrap it in a RuntimeException and rethrow
-            throw new RuntimeException("Error occurred while getting Variety by ID", ex);
+        if (varietyOptional.isEmpty()) {
+            // If the variety is not found, throw a ResourceNotFoundException
+            throw new ResourceNotFoundException("Variety not found with ID: " + varietyId);
         }
+
+        // Convert the variety to a DTO and return
+        Variety variety = varietyOptional.get();
+        return convertVarietyToVarietyDTO(variety);
     }
 
-    // Method to create a new variety
+    /**
+     * Creates a new variety.
+     * @param varietyDTO Contains the new variety details.
+     * @return The created variety.
+     */
     @Override
     public VarietyDTO createVariety(VarietyDTO varietyDTO) throws BadRequestException {
-        try {
-            // Convert the DTO to a Variety entity
-            Variety variety = convertVarietyDTOToVariety(varietyDTO);
+        // Validate the input DTO
+        validateVarietyDTO(varietyDTO);
 
-            // Save the variety in the repository
-            Variety savedVariety = varietyRepository.save(variety);
+        // Convert the DTO to a Variety entity
+        Variety variety = convertVarietyDTOToVariety(varietyDTO);
 
-            // Set the ID of the DTO and return
-            varietyDTO.setId(savedVariety.getId());
-            return varietyDTO;
-        } catch (Exception ex) {
-            // If an exception occurs, throw a BadRequestException
-            throw new BadRequestException("The received request does not have the correct format.");
-        }
+        // Save the variety in the repository
+        Variety savedVariety = varietyRepository.save(variety);
+
+        // Set the ID of the DTO and return
+        varietyDTO.setId(savedVariety.getId());
+        return varietyDTO;
     }
 
-    // Method to update an existing variety
+    /**
+     * Updates an existing variety.
+     * @param varietyDTO Contains the updated variety details.
+     * @return The updated variety.
+     */
     @Override
-    public VarietyDTO updateVariety(VarietyDTO varietyDTO) {
-        try {
-            // Check if the variety exists
-            Variety existingVariety = varietyRepository.findById(varietyDTO.getId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Variety not found with ID: " + varietyDTO.getId()));
+    public VarietyDTO updateVariety(VarietyDTO varietyDTO) throws BadRequestException, ResourceNotFoundException {
+        // Validate the input DTO
+        validateVarietyDTO(varietyDTO);
 
-            // Update the name of the existing variety
-            existingVariety.setName(varietyDTO.getName());
+        // Check if the variety exists
+        Variety existingVariety = varietyRepository.findById(varietyDTO.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Variety not found with ID: " + varietyDTO.getId()));
 
-            // Save the updated variety
-            Variety savedVariety = varietyRepository.save(existingVariety);
+        // Update the name of the existing variety
+        existingVariety.setName(varietyDTO.getName());
 
-            // Convert the updated variety to DTO and return
-            return convertVarietyToVarietyDTO(savedVariety);
-        } catch (Exception ex) {
-            // If any other exception occurs, wrap it in a RuntimeException and rethrow
-            throw new RuntimeException("Error occurred while updating Variety", ex);
-        }
+        // Save the updated variety
+        Variety savedVariety = varietyRepository.save(existingVariety);
+
+        // Convert the updated variety to DTO and return
+        return convertVarietyToVarietyDTO(savedVariety);
     }
 
-    // Method to delete a variety
+    /**
+     * Deletes a specific variety.
+     * @param varietyId ID of the variety to be deleted.
+     */
     @Override
-    public void deleteVariety(Integer varietyId) {
-        try {
-            // Check if the variety exists
-            Variety existingVariety = varietyRepository.findById(varietyId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Variety not found with ID: " + varietyId));
+    public void deleteVariety(Integer varietyId) throws ResourceNotFoundException {
+        // Check if the variety exists
+        Variety existingVariety = varietyRepository.findById(varietyId)
+                .orElseThrow(() -> new ResourceNotFoundException("Variety not found with ID: " + varietyId));
 
-            // Delete the variety
-            varietyRepository.delete(existingVariety);
-        } catch (Exception ex) {
-            // If any other exception occurs, wrap it in a RuntimeException and rethrow
-            throw new RuntimeException("Error occurred while deleting Variety", ex);
-        }
+        // Delete the variety
+        varietyRepository.delete(existingVariety);
     }
 
-    // Method to convert a Variety entity to a VarietyDTO
-    @Override
-    public VarietyDTO convertVarietyToVarietyDTO(Variety variety) {
-        try {
+    /**
+     * Converts a DTO to a Variety entity.
+     * @param varietyDTO DTO to be converted.
+     * @return Converted Variety entity.
+     */
+    private VarietyDTO convertVarietyToVarietyDTO(Variety variety) {
             VarietyDTO varietyDTO = new VarietyDTO();
             varietyDTO.setId(variety.getId());
             varietyDTO.setName(variety.getName());
             return varietyDTO;
-        } catch (Exception ex) {
-            // If any exception occurs, wrap it in a RuntimeException and rethrow
-            throw new RuntimeException("Error occurred while converting Variety to VarietyDTO", ex);
-        }
     }
 
-    // Method to convert a VarietyDTO to a Variety entity
-    @Override
-    public Variety convertVarietyDTOToVariety(VarietyDTO varietyDTO) {
-        try {
+    /**
+     * Converts a Variety to a DTO.
+     * @param variety Variety to be converted.
+     * @return Converted DTO.
+     */
+    private Variety convertVarietyDTOToVariety(VarietyDTO varietyDTO) {
             Variety variety = new Variety();
             variety.setId(varietyDTO.getId());
             variety.setName(varietyDTO.getName());
             return variety;
-        } catch (Exception ex) {
-            // If any exception occurs, wrap it in a RuntimeException and rethrow
-            throw new RuntimeException("Error occurred while converting VarietyDTO to Variety", ex);
+    }
+
+    // Validation methods
+    /**
+     * Validates a VarietyDTO.
+     * @param varietyDTO DTO to be validated.
+     */
+    private void validateVarietyDTO(VarietyDTO varietyDTO) throws BadRequestException {
+        if (varietyDTO.getName() == null || varietyDTO.getName().trim().isEmpty()) {
+            throw new BadRequestException("Variety name must not be null or empty");
         }
     }
 }

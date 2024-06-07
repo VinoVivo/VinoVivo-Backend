@@ -2,9 +2,9 @@ package com.mscommerce.controller;
 
 import com.mscommerce.exception.BadRequestException;
 import com.mscommerce.exception.ResourceNotFoundException;
-import com.mscommerce.models.DTO.OrderDetailsDTO;
-import com.mscommerce.models.DTO.OrderDetailsDTOAddition;
-import com.mscommerce.models.DTO.OrderDetailsDTOUpdate;
+import com.mscommerce.models.DTO.orderDetails.OrderDetailsDTO;
+import com.mscommerce.models.DTO.orderDetails.OrderDetailsDTOAddition;
+import com.mscommerce.models.DTO.orderDetails.OrderDetailsDTOUpdate;
 import com.mscommerce.service.implementation.OrderDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -42,9 +42,9 @@ public class OrderDetailsController {
         return ResponseEntity.ok().body(orderDetails);
     }
 
-    @GetMapping("/id-admin/{orderDetailsId}")
+    @GetMapping("/id/{orderDetailsId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<OrderDetailsDTO> adminGetOrderDetailsById(@PathVariable Integer orderDetailsId) {
+    public ResponseEntity<OrderDetailsDTO> adminGetOrderDetailsById(@PathVariable Integer orderDetailsId) throws ResourceNotFoundException {
         OrderDetailsDTO orderDetailsDTO = orderDetailsServiceImpl.adminGetOrderDetailsById(orderDetailsId);
         return ResponseEntity.ok().body(orderDetailsDTO);
     }
@@ -58,42 +58,42 @@ public class OrderDetailsController {
 
     @PostMapping("/create-to-existing-order")
     @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
-    public ResponseEntity<OrderDetailsDTO> createOrderDetailsToExistingOrder(@RequestBody OrderDetailsDTOAddition orderDetailsDTOAddition) throws BadRequestException {
+    public ResponseEntity<OrderDetailsDTO> createOrderDetailsToExistingOrder(@RequestBody OrderDetailsDTOAddition orderDetailsDTOAddition) throws BadRequestException, ResourceNotFoundException {
         OrderDetailsDTO createdOrderDetails = orderDetailsServiceImpl.createOrderDetailsToExistingOrder(orderDetailsDTOAddition);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrderDetails);
     }
 
     @PutMapping("/update-admin")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<OrderDetailsDTO> adminUpdateOrderDetails(@RequestBody OrderDetailsDTO orderDetailsDTO) {
+    public ResponseEntity<OrderDetailsDTO> adminUpdateOrderDetails(@RequestBody OrderDetailsDTO orderDetailsDTO) throws BadRequestException, ResourceNotFoundException {
         OrderDetailsDTO updatedOrderDetails = orderDetailsServiceImpl.adminUpdateOrderDetails(orderDetailsDTO);
         return ResponseEntity.ok().body(updatedOrderDetails);
     }
 
     @PutMapping("/update")
     @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
-    public ResponseEntity<OrderDetailsDTO> updateOrderDetails(@RequestBody OrderDetailsDTOUpdate orderDetailsDTOUpdate) {
+    public ResponseEntity<OrderDetailsDTO> updateOrderDetails(@RequestBody OrderDetailsDTOUpdate orderDetailsDTOUpdate) throws BadRequestException, ResourceNotFoundException {
         OrderDetailsDTO updatedOrderDetails = orderDetailsServiceImpl.updateOrderDetails(orderDetailsDTOUpdate);
         return ResponseEntity.ok().body(updatedOrderDetails);
     }
 
     @DeleteMapping("/force-delete-admin/{orderDetailsId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> adminForceDeleteOrderDetails(@PathVariable Integer orderDetailsId) {
+    public ResponseEntity<Void> adminForceDeleteOrderDetails(@PathVariable Integer orderDetailsId) throws ResourceNotFoundException {
         orderDetailsServiceImpl.adminForceDeleteOrderDetails(orderDetailsId);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/delete-admin/{orderDetailsId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> adminDeleteOrderDetails(@PathVariable Integer orderDetailsId) {
+    public ResponseEntity<Void> adminDeleteOrderDetails(@PathVariable Integer orderDetailsId) throws ResourceNotFoundException {
         orderDetailsServiceImpl.adminDeleteOrderDetails(orderDetailsId);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/delete/{orderDetailsId}")
     @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteOrderDetails(@PathVariable Integer orderDetailsId) {
+    public ResponseEntity<Void> deleteOrderDetails(@PathVariable Integer orderDetailsId) throws ResourceNotFoundException {
         orderDetailsServiceImpl.deleteOrderDetails(orderDetailsId);
         return ResponseEntity.noContent().build();
     }

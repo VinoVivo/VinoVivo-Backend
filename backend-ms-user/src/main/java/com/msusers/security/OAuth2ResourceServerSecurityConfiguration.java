@@ -56,6 +56,8 @@ public class OAuth2ResourceServerSecurityConfiguration {
         CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.applyPermitDefaultValues();
         corsConfig.addAllowedOrigin("http://localhost:3000");
+        corsConfig.addAllowedOrigin("https://vivo-front-4a6f.vercel.app/");
+        corsConfig.addAllowedOrigin("https://ms-gateway-production.up.railway.app");
         corsConfig.addAllowedMethod(HttpMethod.OPTIONS);
         corsConfig.addAllowedMethod(HttpMethod.GET);
         corsConfig.addAllowedMethod(HttpMethod.POST);

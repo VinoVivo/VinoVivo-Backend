@@ -29,12 +29,10 @@ public class Cart {
     @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "products"})
     private Product product;
 
-    @Column(name = "quantity")
-    private Integer quantity;
-
     @Column(name = "price")
     private Double price;
 
-
+    @Column(name = "quantity")
+    private Integer quantity;
 
 }

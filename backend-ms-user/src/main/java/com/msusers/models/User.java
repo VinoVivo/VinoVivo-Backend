@@ -14,4 +14,10 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
+    private String dni;
+    private String cellphone;
+    private String state;
+    private String city;
+    private String address;
+    private String photo;
 }

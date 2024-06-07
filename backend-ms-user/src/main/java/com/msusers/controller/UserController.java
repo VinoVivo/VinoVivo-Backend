@@ -19,7 +19,6 @@ public class UserController {
 
     private final UserService userService;
 
-
     @GetMapping("/profile")
     @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
     public ResponseEntity<User> findUserById() {
@@ -39,13 +38,4 @@ public class UserController {
         return userRepresentation;
     }
 
-    @PostMapping("/profile/update")
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
-    public String updateUserProfile(@ModelAttribute UserRepresentation updatedUser) {
-        // Update the user's profile via the service layer
-        userService.updateUserProfile(updatedUser);
-
-        // Redirect the user to the profile page
-        return "redirect:/profile";
-    }
 }

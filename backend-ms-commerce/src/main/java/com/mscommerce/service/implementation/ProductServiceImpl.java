@@ -2,26 +2,28 @@ package com.mscommerce.service.implementation;
 
 import com.mscommerce.exception.BadRequestException;
 import com.mscommerce.exception.ResourceNotFoundException;
-import com.mscommerce.models.DTO.ProductDTO;
-import com.mscommerce.models.DTO.ProductDTOGet;
-import com.mscommerce.models.Product;
-import com.mscommerce.models.Type;
-import com.mscommerce.models.Variety;
-import com.mscommerce.models.Winery;
-import com.mscommerce.repositories.ProductRepository;
-import com.mscommerce.repositories.TypeRepository;
-import com.mscommerce.repositories.VarietyRepository;
-import com.mscommerce.repositories.WineryRepository;
+import com.mscommerce.models.*;
+import com.mscommerce.models.DTO.product.ProductDTO;
+import com.mscommerce.models.DTO.product.ProductDTOGet;
+import com.mscommerce.repositories.jpa.ProductRepository;
+import com.mscommerce.repositories.jpa.TypeRepository;
+import com.mscommerce.repositories.jpa.VarietyRepository;
+import com.mscommerce.repositories.jpa.WineryRepository;
 import com.mscommerce.service.IProductService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -36,197 +38,243 @@ public class ProductServiceImpl implements IProductService {
 
     private final TypeRepository typeRepository;
 
-    // Method to fetch all products
+    /**
+     * Fetches all products with stock less than the specified amount.
+     * @param stock The stock amount to compare with.
+     * @return List of products with stock less than the specified amount.
+     */
+    @Transactional
+    public List<Map<String, Object>> getAllByStockLessThan(Integer stock) {
+        List<Product> products = productRepository.findAllByStockLessThan(stock);
+        return products.stream().map(product -> {
+            Map<String, Object> productData = new HashMap<>();
+            Hibernate.initialize(product.getWinery());
+            Hibernate.initialize(product.getVariety());
+            Hibernate.initialize(product.getType());
+            productData.put("Product ID", product.getId());
+            productData.put("Product Name", product.getName());
+            productData.put("Stock", product.getStock());
+            return productData;
+        }).collect(Collectors.toList());
+    }
+
+    /**
+     * Fetches the top 10 products based on the sum of their stock and the count of their occurrences in order details.
+     * The products are ordered first by the sum of their stock in descending order and then by the count of their occurrences in descending order.
+     * @return List of object arrays, where each array contains a product, the count of its occurrences in order details, and the sum of its stock.
+     */
+    @Transactional
+    public List<Map<String, Object>> getTop10ByOrderDetailsCountAndSumStock() {
+        Pageable topTen = PageRequest.of(0, 10);
+        List<Object[]> results = productRepository.findTop10ByOrderDetailsCountAndSumStock(topTen);
+        return results.stream().map(result -> {
+            Map<String, Object> productData = new HashMap<>();
+            Product product = (Product) result[0];
+            Long orderDetailsCount = (Long) result[1];
+            Long sumStock = (Long) result[2];
+            productData.put("Product ID", product.getId());
+            productData.put("Product Name", product.getName());
+            productData.put("Order Details Count", orderDetailsCount);
+            productData.put("Units sold", sumStock);
+            return productData;
+        }).collect(Collectors.toList());
+    }
+
+    /**
+     * Fetches the count of a specific product type and the sum of their stock in order details.
+     * @param typeId ID of the product type.
+     * @return List of object arrays, where each array contains a product type, the count of its occurrences in order details, and the sum of its stock.
+     */
+    @Transactional
+    public List<Map<String, Object>> getCountByProductTypeAndSumStock(Integer typeId) {
+        List<Object[]> results = productRepository.countByProductTypeAndSumStock(typeId);
+        return results.stream().map(result -> {
+            Map<String, Object> productData = new HashMap<>();
+            Type type = (Type) result[0];
+            Long orderDetailsCount = (Long) result[1];
+            Long sumStock = (Long) result[2];
+            productData.put("Product Type", type.getName());
+            productData.put("Order Details Count", orderDetailsCount);
+            productData.put("Units sold", sumStock);
+            return productData;
+        }).collect(Collectors.toList());
+    }
+
+    /**
+     * Fetches all products.
+     * @return List of all products.
+     */
     @Override
     public List<ProductDTOGet> getAllProducts() throws ResourceNotFoundException {
-        try {
-            // Fetch all products from the repository and return them
-            return productRepository.findAllProductDTOGet();
-        } catch (Exception ex) {
-            // If an exception occurs, throw a ResourceNotFoundException
-            throw new ResourceNotFoundException("Failed to fetch products");
-        }
+        // Fetch all products from the repository and return them
+        return productRepository.findAllProductDTOGet();
     }
 
-    // Method to fetch a product by ID
+    /**
+     * Fetches a product by ID.
+     * @param productId ID of the product.
+     * @return The fetched product.
+     */
     @Override
-    public ProductDTOGet getProductById(Integer productId) {
-        try {
-            // Fetch the product DTO by ID from the repository
-            ProductDTOGet productDTO = productRepository.findProductDTOGetById(productId);
+    public ProductDTOGet getProductById(Integer productId) throws ResourceNotFoundException {
+        // Fetch the product DTO by ID from the repository
+        ProductDTOGet productDTO = productRepository.findProductDTOGetById(productId);
 
-            // Check if the product DTO exists
-            if (productDTO == null) {
-                throw new ResourceNotFoundException("Product not found with ID: " + productId);
-            }
-            return productDTO;
-        } catch (Exception ex) {
-            // If any other exception occurs, wrap it in a RuntimeException and rethrow
-            throw new RuntimeException("Error occurred while getting Product by ID", ex);
+        // Check if the product DTO exists
+        if (productDTO == null) {
+            throw new ResourceNotFoundException("Product not found with ID: " + productId);
         }
+        return productDTO;
     }
 
-    // Method to fetch a product by Winery ID
+    /**
+     * Fetches products by winery ID.
+     * @param wineryId ID of the winery.
+     * @return List of products.
+     */
     @Override
-    public List<ProductDTOGet> getProductsByWineryId(Integer wineryId) {
-        try {
-            // Fetch products associated with the Winery ID using the query method
-            List<ProductDTOGet> productDTOs = productRepository.findProductsByWineryId(wineryId);
+    public List<ProductDTOGet> getProductsByWineryId(Integer wineryId) throws ResourceNotFoundException {
+        // Fetch products associated with the Winery ID using the query method
+        List<ProductDTOGet> productDTOs = productRepository.findProductsByWineryId(wineryId);
 
-            // Check if any products are returned
-            if (productDTOs.isEmpty()) {
-                throw new ResourceNotFoundException("No products found for Winery ID: " + wineryId);
-            }
-            return productDTOs;
-        } catch (Exception ex) {
-            // If any other exception occurs, wrap it in a RuntimeException and rethrow
-            throw new RuntimeException("Error occurred while getting products by Winery ID", ex);
+        // Check if any products are returned
+        if (productDTOs.isEmpty()) {
+            throw new ResourceNotFoundException("No products found for Winery ID: " + wineryId);
         }
+        return productDTOs;
     }
 
-    // Method to fetch a product by Variety ID
+    /**
+     * Fetches products by variety ID.
+     * @param varietyId ID of the variety.
+     * @return List of products.
+     */
     @Override
-    public List<ProductDTOGet> getProductsByVarietyId(Integer varietyId) {
-        try {
-            // Fetch products associated with the Variety ID using the query method
-            List<ProductDTOGet> productDTOs = productRepository.findProductsByVarietyId(varietyId);
+    public List<ProductDTOGet> getProductsByVarietyId(Integer varietyId) throws ResourceNotFoundException {
+        // Fetch products associated with the Variety ID using the query method
+        List<ProductDTOGet> productDTOs = productRepository.findProductsByVarietyId(varietyId);
 
-            // Check if any products are returned
-            if (productDTOs.isEmpty()) {
-                throw new ResourceNotFoundException("No products found for Variety ID: " + varietyId);
-            }
-            return productDTOs;
-        } catch (Exception ex) {
-            // If any other exception occurs, wrap it in a RuntimeException and rethrow
-            throw new RuntimeException("Error occurred while getting products by Variety ID", ex);
+        // Check if any products are returned
+        if (productDTOs.isEmpty()) {
+            throw new ResourceNotFoundException("No products found for Variety ID: " + varietyId);
         }
+        return productDTOs;
     }
 
-    // Method to fetch a product by Type ID
+    /**
+     * Fetches products by type ID.
+     * @param typeId ID of the type.
+     * @return List of products.
+     */
     @Override
-    public List<ProductDTOGet> getProductsByTypeId(Integer typeId) {
-        try {
-            // Fetch products associated with the Type ID using the query method
-            List<ProductDTOGet> productDTOs = productRepository.findProductsByTypeId(typeId);
+    public List<ProductDTOGet> getProductsByTypeId(Integer typeId) throws ResourceNotFoundException {
+        // Fetch products associated with the Type ID using the query method
+        List<ProductDTOGet> productDTOs = productRepository.findProductsByTypeId(typeId);
 
-            // Check if any products are returned
-            if (productDTOs.isEmpty()) {
-                throw new ResourceNotFoundException("No products found for Type ID: " + typeId);
-            }
-            return productDTOs;
-        } catch (Exception ex) {
-            // If any other exception occurs, wrap it in a RuntimeException and rethrow
-            throw new RuntimeException("Error occurred while getting products by Type ID", ex);
+        // Check if any products are returned
+        if (productDTOs.isEmpty()) {
+            throw new ResourceNotFoundException("No products found for Type ID: " + typeId);
         }
+        return productDTOs;
     }
 
-    // Method to fetch random products
+    /**
+     * Fetches random products.
+     * @return List of random products.
+     */
     @Override
-    public List<ProductDTOGet> findRandomProducts() {
-        try {
-            // Create a Pageable object with a random sorting order and limit the result to 8 items
-            Pageable pageable = PageRequest.of(0, 8, Sort.by(Sort.Direction.DESC, "id"));
+    public List<ProductDTOGet> findRandomProducts() throws ResourceNotFoundException {
+        // Create a Pageable object with a random sorting order and limit the result to 8 items
+        Pageable pageable = PageRequest.of(0, 8, Sort.by(Sort.Direction.DESC, "id"));
 
-            // Fetch random products from the repository using the query method
-            Page<ProductDTOGet> page = productRepository.findRandProductDTOs(pageable);
+        // Fetch random products from the repository using the query method
+        Page<ProductDTOGet> page = productRepository.findRandProductDTOs(pageable);
 
-            // Extract the content from the page
-            List<ProductDTOGet> randomProductDTOs = page.getContent();
+        // Extract the content from the page
+        List<ProductDTOGet> randomProductDTOs = page.getContent();
 
-            // Check if any random products are found
-            if (randomProductDTOs.isEmpty()) {
-                throw new ResourceNotFoundException("No random products found in the database.");
-            }
-            return randomProductDTOs;
-        } catch (Exception ex) {
-            // If an exception occurs, wrap it in a RuntimeException and rethrow
-            throw new RuntimeException("Error occurred while fetching random products", ex);
+        // Check if any random products are found
+        if (randomProductDTOs.isEmpty()) {
+            throw new ResourceNotFoundException("No random products found in the database.");
         }
+        return randomProductDTOs;
     }
 
-    // Method to create a new product
+    /**
+     * Creates a new product.
+     * @param productDTO Contains the new product details.
+     * @return The created product.
+     */
     @Override
-    public ProductDTO createProduct(ProductDTO productDTO) throws BadRequestException {
+    public ProductDTO createProduct(ProductDTO productDTO) throws BadRequestException, ResourceNotFoundException {
+        // Validate the input DTO
+        validateProductDTO(productDTO);
+
         // Convert the ProductDTO to a Product entity
         Product productToStore = convertProductDTOToProduct(productDTO);
-        try {
-            // Save the product in the repository
-            Product storedProduct = productRepository.save(productToStore);
 
-            // Convert the stored Product entity to a DTO and return
-            return convertProductToProductDTO(storedProduct);
-        } catch (Exception e) {
-            // If an exception occurs, throw a BadRequestException
-            throw new BadRequestException("The received request does not have the correct format.");
-        }
+        // Save the product in the repository
+        Product storedProduct = productRepository.save(productToStore);
+
+        // Convert the stored Product entity to a DTO and return
+        return convertProductToProductDTO(storedProduct);
     }
 
-    // Method to update an existing product
+    /**
+     * Updates an existing product.
+     * @param productDTO Contains the updated product details.
+     * @return The updated product.
+     */
     @Override
-    public ProductDTO updateProduct(ProductDTO productDTO) {
-        try {
-            // Check if the product exists
-            Product existingProduct = productRepository.findById(productDTO.getId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + productDTO.getId()));
+    public ProductDTO updateProduct(ProductDTO productDTO) throws BadRequestException, ResourceNotFoundException {
+        // Validate the input DTO
+        validateProductDTO(productDTO);
 
-            // Convert the ProductDTO to a Product entity
-            Product updatedProduct = convertProductDTOToProduct(productDTO);
+        // Check if the product exists
+        Product existingProduct = productRepository.findById(productDTO.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + productDTO.getId()));
 
-            // Update fields of the existing product
-            existingProduct.setName(updatedProduct.getName());
-            existingProduct.setDescription(updatedProduct.getDescription());
-            existingProduct.setImage(updatedProduct.getImage());
-            existingProduct.setYear(updatedProduct.getYear());
-            existingProduct.setPrice(updatedProduct.getPrice());
-            existingProduct.setStock(updatedProduct.getStock());
-            existingProduct.setWinery(updatedProduct.getWinery());
-            existingProduct.setVariety(updatedProduct.getVariety());
-            existingProduct.setType(updatedProduct.getType());
+        // Convert the ProductDTO to a Product entity
+        Product updatedProduct = convertProductDTOToProduct(productDTO);
 
-            // Save the updated product
-            Product savedProduct = productRepository.save(existingProduct);
+        // Update fields of the existing product
+        existingProduct.setName(updatedProduct.getName());
+        existingProduct.setDescription(updatedProduct.getDescription());
+        existingProduct.setImage(updatedProduct.getImage());
+        existingProduct.setYear(updatedProduct.getYear());
+        existingProduct.setPrice(updatedProduct.getPrice());
+        existingProduct.setStock(updatedProduct.getStock());
+        existingProduct.setWinery(updatedProduct.getWinery());
+        existingProduct.setVariety(updatedProduct.getVariety());
+        existingProduct.setType(updatedProduct.getType());
 
-            // Convert the updated product back to DTO and return
-            return convertProductToProductDTO(savedProduct);
-        } catch (Exception ex) {
-            // If any other exception occurs, wrap it in a RuntimeException and rethrow
-            throw new RuntimeException("Error occurred while updating Product", ex);
-        }
+        // Save the updated product
+        Product savedProduct = productRepository.save(existingProduct);
+
+        // Convert the updated product back to DTO and return
+        return convertProductToProductDTO(savedProduct);
     }
 
-    // Method to delete a product
+    /**
+     * Deletes a specific product.
+     * @param productId ID of the product to be deleted.
+     */
     @Override
     public void deleteProduct(Integer productId) throws ResourceNotFoundException {
-        try {
-            // Check if the product exists
-            Product existingProduct = productRepository.findById(productId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + productId));
+        // Check if the product exists
+        Product existingProduct = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + productId));
 
-            // Delete the product
-            productRepository.delete(existingProduct);
-        } catch (ResourceNotFoundException ex) {
-            // If a ResourceNotFoundException occurs, rethrow it
-            throw ex;
-        } catch (Exception ex) {
-            // If any other exception occurs, wrap it in a RuntimeException and rethrow
-            throw new RuntimeException("Error occurred while deleting Product", ex);
-        }
+        // Delete the product
+        productRepository.delete(existingProduct);
     }
 
-    // Method to convert a ProductDTO to a Product entity
-    @Override
-    public Product convertProductDTOToProduct(ProductDTO productDTO) {
-        try {
-            // Check if any required fields are null
-            if (Stream.of(
-                            productDTO.getId(), productDTO.getName(), productDTO.getDescription(), productDTO.getImage(),
-                            productDTO.getYear(), productDTO.getPrice(), productDTO.getStock(),
-                            productDTO.getIdWinery(), productDTO.getIdVariety(), productDTO.getIdType())
-                    .anyMatch(Objects::isNull)) {
-                // If any required field is null, throw a BadRequestException
-                throw new BadRequestException("The received request does not have the correct format.");
-            }
-
+    /**
+     * Converts a DTO to a Product entity.
+     * @param productDTO DTO to be converted.
+     * @return Converted Product entity.
+     */
+    private Product convertProductDTOToProduct(ProductDTO productDTO) throws ResourceNotFoundException {
             // Create a new Product entity and set its fields
             Product product = new Product();
             product.setId(productDTO.getId());
@@ -251,16 +299,14 @@ public class ProductServiceImpl implements IProductService {
             product.setType(type);
 
             return product;
-        } catch (Exception ex) {
-            // If any other exception occurs, wrap it in a RuntimeException and rethrow
-            throw new RuntimeException("Error occurred while converting ProductDTO to Product", ex);
-        }
     }
 
-    // Method to convert a Product entity to a ProductDTO
-    @Override
-    public ProductDTO convertProductToProductDTO(Product product) {
-        try {
+    /**
+     * Converts a Product to a DTO.
+     * @param product Product to be converted.
+     * @return Converted DTO.
+     */
+    private ProductDTO convertProductToProductDTO(Product product) {
             // Create a new ProductDTO and set its fields
             ProductDTO productDTO = new ProductDTO();
             productDTO.setId(product.getId());
@@ -274,9 +320,43 @@ public class ProductServiceImpl implements IProductService {
             productDTO.setIdVariety(product.getVariety().getId());
             productDTO.setIdType(product.getType().getId());
             return productDTO;
-        } catch (Exception ex) {
-            // If any exception occurs, wrap it in a RuntimeException and rethrow
-            throw new RuntimeException("Error occurred while converting Product to ProductDTO", ex);
+    }
+
+    // Validation methods
+    /**
+     * Validates a ProductDTO.
+     * @param productDTO DTO to be validated.
+     */
+    private void validateProductDTO(ProductDTO productDTO) throws BadRequestException {
+        if (productDTO.getId() == null) {
+            throw new BadRequestException("Product ID must not be null");
+        }
+        if (productDTO.getName() == null || productDTO.getName().trim().isEmpty()) {
+            throw new BadRequestException("Product name must not be null or empty");
+        }
+        if (productDTO.getDescription() == null || productDTO.getDescription().trim().isEmpty()) {
+            throw new BadRequestException("Product description must not be null or empty");
+        }
+        if (productDTO.getImage() == null || productDTO.getImage().trim().isEmpty()) {
+            throw new BadRequestException("Product image must not be null or empty");
+        }
+        if (productDTO.getYear() == null || productDTO.getYear() < 0) {
+            throw new BadRequestException("Product year must not be null and must be a positive number");
+        }
+        if (productDTO.getPrice() == null || productDTO.getPrice() < 0) {
+            throw new BadRequestException("Product price must not be null and must be a positive number");
+        }
+        if (productDTO.getStock() == null || productDTO.getStock() < 0) {
+            throw new BadRequestException("Product stock must not be null and must be a positive number");
+        }
+        if (productDTO.getIdWinery() == null) {
+            throw new BadRequestException("Winery ID must not be null");
+        }
+        if (productDTO.getIdVariety() == null) {
+            throw new BadRequestException("Variety ID must not be null");
+        }
+        if (productDTO.getIdType() == null) {
+            throw new BadRequestException("Type ID must not be null");
         }
     }
 }

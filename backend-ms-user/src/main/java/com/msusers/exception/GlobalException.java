@@ -1,4 +1,4 @@
-/*package com.msusers.exception;
+package com.msusers.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,4 +17,3 @@ public class GlobalException {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }
-*/

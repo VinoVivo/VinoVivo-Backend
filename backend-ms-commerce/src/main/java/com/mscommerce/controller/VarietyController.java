@@ -2,7 +2,7 @@ package com.mscommerce.controller;
 
 import com.mscommerce.exception.BadRequestException;
 import com.mscommerce.exception.ResourceNotFoundException;
-import com.mscommerce.models.DTO.VarietyDTO;
+import com.mscommerce.models.DTO.variety.VarietyDTO;
 import com.mscommerce.service.implementation.VarietyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class VarietyController {
     }
 
     @GetMapping("/id/{varietyId}")
-    public ResponseEntity<VarietyDTO> getVarietyById(@PathVariable Integer varietyId) {
+    public ResponseEntity<VarietyDTO> getVarietyById(@PathVariable Integer varietyId) throws ResourceNotFoundException {
         VarietyDTO varietyDTO = varietyServiceImpl.getVarietyById(varietyId);
         return ResponseEntity.ok().body(varietyDTO);
     }
@@ -40,14 +40,14 @@ public class VarietyController {
 
     @PutMapping("/update")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<VarietyDTO> updateVariety(@RequestBody VarietyDTO varietyDTO) {
+    public ResponseEntity<VarietyDTO> updateVariety(@RequestBody VarietyDTO varietyDTO) throws BadRequestException, ResourceNotFoundException {
         VarietyDTO updatedVariety = varietyServiceImpl.updateVariety(varietyDTO);
         return ResponseEntity.ok().body(updatedVariety);
     }
 
     @DeleteMapping("/delete/{varietyId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteVariety(@PathVariable Integer varietyId) {
+    public ResponseEntity<Void> deleteVariety(@PathVariable Integer varietyId) throws ResourceNotFoundException {
         varietyServiceImpl.deleteVariety(varietyId);
         return ResponseEntity.noContent().build();
     }

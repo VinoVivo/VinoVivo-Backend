@@ -2,7 +2,7 @@ package com.mscommerce.controller;
 
 import com.mscommerce.exception.BadRequestException;
 import com.mscommerce.exception.ResourceNotFoundException;
-import com.mscommerce.models.DTO.WineryDTO;
+import com.mscommerce.models.DTO.winery.WineryDTO;
 import com.mscommerce.service.implementation.WineryServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class WineryController {
     }
 
     @GetMapping("/id/{wineryId}")
-    public ResponseEntity<WineryDTO> getWineryById(@PathVariable Integer wineryId) {
+    public ResponseEntity<WineryDTO> getWineryById(@PathVariable Integer wineryId) throws ResourceNotFoundException {
         WineryDTO wineryDTO = wineryServiceImpl.getWineryById(wineryId);
         return ResponseEntity.ok().body(wineryDTO);
     }
@@ -40,14 +40,14 @@ public class WineryController {
 
     @PutMapping("/update")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<WineryDTO> updateWinery(@RequestBody WineryDTO wineryDTO) {
+    public ResponseEntity<WineryDTO> updateWinery(@RequestBody WineryDTO wineryDTO) throws BadRequestException, ResourceNotFoundException {
         WineryDTO updatedWinery = wineryServiceImpl.updateWinery(wineryDTO);
         return ResponseEntity.ok().body(updatedWinery);
     }
 
     @DeleteMapping("/delete/{wineryId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteWinery(@PathVariable Integer wineryId) {
+    public ResponseEntity<Void> deleteWinery(@PathVariable Integer wineryId) throws ResourceNotFoundException {
         wineryServiceImpl.deleteWinery(wineryId);
         return ResponseEntity.noContent().build();
     }

@@ -23,9 +23,14 @@ public class OrderDetails {
     @Column(name = "id_order")
     private Integer idOrder;
 
-    @NotNull
+    /*@NotNull
     @Column(name = "id_product")
-    private Integer idProduct;
+    private Integer idProduct;*/
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_product", referencedColumnName = "id")
+    private Product product;
 
     @Column(name = "price")
     private Double price;

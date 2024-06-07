@@ -3,11 +3,10 @@ package com.mscommerce.service;
 import com.mscommerce.exception.BadRequestException;
 import com.mscommerce.exception.ResourceNotFoundException;
 import com.mscommerce.exception.UnauthorizedAccessException;
-import com.mscommerce.models.DTO.OrderDTO;
-import com.mscommerce.models.DTO.OrderDTORequest;
-import com.mscommerce.models.DTO.OrderDTOUpdate;
-import com.mscommerce.models.DTO.OrderDetailsDTORequest;
-import com.mscommerce.models.Order;
+import com.mscommerce.models.DTO.order.OrderDTO;
+import com.mscommerce.models.DTO.order.OrderDTORequest;
+import com.mscommerce.models.DTO.order.OrderDTOUpdate;
+import com.mscommerce.models.DTO.orderDetails.OrderDetailsDTORequest;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public interface IOrderService {
 
     OrderDTO adminCreateOrder(OrderDTO orderDTO) throws BadRequestException;
 
-    Order createOrder(OrderDTORequest orderDTORequest) throws BadRequestException, ResourceNotFoundException;
+    OrderDTO createOrder(OrderDTORequest orderDTORequest) throws BadRequestException, ResourceNotFoundException;
 
     OrderDTO adminUpdateOrder(OrderDTO orderDTO) throws BadRequestException, ResourceNotFoundException;
 
@@ -31,9 +30,4 @@ public interface IOrderService {
 
     void deleteOrder(Integer orderId) throws ResourceNotFoundException, UnauthorizedAccessException;
 
-    Order convertOrderDTOToOrder(OrderDTO orderDTO) throws BadRequestException;
-
-    OrderDTO convertOrderToOrderDTO(Order order);
-
-    Double calculateTotalPrice(List<OrderDetailsDTORequest> orderDetailsDTORequests);
 }

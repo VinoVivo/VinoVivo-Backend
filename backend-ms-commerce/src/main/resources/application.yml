@@ -6,7 +6,7 @@ server:
 ## and database connection using JDBC and JPA/Hibernate
 spring:
   application:
-    name: ${APP_NAME:microservice}
+    name: ${APP_NAME:ms-commerce}
   security:
     oauth2:
       resourceserver:

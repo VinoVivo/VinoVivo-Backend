@@ -5,7 +5,7 @@ server:
 ## Configuration for App name and Spring Data
 spring:
   application:
-    name: ${APP_NAME:microservice}
+    name: ${APP_NAME:ms-users}
   security:
     oauth2:
       resourceserver:

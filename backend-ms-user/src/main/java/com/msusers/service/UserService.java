@@ -24,6 +24,11 @@ public class UserService {
     @Value("${proyecto.keycloak.realm}")
     private String realm;
 
+    /**
+     * Retrieves the current authenticated user's information from the security context,
+     * then fetches the user's details from the database using the user ID.
+     * @return A User entity.
+     */
     public User getCurrentUser() {
         Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId = jwt.getSubject();
@@ -32,13 +37,14 @@ public class UserService {
         return userResponse.orElseThrow(() -> new NoSuchElementException("User not found for ID: " + userId));
     }
 
+    /**
+     * Retrieves a user's profile from Keycloak using the user ID.
+     * @param userId A string representing the user's ID.
+     * @return A UserRepresentation object containing the user's profile information.
+     */
     public UserRepresentation getUserProfile(String userId) {
         // Retrieve the user's profile from Keycloak
         return keycloak.realm(realm).users().get(userId).toRepresentation();
     }
 
-    public void updateUserProfile(UserRepresentation updatedUser) {
-        // Update the user's profile in Keycloak
-        keycloak.realm(realm).users().get(updatedUser.getId()).update(updatedUser);
-    }
 }

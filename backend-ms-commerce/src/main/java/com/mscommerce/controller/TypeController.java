@@ -2,7 +2,7 @@ package com.mscommerce.controller;
 
 import com.mscommerce.exception.BadRequestException;
 import com.mscommerce.exception.ResourceNotFoundException;
-import com.mscommerce.models.DTO.TypeDTO;
+import com.mscommerce.models.DTO.type.TypeDTO;
 import com.mscommerce.service.implementation.TypeServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class TypeController {
     }
 
     @GetMapping("/id/{typeId}")
-    public ResponseEntity<TypeDTO> getTypeById(@PathVariable Integer typeId) {
+    public ResponseEntity<TypeDTO> getTypeById(@PathVariable Integer typeId) throws ResourceNotFoundException {
         TypeDTO typeDTO = typeServiceImpl.getTypeById(typeId);
         return ResponseEntity.ok().body(typeDTO);
     }
@@ -40,14 +40,14 @@ public class TypeController {
 
     @PutMapping("/update")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<TypeDTO> updateType(@RequestBody TypeDTO typeDTO) {
+    public ResponseEntity<TypeDTO> updateType(@RequestBody TypeDTO typeDTO) throws BadRequestException, ResourceNotFoundException {
         TypeDTO updatedType = typeServiceImpl.updateType(typeDTO);
         return ResponseEntity.ok().body(updatedType);
     }
 
     @DeleteMapping("/delete/{typeId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteType(@PathVariable Integer typeId) {
+    public ResponseEntity<Void> deleteType(@PathVariable Integer typeId) throws ResourceNotFoundException {
         typeServiceImpl.deleteType(typeId);
         return ResponseEntity.noContent().build();
     }

@@ -1,4 +1,4 @@
-/*package com.mscommerce.exception;
+package com.mscommerce.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,5 +16,19 @@ public class GlobalException {
     public ResponseEntity<String> handleBadRequest (BadRequestException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
+
+    @ExceptionHandler({UnauthorizedAccessException.class})
+    public ResponseEntity<String> handleUnauthorizedAccess (UnauthorizedAccessException e){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+    }
+
+    @ExceptionHandler({InsufficientStockException.class})
+    public ResponseEntity<String> handleInsufficientStock (InsufficientStockException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleGeneralException(Exception e){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    }
 }
-*/

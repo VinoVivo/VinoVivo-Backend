@@ -1,0 +1,2181 @@
+{
+	"info": {
+		"_postman_id": "c8a3b1d7-d577-4fe2-b0c7-c381e9b7254c",
+		"name": "Proyecto Integrador 2 Railway URLs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23378679"
+	},
+	"item": [
+		{
+			"name": "Commerce",
+			"item": [
+				{
+					"name": "Variety",
+					"item": [
+						{
+							"name": "Admin",
+							"item": [
+								{
+									"name": "CreateVariety",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 0,\r\n    \"name\" : \"Rosado2\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/variety/create",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"variety",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateVariety",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 8,\r\n    \"name\" : \"Rosado3\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/variety/update",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"variety",
+												"update"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteVariety",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/variety/delete/8",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"variety",
+												"delete",
+												"8"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Public",
+							"item": [
+								{
+									"name": "GetAllVariety",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/variety/all",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"variety",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetVarietyById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/variety/id/8",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"variety",
+												"id",
+												"8"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Type",
+					"item": [
+						{
+							"name": "Admin",
+							"item": [
+								{
+									"name": "CreateType",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 0,\r\n    \"name\" : \"Test1\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/type/create",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"type",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateType",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 11,\r\n    \"name\" : \"Test25\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/type/update",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"type",
+												"update"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteType",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/type/delete/11",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"type",
+												"delete",
+												"11"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Public",
+							"item": [
+								{
+									"name": "GetAllType",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/type/all",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"type",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetTypeById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/type/id/11",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"type",
+												"id",
+												"11"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Winery",
+					"item": [
+						{
+							"name": "Admin",
+							"item": [
+								{
+									"name": "CreateWinery",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 0,\r\n    \"name\" : \"Vinoteca2\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/winery/create",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"winery",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateWinery",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 8,\r\n    \"name\" : \"Vinoteca35\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/winery/update",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"winery",
+												"update"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteWinery",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/winery/delete/8",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"winery",
+												"delete",
+												"8"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Public",
+							"item": [
+								{
+									"name": "GetAllWinery",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/winery/all",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"winery",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetWineryById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/winery/id/1",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"winery",
+												"id",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "Admin",
+							"item": [
+								{
+									"name": "Filters",
+									"item": [
+										{
+											"name": "GetTop10Products",
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{KCToken}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{URLCOMMERCE}}/product/top10",
+													"host": [
+														"{{URLCOMMERCE}}"
+													],
+													"path": [
+														"product",
+														"top10"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "GetAllByStockLessThan",
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{KCToken}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{URLCOMMERCE}}/product/stock/less/10",
+													"host": [
+														"{{URLCOMMERCE}}"
+													],
+													"path": [
+														"product",
+														"stock",
+														"less",
+														"10"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "GetCountByProductSoldType",
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{KCToken}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{URLCOMMERCE}}/product/type/count/3",
+													"host": [
+														"{{URLCOMMERCE}}"
+													],
+													"path": [
+														"product",
+														"type",
+														"count",
+														"3"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "CreateProduct",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 0,\r\n    \"name\": \"VinoTestProyecto223\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula accumsan turpis, ut bibendum.\",\r\n    \"image\": \"noImage\",\r\n    \"year\": 1995,\r\n    \"price\": 10.20,\r\n    \"stock\": 3,\r\n    \"idWinery\": 4,\r\n    \"idVariety\": 4,\r\n    \"idType\": 3\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/product/create",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"product",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteProductById",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/product/delete/25",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"product",
+												"delete",
+												"25"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateProduct",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 13,\r\n    \"name\": \"VinoTestProyectos\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula accumsan turpis, ut bibendum.\",\r\n    \"image\": \"noImage\",\r\n    \"year\": 1999,\r\n    \"price\": 10.20,\r\n    \"stock\": 3,\r\n    \"idWinery\": 1,\r\n    \"idVariety\": 2,\r\n    \"idType\": 2\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/product/update",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"product",
+												"update"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Public",
+							"item": [
+								{
+									"name": "GetAllProduct",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/product/type/all",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"product",
+												"type",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetProductById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/product/id/1",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"product",
+												"id",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetProductsByWineryId",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/product/winery/3",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"product",
+												"winery",
+												"3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetProductsByVarietyId",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/product/variety/4",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"product",
+												"variety",
+												"4"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetProductsByTypeId",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/product/type/2",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"product",
+												"type",
+												"2"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get8RandomProducts",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/product/random",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"product",
+												"random"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Order",
+					"item": [
+						{
+							"name": "Admin",
+							"item": [
+								{
+									"name": "GetAllOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order/all-admin",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order",
+												"all-admin"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreateOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 0,\r\n    \"idCustomer\" : \"dfsgx\",\r\n    \"totalPrice\" : 10.20,\r\n    \"shippingAddress\" : \"noAddress\",\r\n    \"orderEmail\" : \"noEmail\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order/create-admin",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order",
+												"create-admin"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 8,\r\n    \"idCustomer\" : \"fgdsgsa\",\r\n    \"totalPrice\" : 10.30,\r\n    \"shippingAddress\" : \"noAddress\",\r\n    \"orderEmail\" : \"noEmail\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order/update-admin",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order",
+												"update-admin"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order/delete-admin/13",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order",
+												"delete-admin",
+												"13"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetOrderById",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order/id/9",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order",
+												"id",
+												"9"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "User",
+							"item": [
+								{
+									"name": "GetAllOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order/all",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreateOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"shippingAddress\": \"12345678 Main Street, Cityville\",\r\n  \"orderEmail\": \"secondexample@example.com\",\r\n  \"orderDetailsDTORequests\": [\r\n    {\r\n      \"idProduct\": 9,\r\n      \"quantity\": 1\r\n    },\r\n    {\r\n      \"idProduct\": 9,\r\n      \"quantity\": 1\r\n    }\r\n  ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order/create",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order/delete/67",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order",
+												"delete",
+												"67"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 21,\r\n    \"shippingAddress\" : \"noAddress\",\r\n    \"orderEmail\" : \"noEmail\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order/update",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order",
+												"update"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "OrderDetail",
+					"item": [
+						{
+							"name": "Admin",
+							"item": [
+								{
+									"name": "GetAllOrderDetails",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order-details/all-admin",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order-details",
+												"all-admin"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreateOrderDetails",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 10,\r\n    \"idOrder\" : 1,\r\n    \"idProduct\" : 1,\r\n    \"price\" : 10.20,\r\n    \"quantity\" : 20\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order-details/create-admin",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order-details",
+												"create-admin"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateOrderDetails",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 6,\r\n    \"idOrder\" : 1,\r\n    \"idProduct\" : 1,\r\n    \"price\" : 10.80,\r\n    \"quantity\" : 19\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order-details/update-admin",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order-details",
+												"update-admin"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteOrderDetails",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order-details/delete-admin/44",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order-details",
+												"delete-admin",
+												"44"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ForceDeleteOrderDetails",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order-details/force-delete-admin/57",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order-details",
+												"force-delete-admin",
+												"57"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetOrderDetailsById",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order-details/id/1",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order-details",
+												"id",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "User",
+							"item": [
+								{
+									"name": "UpdateOrderDetails Copy",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 37,\r\n    \"idOrder\" : 29,\r\n    \"quantity\" : 5\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order-details/update",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order-details",
+												"update"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetAllOrderDetailsByOrderId",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order-details/all/order-id/24",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order-details",
+												"all",
+												"order-id",
+												"24"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetAllOrderDetails",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order-details/all",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order-details",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteOrderDetails",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order-details/delete/78",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order-details",
+												"delete",
+												"78"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreateOrderDetailsToExistingOrder",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"idOrder\" : 27,\r\n    \"idProduct\" : 2,\r\n    \"quantity\" : 10\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/order-details/create-to-existing-order",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"order-details",
+												"create-to-existing-order"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Cart",
+					"item": [
+						{
+							"name": "Admin",
+							"item": [
+								{
+									"name": "CreateCart",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": 0,\r\n    \"idCustomer\": \"customer1\",\r\n    \"idProduct\": 101,\r\n    \"price\": 19.99,\r\n    \"quantity\": 2\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/cart/create-admin",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"cart",
+												"create-admin"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateCart",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": 0,\r\n    \"idCustomer\": \"customer1\",\r\n    \"idProduct\": 101,\r\n    \"price\": 19.99,\r\n    \"quantity\": 2\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/cart/update-admin",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"cart",
+												"update-admin"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteCart",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/cart/delete-admin/11",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"cart",
+												"delete-admin",
+												"11"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetAllCarts",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/cart/all-admin",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"cart",
+												"all-admin"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetCartById",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/cart/id/9",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"cart",
+												"id",
+												"9"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "User",
+							"item": [
+								{
+									"name": "GetAllCarts",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/cart/all",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"cart",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreateCart",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"idProduct\": 9,\r\n    \"quantity\": 1\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/cart/create",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"cart",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateCart",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 27,\r\n    \"quantity\" : 2\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URLCOMMERCE}}/cart/update",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"cart",
+												"update"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteCart",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/cart/delete/27",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"cart",
+												"delete",
+												"27"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CleanCart",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{KCToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URLCOMMERCE}}/cart/clean",
+											"host": [
+												"{{URLCOMMERCE}}"
+											],
+											"path": [
+												"cart",
+												"clean"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "ConsoleApi",
+					"item": [
+						{
+							"name": "GetUserThroughConsoleApi",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{KCToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "San",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "password",
+											"value": "1234",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URLKEYCLOAK}}/account",
+									"host": [
+										"{{URLKEYCLOAK}}"
+									],
+									"path": [
+										"account"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateUserThroughConsoleApi",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{KCToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"13775293-cd16-460b-81cf-1d8211d7b3e7\",\r\n    \"username\": \"test3\",\r\n    \"firstName\": \"test3\",\r\n    \"lastName\": \"test3\",\r\n    \"email\": \"test3@gmail.com\",\r\n    \"emailVerified\": true,\r\n    \"userProfileMetadata\": {\r\n        \"attributes\": [\r\n            {\r\n                \"name\": \"locale\",\r\n                \"displayName\": \"locale\",\r\n                \"required\": false,\r\n                \"readOnly\": false,\r\n                \"validators\": {},\r\n                \"multivalued\": false\r\n            },\r\n            {\r\n                \"name\": \"username\",\r\n                \"displayName\": \"${username}\",\r\n                \"required\": true,\r\n                \"readOnly\": false,\r\n                \"validators\": {\r\n                    \"username-prohibited-characters\": {\r\n                        \"ignore.empty.value\": true\r\n                    },\r\n                    \"multivalued\": {\r\n                        \"max\": \"1\"\r\n                    },\r\n                    \"length\": {\r\n                        \"max\": 255,\r\n                        \"ignore.empty.value\": true,\r\n                        \"min\": 3\r\n                    },\r\n                    \"up-username-not-idn-homograph\": {\r\n                        \"ignore.empty.value\": true\r\n                    }\r\n                },\r\n                \"multivalued\": false\r\n            },\r\n            {\r\n                \"name\": \"email\",\r\n                \"displayName\": \"${email}\",\r\n                \"required\": true,\r\n                \"readOnly\": false,\r\n                \"validators\": {\r\n                    \"multivalued\": {\r\n                        \"max\": \"1\"\r\n                    },\r\n                    \"length\": {\r\n                        \"max\": 255,\r\n                        \"ignore.empty.value\": true\r\n                    },\r\n                    \"email\": {\r\n                        \"ignore.empty.value\": true\r\n                    }\r\n                },\r\n                \"multivalued\": false\r\n            },\r\n            {\r\n                \"name\": \"firstName\",\r\n                \"displayName\": \"${firstName}\",\r\n                \"required\": false,\r\n                \"readOnly\": false,\r\n                \"annotations\": {},\r\n                \"validators\": {\r\n                    \"person-name-prohibited-characters\": {\r\n                        \"ignore.empty.value\": true\r\n                    },\r\n                    \"multivalued\": {\r\n                        \"max\": \"1\"\r\n                    },\r\n                    \"length\": {\r\n                        \"max\": 255,\r\n                        \"ignore.empty.value\": true\r\n                    }\r\n                },\r\n                \"multivalued\": false\r\n            },\r\n            {\r\n                \"name\": \"lastName\",\r\n                \"displayName\": \"${lastName}\",\r\n                \"required\": false,\r\n                \"readOnly\": false,\r\n                \"annotations\": {},\r\n                \"validators\": {\r\n                    \"person-name-prohibited-characters\": {\r\n                        \"ignore.empty.value\": true\r\n                    },\r\n                    \"multivalued\": {\r\n                        \"max\": \"1\"\r\n                    },\r\n                    \"length\": {\r\n                        \"max\": 255,\r\n                        \"ignore.empty.value\": true\r\n                    }\r\n                },\r\n                \"multivalued\": false\r\n            },\r\n            {\r\n                \"name\": \"dni\",\r\n                \"displayName\": \"${DNI}\",\r\n                \"required\": false,\r\n                \"readOnly\": false,\r\n                \"annotations\": {},\r\n                \"validators\": {\r\n                    \"multivalued\": {\r\n                        \"max\": \"1\"\r\n                    },\r\n                    \"length\": {\r\n                        \"max\": \"255\",\r\n                        \"ignore.empty.value\": true,\r\n                        \"min\": \"1\"\r\n                    }\r\n                },\r\n                \"multivalued\": false\r\n            },\r\n            {\r\n                \"name\": \"cellphone\",\r\n                \"displayName\": \"${Cellphone}\",\r\n                \"required\": false,\r\n                \"readOnly\": false,\r\n                \"annotations\": {},\r\n                \"validators\": {\r\n                    \"multivalued\": {\r\n                        \"max\": \"1\"\r\n                    },\r\n                    \"integer\": {\r\n                        \"max\": \"255\",\r\n                        \"ignore.empty.value\": true,\r\n                        \"min\": \"1\"\r\n                    }\r\n                },\r\n                \"multivalued\": false\r\n            },\r\n            {\r\n                \"name\": \"state\",\r\n                \"displayName\": \"${State}\",\r\n                \"required\": false,\r\n                \"readOnly\": false,\r\n                \"annotations\": {},\r\n                \"validators\": {\r\n                    \"multivalued\": {\r\n                        \"max\": \"1\"\r\n                    },\r\n                    \"length\": {\r\n                        \"max\": \"255\",\r\n                        \"ignore.empty.value\": true,\r\n                        \"min\": \"1\"\r\n                    }\r\n                },\r\n                \"multivalued\": false\r\n            },\r\n            {\r\n                \"name\": \"city\",\r\n                \"displayName\": \"${City}\",\r\n                \"required\": false,\r\n                \"readOnly\": false,\r\n                \"annotations\": {},\r\n                \"validators\": {\r\n                    \"multivalued\": {\r\n                        \"max\": \"1\"\r\n                    },\r\n                    \"length\": {\r\n                        \"max\": \"255\",\r\n                        \"ignore.empty.value\": true,\r\n                        \"min\": \"1\"\r\n                    }\r\n                },\r\n                \"multivalued\": false\r\n            },\r\n            {\r\n                \"name\": \"address\",\r\n                \"displayName\": \"${Address}\",\r\n                \"required\": false,\r\n                \"readOnly\": false,\r\n                \"annotations\": {},\r\n                \"validators\": {\r\n                    \"multivalued\": {\r\n                        \"max\": \"1\"\r\n                    },\r\n                    \"length\": {\r\n                        \"max\": \"255\",\r\n                        \"ignore.empty.value\": true,\r\n                        \"min\": \"1\"\r\n                    }\r\n                },\r\n                \"multivalued\": false\r\n            },\r\n            {\r\n                \"name\": \"photo\",\r\n                \"displayName\": \"${Photo}\",\r\n                \"required\": false,\r\n                \"readOnly\": false,\r\n                \"annotations\": {},\r\n                \"validators\": {\r\n                    \"multivalued\": {\r\n                        \"max\": \"1\"\r\n                    },\r\n                    \"pattern\": {\r\n                        \"pattern\": \"^(http|https):\\/\\/([a-zA-Z0-9-]+\\\\.)*[a-zA-Z]{2,}\\/.*\\\\.(jpg|jpeg|png|gif|bmp)$\",\r\n                        \"error-message\": \"Invalid image URL\",\r\n                        \"ignore.empty.value\": true\r\n                    }\r\n                },\r\n                \"multivalued\": false\r\n            }\r\n        ],\r\n        \"groups\": [\r\n            {\r\n                \"name\": \"user-metadata\",\r\n                \"displayHeader\": \"User metadata\",\r\n                \"displayDescription\": \"Attributes, which refer to user metadata\"\r\n            }\r\n        ]\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URLKEYCLOAK}}/account",
+									"host": [
+										"{{URLKEYCLOAK}}"
+									],
+									"path": [
+										"account"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GetUserByData",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{KCToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{URLUSERS}}/user/profile",
+							"host": [
+								"{{URLUSERS}}"
+							],
+							"path": [
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserProfile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{KCToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URLUSERS}}/user/kcprofile",
+							"host": [
+								"{{URLUSERS}}"
+							],
+							"path": [
+								"user",
+								"kcprofile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Keycloak",
+			"item": [
+				{
+					"name": "GetEndpoints",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URLKEYCLOAK}}/.well-known/openid-configuration",
+							"host": [
+								"{{URLKEYCLOAK}}"
+							],
+							"path": [
+								".well-known",
+								"openid-configuration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AdminObtainTokenThroughFrontendClient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "token-test-client",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URLKEYCLOAK}}/protocol/openid-connect/token",
+							"host": [
+								"{{URLKEYCLOAK}}"
+							],
+							"path": [
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserOneObtainTokenThroughFrontendClient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "token-test-client",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "test2",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URLKEYCLOAK}}/protocol/openid-connect/token",
+							"host": [
+								"{{URLKEYCLOAK}}"
+							],
+							"path": [
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserTwoObtainTokenThroughFrontendClient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "token-test-client",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "test3",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URLKEYCLOAK}}/protocol/openid-connect/token",
+							"host": [
+								"{{URLKEYCLOAK}}"
+							],
+							"path": [
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

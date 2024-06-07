@@ -1,11 +1,11 @@
 package com.mscommerce.controller;
 
 import com.mscommerce.exception.BadRequestException;
+import com.mscommerce.exception.InsufficientStockException;
 import com.mscommerce.exception.ResourceNotFoundException;
-import com.mscommerce.models.DTO.OrderDTO;
-import com.mscommerce.models.DTO.OrderDTORequest;
-import com.mscommerce.models.DTO.OrderDTOUpdate;
-import com.mscommerce.models.Order;
+import com.mscommerce.models.DTO.order.OrderDTO;
+import com.mscommerce.models.DTO.order.OrderDTORequest;
+import com.mscommerce.models.DTO.order.OrderDTOUpdate;
 import com.mscommerce.service.implementation.OrderServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class OrderController {
 
     @GetMapping("/id/{orderId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<OrderDTO> adminGetOrderById(@PathVariable Integer orderId) {
+    public ResponseEntity<OrderDTO> adminGetOrderById(@PathVariable Integer orderId) throws ResourceNotFoundException {
         OrderDTO orderDTO = orderServiceImpl.adminGetOrderById(orderId);
         return ResponseEntity.ok().body(orderDTO);
     }
@@ -54,36 +54,35 @@ public class OrderController {
 
     @PostMapping("/create")
     @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
-    public ResponseEntity<OrderDTO> createOrder(@Valid @RequestBody OrderDTORequest orderDTORequest) throws BadRequestException {
-        Order createdOrder = orderServiceImpl.createOrder(orderDTORequest);
-        OrderDTO orderDTO = orderServiceImpl.convertOrderToOrderDTO(createdOrder);
-        return new ResponseEntity<>(orderDTO, HttpStatus.CREATED);
+    public ResponseEntity<OrderDTO> createOrder(@Valid @RequestBody OrderDTORequest orderDTORequest) throws BadRequestException, ResourceNotFoundException {
+        OrderDTO createdOrderDTO = orderServiceImpl.createOrder(orderDTORequest);
+        return new ResponseEntity<>(createdOrderDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/update-admin")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<OrderDTO> adminUpdateOrder(@RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<OrderDTO> adminUpdateOrder(@RequestBody OrderDTO orderDTO) throws BadRequestException, ResourceNotFoundException {
         OrderDTO updatedOrder = orderServiceImpl.adminUpdateOrder(orderDTO);
         return ResponseEntity.ok().body(updatedOrder);
     }
 
     @PutMapping("/update")
     @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
-    public ResponseEntity<OrderDTO> updateOrder(@RequestBody OrderDTOUpdate orderDTO) {
+    public ResponseEntity<OrderDTO> updateOrder(@RequestBody OrderDTOUpdate orderDTO) throws BadRequestException, ResourceNotFoundException {
         OrderDTO updatedOrderDTO = orderServiceImpl.updateOrder(orderDTO);
         return ResponseEntity.ok().body(updatedOrderDTO);
     }
 
     @DeleteMapping("/delete-admin/{orderId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> adminDeleteOrder(@PathVariable Integer orderId) {
+    public ResponseEntity<Void> adminDeleteOrder(@PathVariable Integer orderId) throws ResourceNotFoundException {
         orderServiceImpl.adminDeleteOrder(orderId);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/delete/{orderId}")
     @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Integer orderId) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable Integer orderId) throws ResourceNotFoundException {
         orderServiceImpl.deleteOrder(orderId);
         return ResponseEntity.noContent().build();
     }

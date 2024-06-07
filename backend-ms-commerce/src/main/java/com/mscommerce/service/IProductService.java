@@ -2,9 +2,8 @@ package com.mscommerce.service;
 
 import com.mscommerce.exception.BadRequestException;
 import com.mscommerce.exception.ResourceNotFoundException;
-import com.mscommerce.models.DTO.ProductDTO;
-import com.mscommerce.models.DTO.ProductDTOGet;
-import com.mscommerce.models.Product;
+import com.mscommerce.models.DTO.product.ProductDTO;
+import com.mscommerce.models.DTO.product.ProductDTOGet;
 
 import java.util.List;
 
@@ -28,7 +27,4 @@ public interface IProductService {
 
     void deleteProduct(Integer productId) throws ResourceNotFoundException;
 
-    Product convertProductDTOToProduct(ProductDTO productDTO) throws BadRequestException, ResourceNotFoundException;
-
-    ProductDTO convertProductToProductDTO(Product product);
 }

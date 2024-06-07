@@ -3,10 +3,9 @@ package com.mscommerce.service;
 import com.mscommerce.exception.BadRequestException;
 import com.mscommerce.exception.ResourceNotFoundException;
 import com.mscommerce.exception.UnauthorizedAccessException;
-import com.mscommerce.models.DTO.OrderDetailsDTO;
-import com.mscommerce.models.DTO.OrderDetailsDTOAddition;
-import com.mscommerce.models.DTO.OrderDetailsDTOUpdate;
-import com.mscommerce.models.OrderDetails;
+import com.mscommerce.models.DTO.orderDetails.OrderDetailsDTO;
+import com.mscommerce.models.DTO.orderDetails.OrderDetailsDTOAddition;
+import com.mscommerce.models.DTO.orderDetails.OrderDetailsDTOUpdate;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public interface IOrderDetailsService {
 
     OrderDetailsDTO adminUpdateOrderDetails(OrderDetailsDTO orderDetailsDTO) throws BadRequestException, ResourceNotFoundException;
 
-    OrderDetailsDTO updateOrderDetails(OrderDetailsDTOUpdate orderDetailsDTOUpdate) throws BadRequestException, ResourceNotFoundException;
+    OrderDetailsDTO updateOrderDetails(OrderDetailsDTOUpdate orderDetailsDTOUpdate) throws BadRequestException, ResourceNotFoundException, UnauthorizedAccessException;
 
     void adminForceDeleteOrderDetails(Integer orderDetailsId) throws ResourceNotFoundException;
 
@@ -34,7 +33,4 @@ public interface IOrderDetailsService {
 
     void deleteOrderDetails(Integer orderDetailsId) throws ResourceNotFoundException, UnauthorizedAccessException;
 
-    OrderDetails convertDTOToOrderDetails(OrderDetailsDTO orderDetailsDTO) throws BadRequestException, ResourceNotFoundException;
-
-    OrderDetailsDTO convertOrderDetailsToDTO(OrderDetails orderDetails);
 }

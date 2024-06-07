@@ -2,8 +2,7 @@ package com.mscommerce.service;
 
 import com.mscommerce.exception.BadRequestException;
 import com.mscommerce.exception.ResourceNotFoundException;
-import com.mscommerce.models.DTO.WineryDTO;
-import com.mscommerce.models.Winery;
+import com.mscommerce.models.DTO.winery.WineryDTO;
 
 import java.util.List;
 
@@ -15,11 +14,8 @@ public interface IWineryService {
 
     WineryDTO createWinery(WineryDTO wineryDTO) throws BadRequestException;
 
-    WineryDTO updateWinery(WineryDTO wineryDTO) throws ResourceNotFoundException;
+    WineryDTO updateWinery(WineryDTO wineryDTO) throws ResourceNotFoundException, BadRequestException;
 
     void deleteWinery(Integer wineryId) throws ResourceNotFoundException;
 
-    WineryDTO convertWineryToWineryDTO(Winery winery);
-
-    Winery convertWineryDTOToWinery(WineryDTO wineryDTO);
 }
