@@ -5,7 +5,6 @@ import com.mscommerce.exception.ResourceNotFoundException;
 import com.mscommerce.models.DTO.cart.CartDTO;
 import com.mscommerce.models.DTO.cart.CartDTORequest;
 import com.mscommerce.models.DTO.cart.CartDTOUpdate;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
