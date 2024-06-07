@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c8a3b1d7-d577-4fe2-b0c7-c381e9b7254c",
+		"_postman_id": "a9207ead-18f2-4cfe-a5c3-f2a23ca7b246",
 		"name": "Proyecto Integrador 2 Railway URLs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23378679"
@@ -696,9 +696,6 @@
 								{
 									"name": "GetAllProduct",
 									"request": {
-										"auth": {
-											"type": "noauth"
-										},
 										"method": "GET",
 										"header": [],
 										"url": {
