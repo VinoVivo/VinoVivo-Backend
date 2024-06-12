@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: msconfigserver
+    name: ${APP_NAME:ms-commerce}
   cloud:
     config:
       server:
