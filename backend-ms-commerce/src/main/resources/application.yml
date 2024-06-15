@@ -14,9 +14,9 @@ spring:
           issuer-uri: https://vinovivo-production.up.railway.app/realms/vino-vivo
           jwk-set-uri: https://vinovivo-production.up.railway.app/realms/vino-vivo/protocol/openid-connect/certs
   datasource:
-    url: jdbc:mysql://roundhouse.proxy.rlwy.net:53234/Vino_Vivo
+    url: jdbc:mysql://viaduct.proxy.rlwy.net:34951/Vino_Vivo
     username: root
-    password: RoMBBzsMYCGVecgwguuzMAfkjAIGGJwW
+    password: wUJscTKkhYfIYnvpnkdObfClPwMGMPjf
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
