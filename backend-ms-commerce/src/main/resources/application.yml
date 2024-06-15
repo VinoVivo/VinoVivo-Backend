@@ -11,12 +11,12 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://vinovivo-production.up.railway.app/realms/vino-vivo
-          jwk-set-uri: https://vinovivo-production.up.railway.app/realms/vino-vivo/protocol/openid-connect/certs
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:https://vinovivo-production.up.railway.app/realms/vino-vivo}
+          jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:https://vinovivo-production.up.railway.app/realms/vino-vivo/protocol/openid-connect/certs}
   datasource:
-    url: jdbc:mysql://viaduct.proxy.rlwy.net:34951/Vino_Vivo
+    url: jdbc:mysql://${MYSQL_URL:viaduct.proxy.rlwy.net:34951/Vino_Vivo}
     username: root
-    password: wUJscTKkhYfIYnvpnkdObfClPwMGMPjf
+    password: ${MYSQL_PASSWORD:wUJscTKkhYfIYnvpnkdObfClPwMGMPjf}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true

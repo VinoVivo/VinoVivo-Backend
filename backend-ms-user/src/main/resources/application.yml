@@ -10,25 +10,24 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://vinovivo-production.up.railway.app/realms/vino-vivo
-          jwk-set-uri: https://vinovivo-production.up.railway.app/realms/vino-vivo/protocol/openid-connect/certs
-
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:https://vinovivo-production.up.railway.app/realms/vino-vivo}
+          jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:https://vinovivo-production.up.railway.app/realms/vino-vivo/protocol/openid-connect/certs}
       client:
         registration:
           keycloak:
-            client-id: backend-client
-            client-secret: ${CLIENT_SECRET:5UBesc2Jn2tl3sQPsxsnI8wHugQk3DC5}
+            client-id: ${CLIENT_ID:backend-client}
+            client-secret: ${CLIENT_SECRET:XLowzBOMxCOCEq5qy8FXMMQbBQS0sVZ2}
             authorization-grant-type: client_credentials
         provider:
           keycloak:
-            tokenUri: https://vinovivo-production.up.railway.app/realms/vino-vivo/protocol/openid-connect/token
+            tokenUri: ${KEYCLOAK_TOKEN_URI:https://vinovivo-production.up.railway.app/realms/vino-vivo/protocol/openid-connect/token}
 
 proyecto:
   keycloak:
-    serverUrl: https://vinovivo-production.up.railway.app
-    clientId: backend-client
-    clientSecret: ${CLIENT_SECRET:5UBesc2Jn2tl3sQPsxsnI8wHugQk3DC5}
-    realm: vino-vivo
+    serverUrl: ${KEYCLOAK_SERVER_URL:https://vinovivo-production.up.railway.app}
+    clientId: ${CLIENT_ID:backend-client}
+    clientSecret: ${CLIENT_SECRET:XLowzBOMxCOCEq5qy8FXMMQbBQS0sVZ2}
+    realm: ${REALM:vino-vivo}
 
 ## Configuration for Eureka
 eureka:
