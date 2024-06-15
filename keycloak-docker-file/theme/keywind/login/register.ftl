@@ -81,7 +81,7 @@
       </@buttonGroup.kw>
     </@form.kw>
   <#elseif section="nav">
-    <@link.kw color="secondary" href=url.loginUrl size="small">
+    <@link.kw color="white" href=url.loginUrl size="small">
       ${kcSanitize(msg("backToLogin"))?no_esc}
     </@link.kw>
   </#if>
