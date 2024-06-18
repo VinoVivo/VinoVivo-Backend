@@ -12,6 +12,9 @@ import com.mscommerce.repositories.jpa.WineryRepository;
 import com.mscommerce.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -103,6 +106,7 @@ public class ProductServiceImpl implements IProductService {
      * @return List of all products.
      */
     @Override
+    @Cacheable(value = "products", key = "#root.method.name")
     public List<ProductDTOGet> getAllProducts() throws ResourceNotFoundException {
         // Fetch all products from the repository and return them
         return productRepository.findAllProductDTOGet();
@@ -114,6 +118,7 @@ public class ProductServiceImpl implements IProductService {
      * @return The fetched product.
      */
     @Override
+    @Cacheable(value = "products", key = "#productId")
     public ProductDTOGet getProductById(Integer productId) throws ResourceNotFoundException {
         // Fetch the product DTO by ID from the repository
         ProductDTOGet productDTO = productRepository.findProductDTOGetById(productId);
@@ -131,6 +136,7 @@ public class ProductServiceImpl implements IProductService {
      * @return List of products.
      */
     @Override
+    @Cacheable(value = "products", key = "#wineryId")
     public List<ProductDTOGet> getProductsByWineryId(Integer wineryId) throws ResourceNotFoundException {
         // Fetch products associated with the Winery ID using the query method
         List<ProductDTOGet> productDTOs = productRepository.findProductsByWineryId(wineryId);
@@ -148,6 +154,7 @@ public class ProductServiceImpl implements IProductService {
      * @return List of products.
      */
     @Override
+    @Cacheable(value = "products", key = "#varietyId")
     public List<ProductDTOGet> getProductsByVarietyId(Integer varietyId) throws ResourceNotFoundException {
         // Fetch products associated with the Variety ID using the query method
         List<ProductDTOGet> productDTOs = productRepository.findProductsByVarietyId(varietyId);
@@ -165,6 +172,7 @@ public class ProductServiceImpl implements IProductService {
      * @return List of products.
      */
     @Override
+    @Cacheable(value = "products", key = "#typeId")
     public List<ProductDTOGet> getProductsByTypeId(Integer typeId) throws ResourceNotFoundException {
         // Fetch products associated with the Type ID using the query method
         List<ProductDTOGet> productDTOs = productRepository.findProductsByTypeId(typeId);
@@ -204,6 +212,7 @@ public class ProductServiceImpl implements IProductService {
      * @return The created product.
      */
     @Override
+    @CacheEvict(value = "products", allEntries = true)
     public ProductDTO createProduct(ProductDTO productDTO) throws BadRequestException, ResourceNotFoundException {
         // Validate the input DTO
         validateProductDTO(productDTO);
@@ -224,6 +233,7 @@ public class ProductServiceImpl implements IProductService {
      * @return The updated product.
      */
     @Override
+    @CacheEvict(value = "products", allEntries = true)
     public ProductDTO updateProduct(ProductDTO productDTO) throws BadRequestException, ResourceNotFoundException {
         // Validate the input DTO
         validateProductDTO(productDTO);
@@ -258,6 +268,7 @@ public class ProductServiceImpl implements IProductService {
      * @param productId ID of the product to be deleted.
      */
     @Override
+    @CacheEvict(value = "products", allEntries = true)
     public void deleteProduct(Integer productId) throws ResourceNotFoundException {
         // Check if the product exists
         Product existingProduct = productRepository.findById(productId)

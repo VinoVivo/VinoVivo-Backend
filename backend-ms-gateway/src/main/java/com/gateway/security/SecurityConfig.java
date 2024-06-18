@@ -28,7 +28,15 @@ public class SecurityConfig {
                                 "/ms-commerce/variety/all",
                                 "/ms-commerce/variety/id/**",
                                 "/ms-commerce/type/all",
-                                "/ms-commerce/type/id/**").permitAll()
+                                "/ms-commerce/type/id/**",
+                                "/ms-commerce/swagger-ui/**",
+                                "/ms-commerce/v3/api-docs/**",
+                                "/ms-commerce/swagger-ui.html",
+                                "/ms-commerce/swagger-ui/index.html",
+                                "/ms-users/swagger-ui/**",
+                                "/ms-users/v3/api-docs/**",
+                                "/ms-users/swagger-ui.html",
+                                "/ms-users/swagger-ui/index.html").permitAll()
                         .anyExchange().authenticated())
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
         http.csrf(ServerHttpSecurity.CsrfSpec::disable);

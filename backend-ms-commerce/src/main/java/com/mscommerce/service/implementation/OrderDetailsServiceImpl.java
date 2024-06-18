@@ -13,17 +13,27 @@ import com.mscommerce.models.Product;
 import com.mscommerce.repositories.jpa.OrderDetailsRepository;
 import com.mscommerce.repositories.jpa.OrderRepository;
 import com.mscommerce.repositories.jpa.ProductRepository;
+import com.mscommerce.security.KeycloakService;
 import com.mscommerce.service.IOrderDetailsService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class OrderDetailsServiceImpl implements IOrderDetailsService {
 
@@ -33,11 +43,22 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
 
     private final OrderServiceImpl orderService;
 
+    private final KeycloakService keycloakService;
+
+    @Value("${spring.mail.username}")
+    String vinoVivoEmail;
+
+    @Value("${proyecto.mail-on}")
+    String emailOn;
+
+    private final JavaMailSender mailSender;
+
     /**
      * Fetches all order details for administrators.
      * @return List of all order details.
      */
     @Override
+    @Cacheable(value = "orderDetails", key = "#root.method.name")
     public List<OrderDetailsDTO> adminGetAllOrderDetails() throws ResourceNotFoundException {
         // Fetch all order details from the repository
         List<OrderDetails> orderDetailsList = orderDetailsRepository.findAll();
@@ -53,10 +74,10 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
      * @return List of user's order details.
      */
     @Override
+    @Cacheable(value = "orderDetails", key = "#root.method.name")
     public List<OrderDetailsDTO> getAllOrderDetails() throws ResourceNotFoundException {
         // Get the user ID from Keycloak Principal
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String idCustomer = authentication.getName();
+        String idCustomer = keycloakService.getCustomerIdFromAuthentication();
 
         // Fetch all orders for the logged-in user
         List<Order> userOrders = orderRepository.findByIdCustomer(idCustomer);
@@ -81,10 +102,10 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
      * @return List of order details for the specified order.
      */
     @Override
+    @Cacheable(value = "orderDetails", key = "#orderId")
     public List<OrderDetailsDTO> getOrderDetailsByOrderId(Integer orderId) throws ResourceNotFoundException {
         // Get the user ID from Keycloak Principal
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String idCustomer = authentication.getName();
+        String idCustomer = keycloakService.getCustomerIdFromAuthentication();
 
         // Fetch the order by orderId
         Order order = orderService.getOrderById(orderId);
@@ -110,6 +131,7 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
      * @return The fetched order detail.
      */
     @Override
+    @Cacheable(value = "orderDetails", key = "#orderDetailsId")
     public OrderDetailsDTO adminGetOrderDetailsById(Integer orderDetailsId) throws ResourceNotFoundException {
         // Fetch the order details by ID from the repository
         OrderDetails orderDetails = getOrderDetailsById(orderDetailsId);
@@ -125,6 +147,10 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
      */
     @Override
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "orderDetails", allEntries = true),
+            @CacheEvict(value = "orders", allEntries = true)
+    })
     public OrderDetailsDTO adminCreateOrderDetails(OrderDetailsDTO orderDetailsDTO) throws BadRequestException, ResourceNotFoundException {
         // Validate the input DTO
         validateOrderDetailsDTO(orderDetailsDTO);
@@ -163,13 +189,16 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
      */
     @Override
     @Transactional
-    public OrderDetailsDTO createOrderDetailsToExistingOrder(OrderDetailsDTOAddition orderDetailsDTOAddition) throws BadRequestException, ResourceNotFoundException {
+    @Caching(evict = {
+            @CacheEvict(value = "orderDetails", allEntries = true),
+            @CacheEvict(value = "orders", allEntries = true)
+    })
+    public OrderDetailsDTO createOrderDetailsToExistingOrder(OrderDetailsDTOAddition orderDetailsDTOAddition) throws BadRequestException, ResourceNotFoundException, MessagingException, UnsupportedEncodingException {
         // Validate the input DTO
         validateOrderDetailsDTOAddition(orderDetailsDTOAddition);
 
-        // Get the user ID from the authentication context
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String idCustomer = authentication.getName();
+        // Get the user ID from Keycloak Principal
+        String idCustomer = keycloakService.getCustomerIdFromAuthentication();
 
         // Fetch the order by ID from the repository
         Order order = orderService.getOrderById(orderDetailsDTOAddition.getIdOrder());
@@ -214,6 +243,11 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
         // Save the updated product to the repository
         productRepository.save(product);
 
+        // Send order details creation email
+        if(emailOn.equals("true")) {
+            sendOrderDetailsCreationEmail(order, savedOrderDetails, updatedTotalPrice);
+        }
+
         // Return the saved OrderDetails entity as a DTO
         return new OrderDetailsDTO(
                 savedOrderDetails.getId(),
@@ -231,6 +265,10 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
      */
     @Override
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "orderDetails", allEntries = true),
+            @CacheEvict(value = "orders", allEntries = true)
+    })
     public OrderDetailsDTO adminUpdateOrderDetails(OrderDetailsDTO orderDetailsDTO) throws BadRequestException, ResourceNotFoundException {
         // Validate the input DTO
         validateOrderDetailsDTO(orderDetailsDTO);
@@ -246,19 +284,19 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
         Double oldOrderDetailPrice = existingOrderDetails.getPrice() * existingOrderDetails.getQuantity();
 
         // Convert the DTO to an OrderDetails entity
-        existingOrderDetails = convertDTOToOrderDetails(orderDetailsDTO);
+        OrderDetails updatedOrderDetails = convertDTOToOrderDetails(orderDetailsDTO);
 
         // Calculate the new price of the order detail
-        Double newOrderDetailPrice = existingOrderDetails.getPrice() * existingOrderDetails.getQuantity();
+        Double newOrderDetailPrice = updatedOrderDetails.getPrice() * updatedOrderDetails.getQuantity();
 
         // Calculate the price difference
         Double priceDifference = newOrderDetailPrice - oldOrderDetailPrice;
 
         // Fetch the product
-        Product product = existingOrderDetails.getProduct();
+        Product product = updatedOrderDetails.getProduct();
 
         // Calculate the quantity difference
-        int quantityDifference = existingOrderDetails.getQuantity() - orderDetailsDTO.getQuantity();
+        int quantityDifference = updatedOrderDetails.getQuantity() - orderDetailsDTO.getQuantity();
 
         // Calculate the new stock
         int newStock = product.getStock() + quantityDifference;
@@ -275,7 +313,7 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
         productRepository.save(product);
 
         // Save the updated order details to the repository
-        OrderDetails savedOrderDetails = orderDetailsRepository.save(existingOrderDetails);
+        OrderDetails savedOrderDetails = orderDetailsRepository.save(updatedOrderDetails);
 
         // Calculate the updated total price of the order
         Double updatedTotalPrice = oldTotalPrice + priceDifference;
@@ -294,13 +332,16 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
      */
     @Override
     @Transactional
-    public OrderDetailsDTO updateOrderDetails(OrderDetailsDTOUpdate orderDetailsDTOUpdate) throws BadRequestException, ResourceNotFoundException {
+    @Caching(evict = {
+            @CacheEvict(value = "orderDetails", allEntries = true),
+            @CacheEvict(value = "orders", allEntries = true)
+    })
+    public OrderDetailsDTO updateOrderDetails(OrderDetailsDTOUpdate orderDetailsDTOUpdate) throws BadRequestException, ResourceNotFoundException, MessagingException, UnsupportedEncodingException {
         // Validate the input DTO
         validateOrderDetailsDTOUpdate(orderDetailsDTOUpdate);
 
-        // Get the user ID from the authentication context
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String idCustomer = authentication.getName();
+        // Get the user ID from Keycloak Principal
+        String idCustomer = keycloakService.getCustomerIdFromAuthentication();
 
         // Fetch the existing order details by ID from the repository
         OrderDetails existingOrderDetails = getOrderDetailsById(orderDetailsDTOUpdate.getId());
@@ -338,27 +379,31 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
         // Save the updated product to the repository
         productRepository.save(product);
 
+        // Calculate the old total price of the order detail
+        Double oldOrderDetailPrice = existingOrderDetails.getPrice() * existingOrderDetails.getQuantity();
+
         // Update the quantity of the order details
         existingOrderDetails.setQuantity(orderDetailsDTOUpdate.getQuantity());
 
+        // Calculate the new total price of the order detail
+        Double newOrderDetailPrice = product.getPrice() * orderDetailsDTOUpdate.getQuantity();
+
         // Save the updated order details to the repository
         OrderDetails savedOrderDetails = orderDetailsRepository.save(existingOrderDetails);
-
-        // Calculate the old total price of the order and the old price of the order detail
-        Double oldTotalPrice = existingOrder.getTotalPrice();
-        Double oldOrderDetailPrice = existingOrderDetails.getPrice() * existingOrderDetails.getQuantity();
-
-        // Calculate the new price of the order detail
-        Double newOrderDetailPrice = product.getPrice() * orderDetailsDTOUpdate.getQuantity();
 
         // Calculate the price difference
         Double priceDifference = newOrderDetailPrice - oldOrderDetailPrice;
 
         // Calculate the updated total price of the order
-        Double updatedTotalPrice = oldTotalPrice + priceDifference;
+        Double updatedTotalPrice = existingOrder.getTotalPrice() + priceDifference;
 
         // Update the total price of the order in the repository
-        orderRepository.updateTotalPriceById(updatedTotalPrice, existingOrder.getId());
+        orderRepository.updateTotalPriceById(updatedTotalPrice, orderDetailsDTOUpdate.getIdOrder());
+
+        // Send order details update email
+        if(emailOn.equals("true")) {
+            sendOrderDetailsUpdateEmail(existingOrder, savedOrderDetails, updatedTotalPrice);
+        }
 
         // Convert the updated order details back to a DTO and return it
         return convertOrderDetailsToDTO(savedOrderDetails);
@@ -370,6 +415,10 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
      */
     @Override
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "orderDetails", allEntries = true),
+            @CacheEvict(value = "orders", allEntries = true)
+    })
     public void adminForceDeleteOrderDetails(Integer orderDetailsId) throws ResourceNotFoundException {
         // Fetch the existing order details by ID from the repository
         OrderDetails existingOrderDetails = getOrderDetailsById(orderDetailsId);
@@ -422,6 +471,10 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
      */
     @Override
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "orderDetails", allEntries = true),
+            @CacheEvict(value = "orders", allEntries = true)
+    })
     public void adminDeleteOrderDetails(Integer orderDetailsId) throws ResourceNotFoundException {
         // Fetch the order details by ID from the repository
         OrderDetails existingOrderDetails = getOrderDetailsById(orderDetailsId);
@@ -461,10 +514,13 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
      */
     @Override
     @Transactional
-    public void deleteOrderDetails(Integer orderDetailsId) throws ResourceNotFoundException {
-        // Get the user ID from the authentication context
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String idCustomer = authentication.getName();
+    @Caching(evict = {
+            @CacheEvict(value = "orderDetails", allEntries = true),
+            @CacheEvict(value = "orders", allEntries = true)
+    })
+    public void deleteOrderDetails(Integer orderDetailsId) throws ResourceNotFoundException, MessagingException, UnsupportedEncodingException {
+        // Get the user ID from Keycloak Principal
+        String idCustomer = keycloakService.getCustomerIdFromAuthentication();
 
         // Fetch the existing order details by ID from the repository
         OrderDetails existingOrderDetails = getOrderDetailsById(orderDetailsId);
@@ -489,6 +545,8 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
         // Fetch all order details associated with the order
         List<OrderDetails> orderDetailsList = orderDetailsRepository.findAllByIdOrder(associatedOrder.getId());
 
+        Double updatedTotalPrice = 0.0;
+
         // If there are no other order details associated with the order
         if (orderDetailsList.size() == 1) {
             // Delete the order details and the associated order
@@ -496,13 +554,18 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
             orderRepository.delete(associatedOrder);
         } else {
             // Calculate the updated total price of the order
-            Double updatedTotalPrice = associatedOrder.getTotalPrice() - (existingOrderDetails.getPrice() * existingOrderDetails.getQuantity());
+            updatedTotalPrice = associatedOrder.getTotalPrice() - (existingOrderDetails.getPrice() * existingOrderDetails.getQuantity());
 
             // Update the total price of the order in the repository
             orderRepository.updateTotalPriceById(updatedTotalPrice, associatedOrder.getId());
 
             // Delete the order details
             orderDetailsRepository.delete(existingOrderDetails);
+        }
+
+        // Send order details deletion email
+        if(emailOn.equals("true")) {
+            sendOrderDetailsDeletionEmail(associatedOrder, existingOrderDetails, updatedTotalPrice);
         }
     }
 
@@ -548,6 +611,151 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService {
     private OrderDetails getOrderDetailsById(Integer orderDetailsId) throws ResourceNotFoundException {
         return orderDetailsRepository.findById(orderDetailsId)
                 .orElseThrow(() -> new ResourceNotFoundException("OrderDetails not found with ID: " + orderDetailsId));
+    }
+
+    /**
+     * Sends an email to the customer when a new OrderDetails is created.
+     * @param order The order associated with the OrderDetails.
+     * @param orderDetails The OrderDetails that was created.
+     */
+    private void sendOrderDetailsCreationEmail(Order order, OrderDetails orderDetails, Double totalPrice) throws MessagingException, UnsupportedEncodingException {
+        String username = keycloakService.getUsernameFromKeycloak();
+
+        String toAddress = order.getOrderEmail();
+        String fromAddress = vinoVivoEmail;
+        String senderName = "Vino Vivo";
+        String subject = "Creación de detalles de pedido en Vino Vivo";
+        String content = "Hola [[name]],<br><br>"
+                + "Se ha añadido un nuevo detalle a tu pedido:<br><br>"
+                + "ID del pedido: [[orderId]]<br>"
+                + "Precio total del pedido: [[totalPrice]]<br><br>"
+                + "<b>Nuevo detalle del pedido:</b><br>"
+                + "ID del detalle del pedido: [[orderDetailsId]]<br>"
+                + "Producto: [[productName]]<br>"
+                + "Cantidad: [[quantity]]<br>"
+                + "Precio por unidad: [[price]]<br>"
+                + "Precio total del detalle: [[totalDetailPrice]]<br><br>"
+                + "Gracias,<br>"
+                + "Vino Vivo";
+
+        Double totalDetailPrice = orderDetails.getQuantity() * orderDetails.getPrice();
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        content = content.replace("[[name]]", username);
+        content = content.replace("[[orderId]]", order.getId().toString());
+        content = content.replace("[[totalPrice]]", totalPrice.toString());
+        content = content.replace("[[orderDetailsId]]", orderDetails.getId().toString());
+        content = content.replace("[[productName]]", orderDetails.getProduct().getName());
+        content = content.replace("[[quantity]]", String.valueOf(orderDetails.getQuantity()));
+        content = content.replace("[[price]]", orderDetails.getPrice().toString());
+        content = content.replace("[[totalDetailPrice]]", totalDetailPrice.toString());
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
+    }
+
+    /**
+     * Sends an email to the customer when an existing OrderDetails is updated.
+     * @param order The order associated with the OrderDetails.
+     * @param orderDetails The OrderDetails that was updated.
+     */
+    private void sendOrderDetailsUpdateEmail(Order order, OrderDetails orderDetails, Double totalPrice) throws MessagingException, UnsupportedEncodingException {
+        String username = keycloakService.getUsernameFromKeycloak();
+
+        String toAddress = order.getOrderEmail();
+        String fromAddress = vinoVivoEmail;
+        String senderName = "Vino Vivo";
+        String subject = "Actualización de detalles de pedido en Vino Vivo";
+        String content = "Hola [[name]],<br><br>"
+                + "Se ha actualizado un detalle de tu pedido:<br><br>"
+                + "ID del pedido: [[orderId]]<br>"
+                + "Precio total del pedido: [[totalPrice]]<br><br>"
+                + "<b>Detalle actualizado del pedido:</b><br>"
+                + "ID del detalle del pedido: [[orderDetailsId]]<br>"
+                + "Producto: [[productName]]<br>"
+                + "Cantidad: [[quantity]]<br>"
+                + "Precio por unidad: [[price]]<br>"
+                + "Precio total del detalle: [[totalDetailPrice]]<br><br>"
+                + "Gracias,<br>"
+                + "Vino Vivo";
+
+        Double totalDetailPrice = orderDetails.getQuantity() * orderDetails.getPrice();
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        content = content.replace("[[name]]", username);
+        content = content.replace("[[orderId]]", order.getId().toString());
+        content = content.replace("[[totalPrice]]", totalPrice.toString());
+        content = content.replace("[[orderDetailsId]]", orderDetails.getId().toString());
+        content = content.replace("[[productName]]", orderDetails.getProduct().getName());
+        content = content.replace("[[quantity]]", String.valueOf(orderDetails.getQuantity()));
+        content = content.replace("[[price]]", orderDetails.getPrice().toString());
+        content = content.replace("[[totalDetailPrice]]", totalDetailPrice.toString());
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
+    }
+
+    /**
+     * Sends an email to the customer when an existing OrderDetails is deleted.
+     * @param order The order associated with the OrderDetails.
+     * @param orderDetails The OrderDetails that was deleted.
+     */
+    private void sendOrderDetailsDeletionEmail(Order order, OrderDetails orderDetails, Double totalPrice) throws MessagingException,
+            UnsupportedEncodingException {
+        String username = keycloakService.getUsernameFromKeycloak();
+
+        String toAddress = order.getOrderEmail();
+        String fromAddress = vinoVivoEmail;
+        String senderName = "Vino Vivo";
+        String subject = "Eliminación de detalles de pedido en Vino Vivo";
+        String content = "Hola [[name]],<br><br>"
+                + ":Se ha eliminado un detalle de tu pedido:<br><br>"
+                + "ID del pedido: [[orderId]]<br>"
+                + "Precio total del pedido: [[totalPrice]]<br><br>"
+                + "<b>Detalle eliminado del pedido:</b><br>"
+                + "ID del detalle del pedido: [[orderDetailsId]]<br>"
+                + "Producto: [[productName]]<br>"
+                + "Cantidad: [[quantity]]<br>"
+                + "Precio por unidad: [[price]]<br>"
+                + "Precio total del detalle: [[totalDetailPrice]]<br><br>"
+                + "Gracias,<br>"
+                + "Vino Vivo";
+
+        Double totalDetailPrice = orderDetails.getQuantity() * orderDetails.getPrice();
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        content = content.replace("[[name]]", username);
+        content = content.replace("[[orderId]]", order.getId().toString());
+        content = content.replace("[[totalPrice]]", totalPrice.toString());
+        content = content.replace("[[orderDetailsId]]", orderDetails.getId().toString());
+        content = content.replace("[[productName]]", orderDetails.getProduct().getName());
+        content = content.replace("[[quantity]]", String.valueOf(orderDetails.getQuantity()));
+        content = content.replace("[[price]]", orderDetails.getPrice().toString());
+        content = content.replace("[[totalDetailPrice]]", totalDetailPrice.toString());
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
     }
 
     // Validation methods

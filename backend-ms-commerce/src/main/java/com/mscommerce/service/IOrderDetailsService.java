@@ -6,7 +6,9 @@ import com.mscommerce.exception.UnauthorizedAccessException;
 import com.mscommerce.models.DTO.orderDetails.OrderDetailsDTO;
 import com.mscommerce.models.DTO.orderDetails.OrderDetailsDTOAddition;
 import com.mscommerce.models.DTO.orderDetails.OrderDetailsDTOUpdate;
+import jakarta.mail.MessagingException;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface IOrderDetailsService {
@@ -21,16 +23,16 @@ public interface IOrderDetailsService {
 
     OrderDetailsDTO adminCreateOrderDetails(OrderDetailsDTO orderDetailsDTO) throws BadRequestException, ResourceNotFoundException;
 
-    OrderDetailsDTO createOrderDetailsToExistingOrder(OrderDetailsDTOAddition orderDetailsDTOAddition) throws BadRequestException, ResourceNotFoundException;
+    OrderDetailsDTO createOrderDetailsToExistingOrder(OrderDetailsDTOAddition orderDetailsDTOAddition) throws BadRequestException, ResourceNotFoundException, MessagingException, UnsupportedEncodingException;
 
     OrderDetailsDTO adminUpdateOrderDetails(OrderDetailsDTO orderDetailsDTO) throws BadRequestException, ResourceNotFoundException;
 
-    OrderDetailsDTO updateOrderDetails(OrderDetailsDTOUpdate orderDetailsDTOUpdate) throws BadRequestException, ResourceNotFoundException, UnauthorizedAccessException;
+    OrderDetailsDTO updateOrderDetails(OrderDetailsDTOUpdate orderDetailsDTOUpdate) throws BadRequestException, ResourceNotFoundException, UnauthorizedAccessException, MessagingException, UnsupportedEncodingException;
 
     void adminForceDeleteOrderDetails(Integer orderDetailsId) throws ResourceNotFoundException;
 
     void adminDeleteOrderDetails(Integer orderDetailsId) throws ResourceNotFoundException;
 
-    void deleteOrderDetails(Integer orderDetailsId) throws ResourceNotFoundException, UnauthorizedAccessException;
+    void deleteOrderDetails(Integer orderDetailsId) throws ResourceNotFoundException, UnauthorizedAccessException, MessagingException, UnsupportedEncodingException;
 
 }

@@ -14,14 +14,24 @@ import com.mscommerce.models.Product;
 import com.mscommerce.repositories.jpa.OrderDetailsRepository;
 import com.mscommerce.repositories.jpa.OrderRepository;
 import com.mscommerce.repositories.jpa.ProductRepository;
+import com.mscommerce.security.KeycloakService;
 import com.mscommerce.service.IOrderService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,13 +45,24 @@ public class OrderServiceImpl implements IOrderService {
 
     private final OrderDetailsRepository orderDetailsRepository;
 
+    private final KeycloakService keycloakService;
+
     private final CartServiceImpl cartServiceImpl;
+
+    @Value("${spring.mail.username}")
+    String vinoVivoEmail;
+
+    @Value("${proyecto.mail-on}")
+    String emailOn;
+
+    private final JavaMailSender mailSender;
 
     /**
      * Fetches all orders for administrators.
      * @return List of all orders.
      */
     @Override
+    @Cacheable(value = "orders", key = "#root.method.name")
     public List<OrderDTO> adminGetAllOrders() {
         // Fetch all orders from the repository
         List<Order> orders = orderRepository.findAll();
@@ -57,10 +78,10 @@ public class OrderServiceImpl implements IOrderService {
      * @return List of user's orders.
      */
     @Override
+    @Cacheable(value = "orders", key = "#root.method.name")
     public List<OrderDTO> getAllOrders() {
         // Get the user ID from Keycloak Principal
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String idCustomer = authentication.getName();
+        String idCustomer = keycloakService.getCustomerIdFromAuthentication();
 
         // Fetch all orders for the logged-in user
         List<Order> orders = orderRepository.findByIdCustomer(idCustomer);
@@ -77,6 +98,7 @@ public class OrderServiceImpl implements IOrderService {
      * @return The fetched order.
      */
     @Override
+    @Cacheable(value = "orders", key = "#orderId")
     public OrderDTO adminGetOrderById(Integer orderId) throws ResourceNotFoundException {
         // Check if the order exists
         Order existingOrder = getOrderById(orderId);
@@ -91,12 +113,14 @@ public class OrderServiceImpl implements IOrderService {
      * @return The created order.
      */
     @Override
+    @CacheEvict(value = "orders", allEntries = true)
     public OrderDTO adminCreateOrder(OrderDTO orderDTO) throws BadRequestException {
         // Validate the input DTO
         validateOrderDTO(orderDTO);
 
         // Convert the DTO to an Order entity
         Order orderToStore = convertOrderDTOToOrder(orderDTO);
+        orderToStore.setOrderDate(LocalDate.now());
 
         // Save the Order entity to the repository
         Order savedOrder = orderRepository.save(orderToStore);
@@ -113,13 +137,13 @@ public class OrderServiceImpl implements IOrderService {
      */
     @Override
     @Transactional
-    public OrderDTO createOrder(OrderDTORequest orderDTORequest) throws BadRequestException, ResourceNotFoundException, InsufficientStockException {
+    @CacheEvict(value = "orders", allEntries = true)
+    public OrderDTO createOrder(OrderDTORequest orderDTORequest) throws BadRequestException, ResourceNotFoundException, InsufficientStockException, MessagingException, UnsupportedEncodingException {
         // Validate the input DTO
         validateOrderDTORequest(orderDTORequest);
 
-        // Get the user ID from the authentication context
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String idCustomer = authentication.getName();
+        // Get the user ID from Keycloak Principal
+        String idCustomer = keycloakService.getCustomerIdFromAuthentication();
 
         // Calculate the total price
         Double totalPrice = calculateTotalPrice(orderDTORequest.getOrderDetailsDTORequests());
@@ -130,6 +154,7 @@ public class OrderServiceImpl implements IOrderService {
         order.setTotalPrice(totalPrice);
         order.setShippingAddress(orderDTORequest.getShippingAddress());
         order.setOrderEmail(orderDTORequest.getOrderEmail());
+        order.setOrderDate(LocalDate.now());
 
         // Save the Order entity
         Order savedOrder = orderRepository.save(order);
@@ -163,6 +188,11 @@ public class OrderServiceImpl implements IOrderService {
         // Clean the cart
         cartServiceImpl.cleanCart();
 
+        // Send order confirmation email
+        if(emailOn.equals("true")) {
+            sendOrderConfirmationEmail(savedOrder);
+        }
+
         // Convert the saved Order entity to a DTO and return
         return convertOrderToOrderDTO(savedOrder);
     }
@@ -174,6 +204,7 @@ public class OrderServiceImpl implements IOrderService {
      */
     @Override
     @Transactional
+    @CacheEvict(value = "orders", allEntries = true)
     public OrderDTO adminUpdateOrder(OrderDTO orderDTO) throws BadRequestException, ResourceNotFoundException {
         // Validate the input DTO
         validateOrderDTO(orderDTO);
@@ -189,6 +220,7 @@ public class OrderServiceImpl implements IOrderService {
         existingOrder.setTotalPrice(updatedOrder.getTotalPrice());
         existingOrder.setShippingAddress(updatedOrder.getShippingAddress());
         existingOrder.setOrderEmail(updatedOrder.getOrderEmail());
+        existingOrder.setOrderDate(updatedOrder.getOrderDate());
 
         // Save the updated order
         Order savedOrder = orderRepository.save(existingOrder);
@@ -204,13 +236,13 @@ public class OrderServiceImpl implements IOrderService {
      */
     @Override
     @Transactional
-    public OrderDTO updateOrder(OrderDTOUpdate orderDTO) throws BadRequestException, ResourceNotFoundException {
+    @CacheEvict(value = "orders", allEntries = true)
+    public OrderDTO updateOrder(OrderDTOUpdate orderDTO) throws BadRequestException, ResourceNotFoundException, MessagingException, UnsupportedEncodingException {
         // Validate the input DTO
         validateOrderDTOUpdate(orderDTO);
 
         // Get the user ID from Keycloak Principal
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String idCustomer = authentication.getName();
+        String idCustomer = keycloakService.getCustomerIdFromAuthentication();
 
         // Check if the order exists
         Order existingOrder = getOrderById(orderDTO.getId());
@@ -227,6 +259,11 @@ public class OrderServiceImpl implements IOrderService {
         // Save the updated order
         Order savedOrder = orderRepository.save(existingOrder);
 
+        // Send order update email
+        if(emailOn.equals("true")) {
+            sendOrderUpdateEmail(savedOrder);
+        }
+
         // Convert the updated order back to DTO and return
         OrderDTO updatedOrderDTO = new OrderDTO();
         updatedOrderDTO.setId(savedOrder.getId());
@@ -234,6 +271,7 @@ public class OrderServiceImpl implements IOrderService {
         updatedOrderDTO.setTotalPrice(savedOrder.getTotalPrice());
         updatedOrderDTO.setShippingAddress(savedOrder.getShippingAddress());
         updatedOrderDTO.setOrderEmail(savedOrder.getOrderEmail());
+        updatedOrderDTO.setOrderDate(savedOrder.getOrderDate());
 
         return updatedOrderDTO;
     }
@@ -244,6 +282,10 @@ public class OrderServiceImpl implements IOrderService {
      */
     @Override
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "orderDetails", allEntries = true),
+            @CacheEvict(value = "orders", allEntries = true)
+    })
     public void adminDeleteOrder(Integer orderId) throws ResourceNotFoundException {
         // Check if the order exists
         Order existingOrder = getOrderById(orderId);
@@ -274,10 +316,13 @@ public class OrderServiceImpl implements IOrderService {
      */
     @Override
     @Transactional
-    public void deleteOrder(Integer orderId) throws ResourceNotFoundException {
+    @Caching(evict = {
+            @CacheEvict(value = "orderDetails", allEntries = true),
+            @CacheEvict(value = "orders", allEntries = true)
+    })
+    public void deleteOrder(Integer orderId) throws ResourceNotFoundException, MessagingException, UnsupportedEncodingException {
         // Get the user ID from Keycloak Principal
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String idCustomer = authentication.getName();
+        String idCustomer = keycloakService.getCustomerIdFromAuthentication();
 
         // Check if the order exists
         Order existingOrder = getOrderById(orderId);
@@ -305,6 +350,11 @@ public class OrderServiceImpl implements IOrderService {
 
         // Delete the order from the repository
         orderRepository.delete(existingOrder);
+
+        // Send order deletion email
+        if(emailOn.equals("true")) {
+            sendOrderDeletionEmail(existingOrder, orderDetailsList);
+        }
     }
 
     /**
@@ -336,6 +386,7 @@ public class OrderServiceImpl implements IOrderService {
             orderDTO.setTotalPrice(order.getTotalPrice());
             orderDTO.setShippingAddress(order.getShippingAddress());
             orderDTO.setOrderEmail(order.getOrderEmail());
+            orderDTO.setOrderDate(order.getOrderDate());
             return orderDTO;
     }
 
@@ -365,6 +416,172 @@ public class OrderServiceImpl implements IOrderService {
             totalPrice += orderDetailDTO.getQuantity() * product.getPrice();
         }
         return totalPrice;
+    }
+
+    /**
+     * Sends an order confirmation email to the customer.
+     * @param order The order for which the confirmation email is to be sent.
+     */
+    private void sendOrderConfirmationEmail(Order order) throws MessagingException, UnsupportedEncodingException {
+        String username = keycloakService.getUsernameFromKeycloak();
+
+        String toAddress = order.getOrderEmail();
+        String fromAddress = vinoVivoEmail;
+        String senderName = "Vino Vivo";
+        String subject = "Confirmación de pedido de Vino Vivo";
+        String content = "Hola [[name]],<br><br>"
+                + "Tu pedido ha sido realizado con éxito:<br><br>"
+                + "ID del pedido: [[orderId]]<br>"
+                + "Precio total: $[[totalPrice]]<br>"
+                + "Dirección de envío: [[shippingAddress]]<br>"
+                + "Fecha del pedido: [[orderDate]]<br><br>"
+                + "<b>Detalles del pedido:</b><br>"
+                + "[[orderDetails]]"
+                + "Gracias por tu compra,<br>"
+                + "Vino Vivo";
+
+        // Fetch the associated order details
+        List<OrderDetails> orderDetailsList = orderDetailsRepository.findByIdOrder(order.getId());
+
+        // Build a string that represents each OrderDetails
+        StringBuilder orderDetailsStringBuilder = new StringBuilder();
+        for (OrderDetails orderDetails : orderDetailsList) {
+            Double totalDetailPrice = orderDetails.getQuantity() * orderDetails.getPrice();
+            orderDetailsStringBuilder.append("Producto: ").append(orderDetails.getProduct().getName())
+                    .append("<br> Cantidad: ").append(orderDetails.getQuantity())
+                    .append("<br> Precio por unidad: $").append(orderDetails.getPrice())
+                    .append("<br> Precio total del detalle: $").append(totalDetailPrice)
+                    .append("<br><br>");
+        }
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        content = content.replace("[[name]]", username);
+        content = content.replace("[[orderId]]", order.getId().toString());
+        content = content.replace("[[totalPrice]]", order.getTotalPrice().toString());
+        content = content.replace("[[shippingAddress]]", order.getShippingAddress());
+        String orderDate = order.getOrderDate() != null ? order.getOrderDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) : "";
+        content = content.replace("[[orderDate]]", orderDate);
+        content = content.replace("[[orderDetails]]", orderDetailsStringBuilder.toString());
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
+    }
+
+    /**
+     * Sends an email to the customer when an existing order is updated.
+     * @param order The order that was updated.
+     */
+    private void sendOrderUpdateEmail(Order order) throws MessagingException, UnsupportedEncodingException {
+        String username = keycloakService.getUsernameFromKeycloak();
+
+        String toAddress = order.getOrderEmail();
+        String fromAddress = vinoVivoEmail;
+        String senderName = "Vino Vivo";
+        String subject = "Actualización de pedido de Vino Vivo";
+        String content = "Hola [[name]],<br><br>"
+                + "Los datos de tu pedido han sido actualizados:<br><br>"
+                + "ID del pedido: [[orderId]]<br>"
+                + "Precio total: $[[totalPrice]]<br>"
+                + "Dirección de envío: [[shippingAddress]]<br>"
+                + "Fecha del pedido: [[orderDate]]<br><br>"
+                + "<b>Detalles del pedido:</b><br>"
+                + "[[orderDetails]]"
+                + "Gracias,<br>"
+                + "Vino Vivo";
+
+        // Fetch the associated order details
+        List<OrderDetails> orderDetailsList = orderDetailsRepository.findByIdOrder(order.getId());
+
+        // Build a string that represents each OrderDetails
+        StringBuilder orderDetailsStringBuilder = new StringBuilder();
+        for (OrderDetails orderDetails : orderDetailsList) {
+            Double totalDetailPrice = orderDetails.getQuantity() * orderDetails.getPrice();
+            orderDetailsStringBuilder.append("Producto: ").append(orderDetails.getProduct().getName())
+                    .append("<br> Cantidad: ").append(orderDetails.getQuantity())
+                    .append("<br> Precio por unidad: $").append(orderDetails.getPrice())
+                    .append("<br> Precio total del detalle: $").append(totalDetailPrice)
+                    .append("<br><br>");
+        }
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        content = content.replace("[[name]]", username);
+        content = content.replace("[[orderId]]", order.getId().toString());
+        content = content.replace("[[totalPrice]]", order.getTotalPrice().toString());
+        content = content.replace("[[shippingAddress]]", order.getShippingAddress());
+        String orderDate = order.getOrderDate() != null ? order.getOrderDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) : "";
+        content = content.replace("[[orderDate]]", orderDate);
+        content = content.replace("[[orderDetails]]", orderDetailsStringBuilder.toString());
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
+    }
+
+    /**
+     * Sends an email to the customer when an existing order is deleted.
+     * @param order The order that was deleted.
+     */
+    private void sendOrderDeletionEmail(Order order, List<OrderDetails> orderDetailsList) throws MessagingException,
+            UnsupportedEncodingException {
+        String username = keycloakService.getUsernameFromKeycloak();
+
+        String toAddress = order.getOrderEmail();
+        String fromAddress = vinoVivoEmail;
+        String senderName = "Vino Vivo";
+        String subject = "Eliminación de pedido de Vino Vivo";
+        String content = "Hola [[name]],<br><br>"
+                + "Tu pedido ha sido eliminado:<br><br>"
+                + "ID del pedido: [[orderId]]<br>"
+                + "Precio total: $[[totalPrice]]<br>"
+                + "Dirección de envío: [[shippingAddress]]<br>"
+                + "Fecha del pedido: [[orderDate]]<br><br>"
+                + "<b>Detalles del pedido:</b><br>"
+                + "[[orderDetails]]"
+                + "Gracias,<br>"
+                + "Vino Vivo";
+
+        // Build a string that represents each OrderDetails
+        StringBuilder orderDetailsStringBuilder = new StringBuilder();
+        for (OrderDetails orderDetails : orderDetailsList) {
+            Double totalDetailPrice = orderDetails.getQuantity() * orderDetails.getPrice();
+            orderDetailsStringBuilder.append("Producto: ").append(orderDetails.getProduct().getName())
+                    .append("<br> Cantidad: ").append(orderDetails.getQuantity())
+                    .append("<br> Precio por unidad: $").append(orderDetails.getPrice())
+                    .append("<br> Precio total del detalle: $").append(totalDetailPrice)
+                    .append("<br><br>");
+        }
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        content = content.replace("[[name]]", username);
+        content = content.replace("[[orderId]]", order.getId().toString());
+        content = content.replace("[[totalPrice]]", order.getTotalPrice().toString());
+        content = content.replace("[[shippingAddress]]", order.getShippingAddress());
+        String orderDate = order.getOrderDate() != null ? order.getOrderDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) : "";
+        content = content.replace("[[orderDate]]", orderDate);
+        content = content.replace("[[orderDetails]]", orderDetailsStringBuilder.toString());
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
     }
 
     // Validation methods

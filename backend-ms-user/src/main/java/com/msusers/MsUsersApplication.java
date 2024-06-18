@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.filter.ForwardedHeaderFilter;
 
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -24,5 +26,10 @@ public class MsUsersApplication {
 			Thread.currentThread().interrupt();
 		}
 		SpringApplication.run(MsUsersApplication.class, args);
+	}
+
+	@Bean
+	ForwardedHeaderFilter forwardedHeaderFilter() {
+		return new ForwardedHeaderFilter();
 	}
 }

@@ -2,7 +2,7 @@
 server:
   port: ${PORT:8081}
 
-## Configuration for App name and Spring Data
+## Configuration for App name and security using OAuth2
 spring:
   application:
     name: ${APP_NAME:ms-users}
@@ -22,6 +22,18 @@ spring:
           keycloak:
             tokenUri: ${KEYCLOAK_TOKEN_URI:https://vinovivo-production.up.railway.app/realms/vino-vivo/protocol/openid-connect/token}
 
+## Configuration for Springdoc
+## This includes the path for API docs and Swagger UI, enabling Swagger UI
+## and specifying the packages to scan for API docs generation
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enable: true
+  packages-to-scan: com.msusers.controller
+
+## Configuration variables for the Keycloak client, server, and realm
 proyecto:
   keycloak:
     serverUrl: ${KEYCLOAK_SERVER_URL:https://vinovivo-production.up.railway.app}

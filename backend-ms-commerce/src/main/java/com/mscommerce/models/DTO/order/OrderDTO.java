@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,4 +23,13 @@ public class OrderDTO {
     private String shippingAddress;
 
     private String orderEmail;
+
+    private String orderDate;
+
+    public void setOrderDate(LocalDate orderDate) {
+        if(orderDate != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            this.orderDate = orderDate.format(formatter);
+        }
+    }
 }

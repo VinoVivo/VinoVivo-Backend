@@ -10,6 +10,7 @@ import com.mscommerce.models.DTO.cart.CartDTORequest;
 import com.mscommerce.models.DTO.cart.CartDTOUpdate;
 import com.mscommerce.repositories.jpa.CartRepository;
 import com.mscommerce.repositories.jpa.ProductRepository;
+import com.mscommerce.security.KeycloakService;
 import com.mscommerce.service.ICartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -27,6 +28,8 @@ public class CartServiceImpl implements ICartService {
     private final CartRepository cartRepository;
 
     private final ProductRepository productRepository;
+
+    private final KeycloakService keycloakService;
 
     private final Integer cartLimit = 10;
 
@@ -52,8 +55,7 @@ public class CartServiceImpl implements ICartService {
     @Override
     public List<CartDTO> getAllCarts() {
         // Get the user ID from Keycloak Principal
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String idCustomer = authentication.getName();
+        String idCustomer = keycloakService.getCustomerIdFromAuthentication();
 
         // Fetch all carts for the logged-in user
         List<Cart> carts = cartRepository.findByIdCustomer(idCustomer);
@@ -120,8 +122,7 @@ public class CartServiceImpl implements ICartService {
         validateCartDTORequest(cartDTORequest);
 
         // Get the user ID from Keycloak Principal
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String idCustomer = authentication.getName();
+        String idCustomer = keycloakService.getCustomerIdFromAuthentication();
 
         // Check if the customer already has 10 products in their cart
         Long productCount = cartRepository.countByIdCustomer(idCustomer);
@@ -207,7 +208,7 @@ public class CartServiceImpl implements ICartService {
      */
     @Override
     @Transactional
-    public CartDTO updateCart(CartDTOUpdate cartDTOUpdate) throws BadRequestException, ResourceNotFoundException, InsufficientStockException {
+    public CartDTO updateCart(CartDTOUpdate cartDTOUpdate) throws BadRequestException, ResourceNotFoundException, InsufficientStockException, UnauthorizedAccessException {
         // Validate the input DTO
         validateCartDTOUpdate(cartDTOUpdate);
 
@@ -215,8 +216,12 @@ public class CartServiceImpl implements ICartService {
         Cart cart = getCartById(cartDTOUpdate.getId());
 
         // Get the user ID from Keycloak Principal
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String idCustomer = authentication.getName();
+        String idCustomer = keycloakService.getCustomerIdFromAuthentication();
+
+        // Check if the cart item belongs to the logged-in user
+        if (!cart.getIdCustomer().equals(idCustomer)) {
+            throw new UnauthorizedAccessException("You are not authorized to update this cart item");
+        }
 
         // Fetch all the existing Cart entities associated with the user
         List<Cart> existingCarts = cartRepository.findByIdCustomer(idCustomer);
@@ -252,7 +257,6 @@ public class CartServiceImpl implements ICartService {
         return convertCartToCartDTO(updatedCart);
     }
 
-
     /**
      * Deletes a specific cart. Intended for administrators.
      * @param cartId ID of the cart to be deleted.
@@ -275,8 +279,7 @@ public class CartServiceImpl implements ICartService {
     @Transactional
     public void deleteCart(Integer cartId) throws ResourceNotFoundException {
         // Get the user ID from Keycloak Principal
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String idCustomer = authentication.getName();
+        String idCustomer = keycloakService.getCustomerIdFromAuthentication();
 
         // Fetch the cart by ID from the repository
         Cart cart = getCartById(cartId);
@@ -295,8 +298,7 @@ public class CartServiceImpl implements ICartService {
     @Transactional
     public void cleanCart() {
         // Get the user ID from Keycloak Principal
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String idCustomer = authentication.getName();
+        String idCustomer = keycloakService.getCustomerIdFromAuthentication();
 
         // Fetch all the existing Cart entities associated with the user
         List<Cart> existingCarts = cartRepository.findByIdCustomer(idCustomer);

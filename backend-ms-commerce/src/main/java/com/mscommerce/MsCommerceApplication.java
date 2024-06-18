@@ -3,11 +3,17 @@ package com.mscommerce;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.filter.ForwardedHeaderFilter;
 
+@Slf4j
+@EnableCaching
 @SpringBootApplication
 @EnableDiscoveryClient
-@Slf4j
+@EnableTransactionManagement
 public class MsCommerceApplication {
 
 	public static void main(String[] args) {
@@ -22,5 +28,10 @@ public class MsCommerceApplication {
 			Thread.currentThread().interrupt();
 		}
 		SpringApplication.run(MsCommerceApplication.class, args);
+	}
+
+	@Bean
+	ForwardedHeaderFilter forwardedHeaderFilter() {
+		return new ForwardedHeaderFilter();
 	}
 }

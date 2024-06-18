@@ -1,5 +1,6 @@
 server:
   port: ${PORT:8090}
+  forward-headers-strategy: framework
         
 ## Classic Eureka configuration
 eureka:
@@ -12,9 +13,15 @@ eureka:
     serviceUrl:
       defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
 
+## Configuration for App name, security using OAuth2 and gateway
 spring:
   application:
     name: ${HOSTNAME:ms-gateway}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:https://vinovivo-production.up.railway.app/realms/vino-vivo/protocol/openid-connect/certs}
   cloud:
     gateway:
       discovery:
@@ -36,11 +43,18 @@ spring:
               - PATCH
               - OPTIONS
 
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:https://vinovivo-production.up.railway.app/realms/vino-vivo/protocol/openid-connect/certs}
+## Configuration for Springdoc
+## This includes the paths for API docs and Swagger UI of each microservice
+springdoc:
+  api-docs:
+    paths:
+      ms-commerce: /ms-commerce/v3/api-docs
+      ms-users: /ms-users/v3/api-docs
+  swagger-ui:
+    paths:
+      ms-commerce: /ms-commerce/swagger-ui.html
+      ms-users: /ms-users/swagger-ui.html
+  enable: true
 
 ## We enable the Actuator API to be able to access <<host>>/actuator/gateway/routes
 ## We expose the routings that have been automatically detected (all)
