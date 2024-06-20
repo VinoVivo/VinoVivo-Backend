@@ -1,0 +1,14 @@
+server:
+  port: ${PORT:8761}
+
+## Eureka Server Configuration
+eureka:
+  instance:
+    hostname: ${EUREKA_HOST:localhost}
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+  server:
+    renewal-percent-threshold: 0.90

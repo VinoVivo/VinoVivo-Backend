@@ -1,0 +1,9 @@
+## Load Balancer must use Railway's private domain name instead of Local IP
+## This value can be obtained in the Railway deployment tab, Settings -> Networking -> Private Networking
+eureka:
+  instance:
+    preferIpAddress: false
+    non-secure-port-enabled: true
+    secure-port-enabled: false
+    non-secure-port: ${server.port}
+    secure-port: 443
