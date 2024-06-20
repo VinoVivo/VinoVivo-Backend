@@ -13,10 +13,18 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="eureka" target="1.5" />
-      <module name="gateway" target="1.5" />
-      <module name="ms-commerce" target="1.5" />
-      <module name="ms-users" target="1.5" />
+      <module name="eureka" target="21" />
+      <module name="gateway" target="21" />
+      <module name="ms-commerce" target="21" />
+      <module name="ms-users" target="21" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="eureka" options="-parameters" />
+      <module name="gateway" options="-parameters" />
+      <module name="ms-commerce" options="-parameters" />
+      <module name="ms-users" options="-parameters" />
+    </option>
   </component>
 </project>
