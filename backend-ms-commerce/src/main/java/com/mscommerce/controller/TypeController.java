@@ -50,6 +50,7 @@ public class TypeController {
     @Operation(summary = "Create a new type", responses = {
             @ApiResponse(responseCode = "201", description = "Successfully created a new type"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
     public ResponseEntity<TypeDTO> createType(@RequestBody TypeDTO typeDTO) throws BadRequestException {
@@ -62,6 +63,7 @@ public class TypeController {
     @Operation(summary = "Update an existing type", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully updated the existing type"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Type not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -74,6 +76,7 @@ public class TypeController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Delete a specific type", responses = {
             @ApiResponse(responseCode = "204", description = "Successfully deleted the specific type"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Type not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })

@@ -30,6 +30,7 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Fetch all products with stock less than a certain amount", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of all products with stock less than the given amount"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
     public ResponseEntity<List<Map<String, Object>>> getAllByStockLessThan(@PathVariable Integer stock) {
@@ -41,6 +42,7 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Fetch top 10 products by order details count and sum stock", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of top 10 products by order details count and sum stock"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
     public ResponseEntity<List<Map<String, Object>>> getTop10ByOrderDetailsCountAndSumStock() {
@@ -52,11 +54,63 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Fetch product count by product type and sum stock", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the product count by product type and sum stock"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
     public ResponseEntity<List<Map<String, Object>>> getCountByProductTypeAndSumStock(@PathVariable Integer typeId) {
         List<Map<String, Object>> counts = productServiceImpl.getCountByProductTypeAndSumStock(typeId);
         return new ResponseEntity<>(counts, HttpStatus.OK);
+    }
+
+    @GetMapping("/quantity-sold/{year}/{typeId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Fetch all products, sorted by quantity sold in descending order, optionally filtered by year and typ",
+            responses = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of all products ordered by the ones that sold more, filtered by year and type"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
+            @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
+    })
+    public ResponseEntity<List<Map<String, Object>>> getAllProductsByYearAndTypeIdAndQuantitySoldDesc(@PathVariable(required = false) Integer year, @PathVariable(required = false) Integer typeId) {
+        List<Map<String, Object>> products = productServiceImpl.getAllProductsByYearAndTypeIdAndQuantitySoldDesc(year, typeId);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/total-revenue/{year}/{typeId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Fetch all products and their total revenue, sorted by total revenue in descending order, optionally filtered by year and type",
+            responses = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of all products and their total sales, filtered by year and type"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
+            @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
+    })
+    public ResponseEntity<List<Map<String, Object>>> getAllProductsByYearAndTypeIdAndTotalRevenueDesc(@PathVariable(required = false) Integer year, @PathVariable(required = false) Integer typeId) {
+        List<Map<String, Object>> products = productServiceImpl.getAllProductsByYearAndTypeIdAndTotalRevenueDesc(year, typeId);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/type-sales/{year}/{typeId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Fetch total sales by product type, sorted by total sales in descending order, optionally filtered by year and type", responses = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved the total sales by product type, filtered by year and type"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
+            @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
+    })
+    public ResponseEntity<List<Map<String, Object>>> getTotalSalesByProductType(@PathVariable(required = false) Integer year, @PathVariable(required = false) Integer typeId) {
+        List<Map<String, Object>> sales = productServiceImpl.getTotalSalesByProductType(year, typeId);
+        return new ResponseEntity<>(sales, HttpStatus.OK);
+    }
+
+    @GetMapping("/stock/{year}/{typeId}/{order}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Fetch all products and their stock, optionally filtered by year and type, ordered by stock"
+            , responses = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of all products and their stock, filtered by year and type, ordered by stock"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
+            @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
+    })
+    public ResponseEntity<List<Map<String, Object>>> getAllByYearAndTypeIdAndStock(@PathVariable(required = false) Integer year, @PathVariable(required = false) Integer typeId, @PathVariable(required = false) String order) {
+        List<Map<String, Object>> products = productServiceImpl.getAllByYearAndTypeIdAndStock(year, typeId, order);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @GetMapping("/type/all")
@@ -97,6 +151,7 @@ public class ProductController {
     @Operation(summary = "Create a new product", responses = {
             @ApiResponse(responseCode = "201", description = "Successfully created a new product"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
     public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) throws BadRequestException, ResourceNotFoundException {
@@ -109,6 +164,7 @@ public class ProductController {
     @Operation(summary = "Update an existing product", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully updated the existing product"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Product not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -121,6 +177,7 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Delete a specific product", responses = {
             @ApiResponse(responseCode = "204", description = "Successfully deleted the specific product"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Product not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -132,6 +189,7 @@ public class ProductController {
     @GetMapping("/winery/{wineryId}")
     @Operation(summary = "Fetch products by winery ID", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of products for the given winery ID"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Products not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -143,6 +201,7 @@ public class ProductController {
     @GetMapping("/variety/{varietyId}")
     @Operation(summary = "Fetch products by variety ID", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of products for the given variety ID"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Products not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -154,6 +213,7 @@ public class ProductController {
     @GetMapping("/type/{typeId}")
     @Operation(summary = "Fetch products by type ID", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of products for the given type ID"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Products not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })

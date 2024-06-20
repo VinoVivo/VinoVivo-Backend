@@ -29,6 +29,7 @@ public class CartController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Fetch all carts for administrators", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of all carts for administrators"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
     public ResponseEntity<List<CartDTO>> adminGetAllCarts() throws ResourceNotFoundException {
@@ -40,6 +41,7 @@ public class CartController {
     @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
     @Operation(summary = "Fetch all carts for the current user", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of all carts for the current user"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
     public ResponseEntity<List<CartDTO>> getAllCarts() throws ResourceNotFoundException {
@@ -51,6 +53,7 @@ public class CartController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Fetch a specific cart by ID for administrators", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the cart with the provided ID for administrators"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Cart not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -64,6 +67,7 @@ public class CartController {
     @Operation(summary = "Create a new cart for administrators", responses = {
             @ApiResponse(responseCode = "201", description = "Successfully created a new cart for administrators"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
     public ResponseEntity<CartDTO> adminCreateCart(@RequestBody CartDTO cartDTO) throws BadRequestException, ResourceNotFoundException {
@@ -76,6 +80,7 @@ public class CartController {
     @Operation(summary = "Create a new cart for the current user", responses = {
             @ApiResponse(responseCode = "201", description = "Successfully created a new cart for the current user"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Resource not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -89,6 +94,7 @@ public class CartController {
     @Operation(summary = "Update an existing cart for administrators", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully updated the existing cart for administrators"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Cart not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -102,6 +108,7 @@ public class CartController {
     @Operation(summary = "Update an existing cart for the current user", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully updated the existing cart for the current user"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Cart not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -114,6 +121,7 @@ public class CartController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Delete a specific cart for administrators", responses = {
             @ApiResponse(responseCode = "204", description = "Successfully deleted the specific cart for administrators"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Cart not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -126,6 +134,7 @@ public class CartController {
     @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
     @Operation(summary = "Delete a specific cart for the current user", responses = {
             @ApiResponse(responseCode = "204", description = "Successfully deleted the specific cart for the current user"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Cart not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -138,6 +147,7 @@ public class CartController {
     @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
     @Operation(summary = "Clean the current user's cart", responses = {
             @ApiResponse(responseCode = "204", description = "Successfully cleaned the current user's cart"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
     public ResponseEntity<Void> cleanCart() {

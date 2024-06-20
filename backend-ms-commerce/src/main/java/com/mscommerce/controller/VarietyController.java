@@ -50,6 +50,7 @@ public class VarietyController {
     @Operation(summary = "Create a new variety", responses = {
             @ApiResponse(responseCode = "201", description = "Successfully created a new variety"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
     public ResponseEntity<VarietyDTO> createVariety(@RequestBody VarietyDTO varietyDTO) throws BadRequestException {
@@ -62,6 +63,7 @@ public class VarietyController {
     @Operation(summary = "Update an existing variety", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully updated the existing variety"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Variety not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -74,6 +76,7 @@ public class VarietyController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Delete a specific variety", responses = {
             @ApiResponse(responseCode = "204", description = "Successfully deleted the specific variety"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Variety not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })

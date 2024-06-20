@@ -26,6 +26,7 @@ public class WineryController {
     @GetMapping("/all")
     @Operation(summary = "Fetch all wineries", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of all wineries"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Wineries not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -37,6 +38,7 @@ public class WineryController {
     @GetMapping("/id/{wineryId}")
     @Operation(summary = "Fetch winery by ID", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the winery with the provided ID"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Winery not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -50,6 +52,7 @@ public class WineryController {
     @Operation(summary = "Create a new winery", responses = {
             @ApiResponse(responseCode = "201", description = "Successfully created a new winery"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
     public ResponseEntity<WineryDTO> createWinery(@RequestBody WineryDTO wineryDTO) throws BadRequestException {
@@ -62,6 +65,7 @@ public class WineryController {
     @Operation(summary = "Update an existing winery", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully updated the existing winery"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Winery not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -74,6 +78,7 @@ public class WineryController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Delete a specific winery", responses = {
             @ApiResponse(responseCode = "204", description = "Successfully deleted the specific winery"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Winery not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })

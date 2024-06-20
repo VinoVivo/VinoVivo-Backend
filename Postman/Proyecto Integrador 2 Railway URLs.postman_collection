@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "a9207ead-18f2-4cfe-a5c3-f2a23ca7b246",
-		"name": "Proyecto Integrador 2 Railway URLs",
+		"_postman_id": "c8a3b1d7-d577-4fe2-b0c7-c381e9b7254c",
+		"name": "Proyecto Integrador 2 Railway URLs2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23378679"
 	},
@@ -496,35 +496,100 @@
 									"name": "Filters",
 									"item": [
 										{
-											"name": "GetTop10Products",
-											"request": {
-												"auth": {
-													"type": "bearer",
-													"bearer": [
-														{
-															"key": "token",
-															"value": "{{KCToken}}",
-															"type": "string"
+											"name": "Old Filters",
+											"item": [
+												{
+													"name": "GetTop10Products",
+													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{KCToken}}",
+																	"type": "string"
+																}
+															]
+														},
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{URLCOMMERCE}}/product/top10",
+															"host": [
+																"{{URLCOMMERCE}}"
+															],
+															"path": [
+																"product",
+																"top10"
+															]
 														}
-													]
+													},
+													"response": []
 												},
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{URLCOMMERCE}}/product/top10",
-													"host": [
-														"{{URLCOMMERCE}}"
-													],
-													"path": [
-														"product",
-														"top10"
-													]
+												{
+													"name": "GetAllByStockLessThan",
+													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{KCToken}}",
+																	"type": "string"
+																}
+															]
+														},
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{URLCOMMERCE}}/product/stock/less/10",
+															"host": [
+																"{{URLCOMMERCE}}"
+															],
+															"path": [
+																"product",
+																"stock",
+																"less",
+																"10"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "GetCountByProductSoldType",
+													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{KCToken}}",
+																	"type": "string"
+																}
+															]
+														},
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{URLCOMMERCE}}/product/type/count/3",
+															"host": [
+																"{{URLCOMMERCE}}"
+															],
+															"path": [
+																"product",
+																"type",
+																"count",
+																"3"
+															]
+														}
+													},
+													"response": []
 												}
-											},
-											"response": []
+											]
 										},
 										{
-											"name": "GetAllByStockLessThan",
+											"name": "GetProductsByStock",
 											"request": {
 												"auth": {
 													"type": "bearer",
@@ -539,22 +604,23 @@
 												"method": "GET",
 												"header": [],
 												"url": {
-													"raw": "{{URLCOMMERCE}}/product/stock/less/10",
+													"raw": "{{URLCOMMERCE}}/product/stock/2023/1/DESC",
 													"host": [
 														"{{URLCOMMERCE}}"
 													],
 													"path": [
 														"product",
 														"stock",
-														"less",
-														"10"
+														"2023",
+														"1",
+														"DESC"
 													]
 												}
 											},
 											"response": []
 										},
 										{
-											"name": "GetCountByProductSoldType",
+											"name": "GetTotalSalesByTypeDESC",
 											"request": {
 												"auth": {
 													"type": "bearer",
@@ -569,15 +635,75 @@
 												"method": "GET",
 												"header": [],
 												"url": {
-													"raw": "{{URLCOMMERCE}}/product/type/count/3",
+													"raw": "{{URLCOMMERCE}}/product/type-sales/2023/1",
 													"host": [
 														"{{URLCOMMERCE}}"
 													],
 													"path": [
 														"product",
-														"type",
-														"count",
-														"3"
+														"type-sales",
+														"2023",
+														"1"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "GetProductsByQuantitySoldDESC",
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{KCToken}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{URLCOMMERCE}}/product/quantity-sold/2023/1",
+													"host": [
+														"{{URLCOMMERCE}}"
+													],
+													"path": [
+														"product",
+														"quantity-sold",
+														"2023",
+														"1"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "GetProductsByTotalRevenueDESC",
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{KCToken}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{URLCOMMERCE}}/product/total-revenue/2023/1",
+													"host": [
+														"{{URLCOMMERCE}}"
+													],
+													"path": [
+														"product",
+														"total-revenue",
+														"2023",
+														"1"
 													]
 												}
 											},
@@ -668,7 +794,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"id\" : 13,\r\n    \"name\": \"VinoTestProyectos\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula accumsan turpis, ut bibendum.\",\r\n    \"image\": \"noImage\",\r\n    \"year\": 1999,\r\n    \"price\": 10.20,\r\n    \"stock\": 3,\r\n    \"idWinery\": 1,\r\n    \"idVariety\": 2,\r\n    \"idType\": 2\r\n}",
+											"raw": "{\r\n    \"id\" : 2,\r\n    \"name\": \"Trumpeter Reserve Pinot Noir\",\r\n    \"description\": \"Intenso color rubí brillante. La nariz está matizada con un vaho floral (violeta) y de fruta fresca (frambuesas). En la boca, estos aromas se vuelven finamente complejos, con acentos ahumados y marcada jugosidad.\",\r\n    \"image\": \"https://imagenes-proyecto-vino.s3.amazonaws.com/Vino_Tinto/Reserva_Cabernet_Sauvignon+Estancia_Mendoza.jpeg\",\r\n    \"year\": 2020,\r\n    \"price\": 10500.0,\r\n    \"stock\": 20,\r\n    \"idWinery\": 2,\r\n    \"idVariety\": 3,\r\n    \"idType\": 3\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -697,7 +823,20 @@
 									"name": "GetAllProduct",
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Origin",
+												"value": "http://localhost:3000",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Access-Control-Request-Method",
+												"value": "GET",
+												"type": "text",
+												"disabled": true
+											}
+										],
 										"url": {
 											"raw": "{{URLCOMMERCE}}/product/type/all",
 											"host": [
@@ -934,14 +1073,14 @@
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "{{URLCOMMERCE}}/order/delete-admin/13",
+											"raw": "{{URLCOMMERCE}}/order/delete-admin/136",
 											"host": [
 												"{{URLCOMMERCE}}"
 											],
 											"path": [
 												"order",
 												"delete-admin",
-												"13"
+												"136"
 											]
 										}
 									},
@@ -1026,7 +1165,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n  \"shippingAddress\": \"12345678 Main Street, Cityville\",\r\n  \"orderEmail\": \"secondexample@example.com\",\r\n  \"orderDetailsDTORequests\": [\r\n    {\r\n      \"idProduct\": 9,\r\n      \"quantity\": 1\r\n    },\r\n    {\r\n      \"idProduct\": 9,\r\n      \"quantity\": 1\r\n    }\r\n  ]\r\n}",
+											"raw": "{\r\n  \"shippingAddress\": \"12345678 Main Street, Cityville\",\r\n  \"orderEmail\": \"voroyax179@lisoren.com\",\r\n  \"orderDetailsDTORequests\": [\r\n    {\r\n      \"idProduct\": 2,\r\n      \"quantity\": 2\r\n    },\r\n    {\r\n      \"idProduct\": 2,\r\n      \"quantity\": 1\r\n    }\r\n  ]\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1062,14 +1201,14 @@
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "{{URLCOMMERCE}}/order/delete/67",
+											"raw": "{{URLCOMMERCE}}/order/delete/160",
 											"host": [
 												"{{URLCOMMERCE}}"
 											],
 											"path": [
 												"order",
 												"delete",
-												"67"
+												"160"
 											]
 										}
 									},
@@ -1092,7 +1231,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"id\" : 21,\r\n    \"shippingAddress\" : \"noAddress\",\r\n    \"orderEmail\" : \"noEmail\"\r\n}",
+											"raw": "{\r\n    \"id\" : 160,\r\n    \"shippingAddress\" : \"noAddress\",\r\n    \"orderEmail\" : \"voroyax179@lisoren.com\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1333,7 +1472,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"id\" : 37,\r\n    \"idOrder\" : 29,\r\n    \"quantity\" : 5\r\n}",
+											"raw": "{\r\n    \"id\" : 196,\r\n    \"idOrder\" : 161,\r\n    \"quantity\" : 5\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1369,7 +1508,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{URLCOMMERCE}}/order-details/all/order-id/24",
+											"raw": "{{URLCOMMERCE}}/order-details/all/order-id/152",
 											"host": [
 												"{{URLCOMMERCE}}"
 											],
@@ -1377,7 +1516,7 @@
 												"order-details",
 												"all",
 												"order-id",
-												"24"
+												"152"
 											]
 										}
 									},
@@ -1427,14 +1566,14 @@
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "{{URLCOMMERCE}}/order-details/delete/78",
+											"raw": "{{URLCOMMERCE}}/order-details/delete/170",
 											"host": [
 												"{{URLCOMMERCE}}"
 											],
 											"path": [
 												"order-details",
 												"delete",
-												"78"
+												"170"
 											]
 										}
 									},
@@ -1457,7 +1596,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"idOrder\" : 27,\r\n    \"idProduct\" : 2,\r\n    \"quantity\" : 10\r\n}",
+											"raw": "{\r\n    \"idOrder\" : 161,\r\n    \"idProduct\" : 2,\r\n    \"quantity\" : 2\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1697,7 +1836,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"idProduct\": 9,\r\n    \"quantity\": 1\r\n}",
+											"raw": "{\r\n    \"idProduct\": 9,\r\n    \"quantity\": 2\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1734,7 +1873,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"id\" : 27,\r\n    \"quantity\" : 2\r\n}",
+											"raw": "{\r\n    \"id\" : 29,\r\n    \"quantity\" : 1\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1770,14 +1909,14 @@
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "{{URLCOMMERCE}}/cart/delete/27",
+											"raw": "{{URLCOMMERCE}}/cart/delete/29",
 											"host": [
 												"{{URLCOMMERCE}}"
 											],
 											"path": [
 												"cart",
 												"delete",
-												"27"
+												"29"
 											]
 										}
 									},
@@ -2100,6 +2239,55 @@
 								{
 									"key": "username",
 									"value": "test2",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URLKEYCLOAK}}/protocol/openid-connect/token",
+							"host": [
+								"{{URLKEYCLOAK}}"
+							],
+							"path": [
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EmailUserTestObtainTokenThroughFrontendClient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "token-test-client",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "emailtest",
 									"type": "text"
 								},
 								{

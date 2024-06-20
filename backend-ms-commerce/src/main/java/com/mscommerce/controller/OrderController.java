@@ -33,6 +33,7 @@ public class OrderController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Fetch all orders for administrators", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of all orders for administrators"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
     public ResponseEntity<List<OrderDTO>> adminGetAllOrders() throws ResourceNotFoundException {
@@ -44,6 +45,7 @@ public class OrderController {
     @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
     @Operation(summary = "Fetch all orders for the current user", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of all orders for the current user"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
     public ResponseEntity<List<OrderDTO>> getAllOrders() throws ResourceNotFoundException {
@@ -55,6 +57,7 @@ public class OrderController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Fetch a specific order by ID for administrators", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the order with the provided ID for administrators"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Order not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -68,6 +71,7 @@ public class OrderController {
     @Operation(summary = "Create a new order for administrators", responses = {
             @ApiResponse(responseCode = "201", description = "Successfully created a new order for administrators"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
     public ResponseEntity<OrderDTO> adminCreateOrder(@RequestBody OrderDTO orderDTO) throws BadRequestException {
@@ -80,6 +84,7 @@ public class OrderController {
     @Operation(summary = "Create a new order for the current user", responses = {
             @ApiResponse(responseCode = "201", description = "Successfully created a new order for the current user"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Resource not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -93,6 +98,7 @@ public class OrderController {
     @Operation(summary = "Update an existing order for administrators", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully updated the existing order for administrators"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Order not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -106,6 +112,7 @@ public class OrderController {
     @Operation(summary = "Update an existing order for the current user", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully updated the existing order for the current user"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Order not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -118,6 +125,7 @@ public class OrderController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Delete a specific order for administrators", responses = {
             @ApiResponse(responseCode = "204", description = "Successfully deleted the specific order for administrators"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Order not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
@@ -130,6 +138,7 @@ public class OrderController {
     @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
     @Operation(summary = "Delete a specific order for the current user", responses = {
             @ApiResponse(responseCode = "204", description = "Successfully deleted the specific order for the current user"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing authentication"),
             @ApiResponse(responseCode = "404", description = "Order not found"),
             @ApiResponse(responseCode = "500", description = "An error occurred while processing the request")
     })
