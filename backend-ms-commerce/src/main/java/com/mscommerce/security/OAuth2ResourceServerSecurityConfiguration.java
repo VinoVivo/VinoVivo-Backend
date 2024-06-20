@@ -20,7 +20,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableMethodSecurity
-@EnableTransactionManagement
 public class OAuth2ResourceServerSecurityConfiguration {
 
     @Bean
@@ -43,17 +42,10 @@ public class OAuth2ResourceServerSecurityConfiguration {
                                         "/variety/id/**",
                                         "/type/all",
                                         "/type/id/**",
-                                        "/auth/**",
-                                        "/v2/api-docs",
-                                        "/v3/api-docs",
-                                        "/v3/api-docs/**",
-                                        "/swagger-resources",
-                                        "/swagger-resources/**",
-                                        "/configuration/ui",
-                                        "/configuration/security",
                                         "/swagger-ui/**",
-                                        "/webjars/**",
-                                        "/swagger-ui.html"
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui.html",
+                                        "/swagger-ui/index.html"
                                 )
                                 .permitAll()
                                 .anyRequest()

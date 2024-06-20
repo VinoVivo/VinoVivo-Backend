@@ -27,7 +27,6 @@ public class UserService {
     /**
      * Retrieves the current authenticated user's information from the security context,
      * then fetches the user's details from the database using the user ID.
-     * @return A User entity.
      */
     public User getCurrentUser() {
         Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -40,7 +39,6 @@ public class UserService {
     /**
      * Retrieves a user's profile from Keycloak using the user ID.
      * @param userId A string representing the user's ID.
-     * @return A UserRepresentation object containing the user's profile information.
      */
     public UserRepresentation getUserProfile(String userId) {
         // Retrieve the user's profile from Keycloak

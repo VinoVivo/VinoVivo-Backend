@@ -7,8 +7,8 @@
   "defaultSignatureAlgorithm": "RS256",
   "revokeRefreshToken": false,
   "refreshTokenMaxReuse": 0,
-  "accessTokenLifespan": 300,
-  "accessTokenLifespanForImplicitFlow": 900,
+  "accessTokenLifespan": 1200,
+  "accessTokenLifespanForImplicitFlow": 1200,
   "ssoSessionIdleTimeout": 1800,
   "ssoSessionMaxLifespan": 36000,
   "ssoSessionIdleTimeoutRememberMe": 0,
@@ -16,8 +16,8 @@
   "offlineSessionIdleTimeout": 2592000,
   "offlineSessionMaxLifespanEnabled": false,
   "offlineSessionMaxLifespan": 5184000,
-  "clientSessionIdleTimeout": 0,
-  "clientSessionMaxLifespan": 0,
+  "clientSessionIdleTimeout": 36000,
+  "clientSessionMaxLifespan": 36000,
   "clientOfflineSessionIdleTimeout": 0,
   "clientOfflineSessionMaxLifespan": 0,
   "accessCodeLifespan": 60,
@@ -32,7 +32,7 @@
   "registrationAllowed": true,
   "registrationEmailAsUsername": false,
   "rememberMe": true,
-  "verifyEmail": false,
+  "verifyEmail": true,
   "loginWithEmailAllowed": false,
   "duplicateEmailsAllowed": false,
   "resetPasswordAllowed": true,
@@ -326,6 +326,7 @@
           "attributes": {}
         }
       ],
+      "token-test-client": [],
       "security-admin-console": [],
       "admin-cli": [],
       "account-console": [],
@@ -351,6 +352,7 @@
           "attributes": {}
         }
       ],
+      "frontend-local-client": [],
       "account": [
         {
           "id": "0c37010b-a80f-43ee-97d8-342cc3090d08",
@@ -661,7 +663,9 @@
       "publicClient": true,
       "frontchannelLogout": false,
       "protocol": "openid-connect",
-      "attributes": {},
+      "attributes": {
+        "post.logout.redirect.uris": "+"
+      },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": false,
       "nodeReRegistrationTimeout": 0,
@@ -710,10 +714,11 @@
       "protocol": "openid-connect",
       "attributes": {
         "oidc.ciba.grant.enabled": "false",
-        "client.secret.creation.time": "1717077763",
+        "client.secret.creation.time": "1718466436",
         "backchannel.logout.session.required": "true",
-        "oauth2.device.authorization.grant.enabled": "false",
+        "post.logout.redirect.uris": "+",
         "display.on.consent.screen": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
         "backchannel.logout.revoke.offline.tokens": "false"
       },
       "authenticationFlowBindingOverrides": {},
@@ -729,6 +734,7 @@
           "config": {
             "user.session.note": "client_id",
             "introspection.token.claim": "true",
+            "userinfo.token.claim": "true",
             "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "client_id",
@@ -744,6 +750,7 @@
           "config": {
             "user.session.note": "clientHost",
             "introspection.token.claim": "true",
+            "userinfo.token.claim": "true",
             "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "clientHost",
@@ -759,6 +766,7 @@
           "config": {
             "user.session.note": "clientAddress",
             "introspection.token.claim": "true",
+            "userinfo.token.claim": "true",
             "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "clientAddress",
@@ -800,7 +808,9 @@
       "publicClient": false,
       "frontchannelLogout": false,
       "protocol": "openid-connect",
-      "attributes": {},
+      "attributes": {
+        "post.logout.redirect.uris": "+"
+      },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": false,
       "nodeReRegistrationTimeout": 0,
@@ -823,15 +833,16 @@
       "clientId": "frontend-client",
       "name": "frontend-client",
       "description": "",
-      "rootUrl": "http://localhost:3000",
+      "rootUrl": "https://vivo-front-4a6f.vercel.app",
       "adminUrl": "",
       "baseUrl": "",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
+      "secret": "**********",
       "redirectUris": [
-        "http://localhost:3000/*"
+        "https://vivo-front-4a6f.vercel.app/*"
       ],
       "webOrigins": [
         "+"
@@ -843,15 +854,70 @@
       "implicitFlowEnabled": false,
       "directAccessGrantsEnabled": true,
       "serviceAccountsEnabled": false,
-      "publicClient": true,
+      "publicClient": false,
       "frontchannelLogout": true,
       "protocol": "openid-connect",
       "attributes": {
         "oidc.ciba.grant.enabled": "false",
+        "client.secret.creation.time": "1718411184",
+        "backchannel.logout.session.required": "true",
+        "post.logout.redirect.uris": "https://vivo-front-4a6f.vercel.app/*",
+        "display.on.consent.screen": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "backchannel.logout.revoke.offline.tokens": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "roles",
+        "profile",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
+      "id": "4e6e1b9f-930b-46d1-96f2-07ae22cc8ba8",
+      "clientId": "frontend-local-client",
+      "name": "frontend-local-client",
+      "description": "",
+      "rootUrl": "http://localhost:3000",
+      "adminUrl": "http://localhost:3000",
+      "baseUrl": "",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "**********",
+      "redirectUris": [
+        "http://localhost:3000/*"
+      ],
+      "webOrigins": [
+        "http://localhost:3000"
+      ],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": false,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "oidc.ciba.grant.enabled": "false",
+        "client.secret.creation.time": "1718468980",
         "backchannel.logout.session.required": "true",
         "post.logout.redirect.uris": "http://localhost:3000/*",
         "oauth2.device.authorization.grant.enabled": "false",
-        "display.on.consent.screen": "false",
         "backchannel.logout.revoke.offline.tokens": "false"
       },
       "authenticationFlowBindingOverrides": {},
@@ -891,7 +957,9 @@
       "publicClient": false,
       "frontchannelLogout": false,
       "protocol": "openid-connect",
-      "attributes": {},
+      "attributes": {
+        "post.logout.redirect.uris": "+"
+      },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": false,
       "nodeReRegistrationTimeout": 0,
@@ -960,6 +1028,57 @@
           }
         }
       ],
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "roles",
+        "profile",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
+      "id": "eeeaae84-9c24-4e12-8b49-c13b6064d2dc",
+      "clientId": "token-test-client",
+      "name": "token-test-client",
+      "description": "",
+      "rootUrl": "",
+      "adminUrl": "",
+      "baseUrl": "",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "redirectUris": [
+        "/*"
+      ],
+      "webOrigins": [
+        "/*"
+      ],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "oidc.ciba.grant.enabled": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "backchannel.logout.session.required": "true",
+        "backchannel.logout.revoke.offline.tokens": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
       "defaultClientScopes": [
         "web-origins",
         "acr",
@@ -1054,8 +1173,8 @@
           "protocolMapper": "oidc-audience-resolve-mapper",
           "consentRequired": false,
           "config": {
-            "introspection.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "introspection.token.claim": "true"
           }
         },
         {
@@ -1093,8 +1212,8 @@
           "protocolMapper": "oidc-allowed-origins-mapper",
           "consentRequired": false,
           "config": {
-            "introspection.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "introspection.token.claim": "true"
           }
         }
       ]
@@ -1118,6 +1237,7 @@
           "config": {
             "introspection.token.claim": "true",
             "multivalued": "true",
+            "userinfo.token.claim": "true",
             "user.attribute": "foo",
             "id.token.claim": "true",
             "access.token.claim": "true",
@@ -1262,21 +1382,12 @@
           "consentRequired": false,
           "config": {
             "id.token.claim": "true",
+            "access.token.claim": "true",
             "introspection.token.claim": "true",
-            "access.token.claim": "true"
+            "userinfo.token.claim": "true"
           }
         }
       ]
-    },
-    {
-      "id": "83ebebc9-70bd-43fb-9ace-07b4b5aa64bf",
-      "name": "offline_access",
-      "description": "OpenID Connect built-in scope: offline_access",
-      "protocol": "openid-connect",
-      "attributes": {
-        "consent.screen.text": "${offlineAccessScopeConsentText}",
-        "display.on.consent.screen": "true"
-      }
     },
     {
       "id": "7fe798d1-9d3f-4c19-aa5e-51ac7da49ecd",
@@ -1505,27 +1616,37 @@
           "consentRequired": false,
           "config": {
             "id.token.claim": "true",
-            "introspection.token.claim": "true",
             "access.token.claim": "true",
+            "introspection.token.claim": "true",
             "userinfo.token.claim": "true"
           }
         }
       ]
+    },
+    {
+      "id": "83ebebc9-70bd-43fb-9ace-07b4b5aa64bf",
+      "name": "offline_access",
+      "description": "OpenID Connect built-in scope: offline_access",
+      "protocol": "openid-connect",
+      "attributes": {
+        "consent.screen.text": "${offlineAccessScopeConsentText}",
+        "display.on.consent.screen": "true"
+      }
     }
   ],
   "defaultDefaultClientScopes": [
     "role_list",
+    "acr",
     "profile",
-    "email",
     "roles",
     "web-origins",
-    "acr"
+    "email"
   ],
   "defaultOptionalClientScopes": [
-    "offline_access",
     "address",
-    "phone",
-    "microprofile-jwt"
+    "microprofile-jwt",
+    "offline_access",
+    "phone"
   ],
   "browserSecurityHeaders": {
     "contentSecurityPolicyReportOnly": "",
@@ -1538,18 +1659,20 @@
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
   "smtpServer": {
-    "replyToDisplayName": "",
-    "starttls": "false",
-    "auth": "",
-    "port": "1025",
-    "replyTo": "info@example.de",
-    "host": "localhost",
-    "from": "info@example.de",
-    "fromDisplayName": "",
+    "replyToDisplayName": "VinoVivo Admin",
+    "starttls": "true",
+    "auth": "true",
     "envelopeFrom": "",
-    "ssl": "false"
+    "ssl": "false",
+    "password": "**********",
+    "port": "587",
+    "host": "smtppro.zoho.com",
+    "replyTo": "administracion@vinovivo.work.gd",
+    "from": "administracion@vinovivo.work.gd",
+    "fromDisplayName": "VinoVivo Admin",
+    "user": "vinovivo.adm@gmail.com"
   },
-  "loginTheme": "keycloak",
+  "loginTheme": "keywind",
   "accountTheme": "keycloak.v3",
   "adminTheme": "keycloak.v2",
   "emailTheme": "keycloak",
@@ -1572,13 +1695,13 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "oidc-address-mapper",
             "saml-role-list-mapper",
+            "oidc-full-name-mapper",
             "saml-user-attribute-mapper",
             "oidc-usermodel-attribute-mapper",
-            "oidc-full-name-mapper",
             "saml-user-property-mapper",
             "oidc-usermodel-property-mapper",
+            "oidc-address-mapper",
             "oidc-sha256-pairwise-sub-mapper"
           ]
         }
@@ -1603,14 +1726,14 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "saml-role-list-mapper",
-            "oidc-address-mapper",
+            "saml-user-attribute-mapper",
             "oidc-usermodel-attribute-mapper",
             "oidc-full-name-mapper",
-            "saml-user-property-mapper",
-            "saml-user-attribute-mapper",
             "oidc-sha256-pairwise-sub-mapper",
-            "oidc-usermodel-property-mapper"
+            "saml-role-list-mapper",
+            "oidc-usermodel-property-mapper",
+            "oidc-address-mapper",
+            "saml-user-property-mapper"
           ]
         }
       },
@@ -1677,7 +1800,7 @@
         "subComponents": {},
         "config": {
           "kc.user.profile.config": [
-            "{\"attributes\":[{\"name\":\"username\",\"displayName\":\"${username}\",\"validations\":{\"length\":{\"min\":3,\"max\":255},\"username-prohibited-characters\":{},\"up-username-not-idn-homograph\":{}},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"email\",\"displayName\":\"${email}\",\"validations\":{\"email\":{},\"length\":{\"max\":255}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"firstName\",\"displayName\":\"${firstName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"lastName\",\"displayName\":\"${lastName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"dni\",\"displayName\":\"${DNI}\",\"validations\":{\"length\":{\"min\":\"1\",\"max\":\"255\"}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"cellphone\",\"displayName\":\"${Cellphone}\",\"validations\":{\"integer\":{\"min\":\"1\",\"max\":\"255\"}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"state\",\"displayName\":\"${State}\",\"validations\":{\"length\":{\"min\":\"1\",\"max\":\"255\"}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"city\",\"displayName\":\"${City}\",\"validations\":{\"length\":{\"min\":\"1\",\"max\":\"255\"}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"address\",\"displayName\":\"${Address}\",\"validations\":{\"length\":{\"min\":\"1\",\"max\":\"255\"}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"photo\",\"displayName\":\"${Photo}\",\"validations\":{\"pattern\":{\"pattern\":\"^(http|https):\\\\/\\\\/([a-zA-Z0-9-]+\\\\.)*[a-zA-Z]{2,}\\\\/.*\\\\.(jpg|jpeg|png|gif|bmp)$\",\"error-message\":\"Invalid image URL\"}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false}],\"groups\":[{\"name\":\"user-metadata\",\"displayHeader\":\"User metadata\",\"displayDescription\":\"Attributes, which refer to user metadata\"}]}"
+            "{\"attributes\":[{\"name\":\"username\",\"displayName\":\"${username}\",\"validations\":{\"length\":{\"min\":3,\"max\":255},\"username-prohibited-characters\":{},\"up-username-not-idn-homograph\":{}},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"email\",\"displayName\":\"${email}\",\"validations\":{\"email\":{},\"length\":{\"max\":255}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"firstName\",\"displayName\":\"${firstName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"lastName\",\"displayName\":\"${lastName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"dni\",\"displayName\":\"${DNI}\",\"validations\":{\"length\":{\"min\":\"1\",\"max\":\"255\"}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"cellphone\",\"displayName\":\"${Cellphone}\",\"validations\":{\"integer\":{\"min\":\"0\",\"max\":\"9999999999999999\"}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"state\",\"displayName\":\"${State}\",\"validations\":{\"length\":{\"min\":\"1\",\"max\":\"255\"}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"city\",\"displayName\":\"${City}\",\"validations\":{\"length\":{\"min\":\"1\",\"max\":\"255\"}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"address\",\"displayName\":\"${Address}\",\"validations\":{\"length\":{\"min\":\"1\",\"max\":\"255\"}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"photo\",\"displayName\":\"${Photo}\",\"validations\":{\"pattern\":{\"pattern\":\"^(http|https):\\\\/\\\\/([a-zA-Z0-9-]+\\\\.)*[a-zA-Z]{2,}\\\\/.*\\\\.(jpg|jpeg|png|gif|bmp)$\",\"error-message\":\"Invalid image URL\"}},\"annotations\":{},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false}],\"groups\":[{\"name\":\"user-metadata\",\"displayHeader\":\"User metadata\",\"displayDescription\":\"Attributes, which refer to user metadata\"}]}"
           ]
         }
       }
@@ -1698,17 +1821,6 @@
         }
       },
       {
-        "id": "c2724db3-3514-42f2-8de1-0c65fea96f95",
-        "name": "rsa-generated",
-        "providerId": "rsa-generated",
-        "subComponents": {},
-        "config": {
-          "priority": [
-            "100"
-          ]
-        }
-      },
-      {
         "id": "91b82f80-f749-4d37-91fd-fcfddfb2dc43",
         "name": "hmac-generated-hs512",
         "providerId": "hmac-generated",
@@ -1719,6 +1831,17 @@
           ],
           "algorithm": [
             "HS512"
+          ]
+        }
+      },
+      {
+        "id": "c2724db3-3514-42f2-8de1-0c65fea96f95",
+        "name": "rsa-generated",
+        "providerId": "rsa-generated",
+        "subComponents": {},
+        "config": {
+          "priority": [
+            "100"
           ]
         }
       },
@@ -2380,18 +2503,23 @@
   "attributes": {
     "cibaBackchannelTokenDeliveryMode": "poll",
     "cibaAuthRequestedUserHint": "login_hint",
-    "oauth2DevicePollingInterval": "5",
     "clientOfflineSessionMaxLifespan": "0",
-    "clientSessionIdleTimeout": "0",
+    "oauth2DevicePollingInterval": "5",
+    "clientSessionIdleTimeout": "36000",
+    "actionTokenGeneratedByUserLifespan.idp-verify-account-via-email": "",
+    "actionTokenGeneratedByUserLifespan.verify-email": "",
     "clientOfflineSessionIdleTimeout": "0",
+    "actionTokenGeneratedByUserLifespan.execute-actions": "",
     "cibaInterval": "5",
     "realmReusableOtpCode": "false",
     "cibaExpiresIn": "120",
     "oauth2DeviceCodeLifespan": "600",
     "parRequestUriLifespan": "60",
-    "clientSessionMaxLifespan": "0",
+    "clientSessionMaxLifespan": "36000",
     "frontendUrl": "",
-    "acr.loa.map": "{}"
+    "acr.loa.map": "{}",
+    "shortVerificationUri": "",
+    "actionTokenGeneratedByUserLifespan.reset-credentials": ""
   },
   "keycloakVersion": "24.0.2",
   "userManagedAccessAllowed": false,

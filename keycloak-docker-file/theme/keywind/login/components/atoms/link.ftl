@@ -6,6 +6,9 @@
     <#case "secondary">
       <#assign colorClass="text-secondary-600 hover:text-secondary-900">
       <#break>
+    <#case "white">
+        <#assign colorClass="text-white hover:text-primary-500">
+        <#break>
     <#default>
       <#assign colorClass="text-primary-600 hover:text-primary-500">
   </#switch>

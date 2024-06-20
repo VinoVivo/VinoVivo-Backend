@@ -6,7 +6,9 @@ import com.mscommerce.exception.UnauthorizedAccessException;
 import com.mscommerce.models.DTO.order.OrderDTO;
 import com.mscommerce.models.DTO.order.OrderDTORequest;
 import com.mscommerce.models.DTO.order.OrderDTOUpdate;
+import jakarta.mail.MessagingException;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface IOrderService {
@@ -19,14 +21,14 @@ public interface IOrderService {
 
     OrderDTO adminCreateOrder(OrderDTO orderDTO) throws BadRequestException;
 
-    OrderDTO createOrder(OrderDTORequest orderDTORequest) throws BadRequestException, ResourceNotFoundException;
+    OrderDTO createOrder(OrderDTORequest orderDTORequest) throws BadRequestException, ResourceNotFoundException, MessagingException, UnsupportedEncodingException;
 
     OrderDTO adminUpdateOrder(OrderDTO orderDTO) throws BadRequestException, ResourceNotFoundException;
 
-    OrderDTO updateOrder(OrderDTOUpdate orderDTO) throws BadRequestException, ResourceNotFoundException;
+    OrderDTO updateOrder(OrderDTOUpdate orderDTO) throws BadRequestException, ResourceNotFoundException, MessagingException, UnsupportedEncodingException;
 
     void adminDeleteOrder(Integer orderId) throws ResourceNotFoundException;
 
-    void deleteOrder(Integer orderId) throws ResourceNotFoundException, UnauthorizedAccessException;
+    void deleteOrder(Integer orderId) throws ResourceNotFoundException, UnauthorizedAccessException, MessagingException, UnsupportedEncodingException;
 
 }
