@@ -3,12 +3,12 @@ server:
 
 spring:
   application:
-    name: ${APP_NAME:ms-commerce}
+    name: ${APP_NAME:ms-configserver}
   cloud:
     config:
       server:
         git:
-          uri: https://github.com/Gaghyta/VinoVivo-back-ms-configserver
+          uri: https://github.com/Gaghyta/ms-config
 
 management:
   endpoints:
