@@ -1,54 +1,6 @@
-## Instance port
-server:
-  port: ${PORT:8081}
-
-## Configuration for App name and security using OAuth2
 spring:
   application:
-    name: ${APP_NAME:ms-users}
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${KEYCLOAK_ISSUER_URI:https://vinovivo-production.up.railway.app/realms/vino-vivo}
-          jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:https://vinovivo-production.up.railway.app/realms/vino-vivo/protocol/openid-connect/certs}
-      client:
-        registration:
-          keycloak:
-            client-id: ${CLIENT_ID:backend-client}
-            client-secret: ${CLIENT_SECRET:XLowzBOMxCOCEq5qy8FXMMQbBQS0sVZ2}
-            authorization-grant-type: client_credentials
-        provider:
-          keycloak:
-            tokenUri: ${KEYCLOAK_TOKEN_URI:https://vinovivo-production.up.railway.app/realms/vino-vivo/protocol/openid-connect/token}
-
-## Configuration for Springdoc
-## This includes the path for API docs and Swagger UI, enabling Swagger UI
-## and specifying the packages to scan for API docs generation
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    enable: true
-  packages-to-scan: com.msusers.controller
-
-## Configuration variables for the Keycloak client, server, and realm
-proyecto:
-  keycloak:
-    serverUrl: ${KEYCLOAK_SERVER_URL:https://vinovivo-production.up.railway.app}
-    clientId: ${CLIENT_ID:backend-client}
-    clientSecret: ${CLIENT_SECRET:XLowzBOMxCOCEq5qy8FXMMQbBQS0sVZ2}
-    realm: ${REALM:vino-vivo}
-
-## Configuration for Eureka
-eureka:
-  client:
-    registerWithEureka: true
-    fetchRegistry: true
-    service-url:
-      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
-  instance:
-    preferIpAddress: false
-    # For local development. Set to false if you want to use the hostname in a DNS-enabled environment
-    hostname: ${HOSTNAME:localhost}
+    name: 
+    config:
+      enabled: true
+      uri: 
