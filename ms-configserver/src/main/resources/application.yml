@@ -8,7 +8,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/Gaghyta/ms-config
+          uri: https://github.com/Gaghyta/ms-configserver
 
 management:
   endpoints:
