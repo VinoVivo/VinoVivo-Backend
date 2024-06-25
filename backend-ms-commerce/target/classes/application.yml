@@ -1,6 +1,7 @@
 spring:
-  application:
-    name: 
-    config:
-      enabled: true
-      uri: 
+  application: 
+    name: ${APP_NAME:ms-commerce}
+  config:
+    import: 
+      optional: 
+        configserver: 

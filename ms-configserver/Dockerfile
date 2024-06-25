@@ -15,6 +15,6 @@ RUN mvn clean package
 # We copy from "build" the generated JAR (the generation path is the same as we would see locally) and we move and rename it in destination as app.jar
 # We mark the starting point of the image with the command "java -jar app.jar" that will execute our component.
 FROM openjdk:21
-EXPOSE 8082
-COPY --from=build /target/ms-commerce-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 8088
+COPY --from=build /target/ms-configserver-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
